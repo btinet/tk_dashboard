@@ -1,0 +1,27 @@
+{
+    "name": "btinet/tk-dashboard",
+    "description": "web-based school manager.",
+    "type": "project",
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Core\\": "core/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Benjamin Wagner",
+            "email": "benjamin.wagner@vapita.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "symfony/yaml": "5.4.x-dev",
+      "ext-json": "*",
+        "league/plates": "v3.x-dev",
+      "ext-http": "*",
+      "ext-pdo": "*",
+      "ext-curl": "*"
+    }
+}

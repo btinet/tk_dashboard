@@ -1,0 +1,25 @@
+# Route zum Index der Class "AppController"
+app_index:
+  expression: '/'
+  controller: 'App\Controller\AppController'
+  method: 'index'
+  request: 'get'
+
+# Route zum Index der Class "AppController" mit Übergabe einer numerischen Variable
+app_index_id:
+  expression: '/([0-9]*)/user'
+  controller: 'App\Controller\AppController'
+  method: 'index'
+  request: 'get'
+
+coffee_index:
+  expression: '/coffee'
+  controller: 'App\Controller\DrinkCoffeeController'
+  method: 'index'
+  request: 'get'
+
+char_index:
+  expression: '/char'
+  controller: 'App\Controller\CharController'
+  method: 'setChar'
+  request: 'get'
