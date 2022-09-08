@@ -32,13 +32,6 @@ class MenuBuilder extends AbstractMenu
                     'class' => ['nav-link'],
                 ],
             ])
-            ->add('coffee',NavigationType::class,[
-                'label' => 'Kaffee Maschine',
-                'route' => 'coffee_index',
-                'attrib' => [
-                    'class' => ['nav-link'],
-                ],
-            ])
         ;
 
         return $this;

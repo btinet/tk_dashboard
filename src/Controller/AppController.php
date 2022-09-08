@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Student;
+use App\Entity\User;
 use App\Menu\MenuBuilder;
 use App\Repository\StudentRepository;
 use Core\Controller\AbstractController;
@@ -19,8 +20,7 @@ class AppController extends AbstractController
         $luckyNumber = rand(1, 99);
         $btn = $this->generateUrlFromRoute('app_index_id',[$luckyNumber]);
         $number = null !== $i ? $i : false;
-        $students = $this->getRepositoryManager()->findAll(Student::class);
-        $studentRepository = new StudentRepository();
+        $students = $this->getRepositoryManager()->findAll(User::class);
 
 
         $mainMenu = new MenuBuilder();
