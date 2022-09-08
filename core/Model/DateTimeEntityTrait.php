@@ -13,19 +13,19 @@ trait DateTimeEntityTrait
     /**
      * @return DateTime
      */
-    public function getCreated(): DateTime
+    public function getCreated($format = 'd.m.Y'): DateTime
     {
-        return DateTime::createFromFormat('d.m.Y',$this->created);
+        return DateTime::createFromFormat($format,$this->created);
     }
 
     /**
      * @return DateTime|null
      */
-    public function getUpdated(): ?DateTime
+    public function getUpdated($format = 'd.m.Y'): ?DateTime
     {
         if ($this->updated)
         {
-            return DateTime::createFromFormat('d.m.Y',$this->updated);
+            return DateTime::createFromFormat($format,$this->updated);
         }
         return null;
     }
