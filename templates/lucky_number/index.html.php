@@ -53,7 +53,7 @@ $this->layout('_layout.standard.html',
 <hr>
 <ul class="list-group list-group-flush">
 <?php foreach($students as $student): ?>
-    <li class="list-group-item"><?=$student?></li>
+    <li class="list-group-item"><?=$student?> (erstellt: <?=$student->getCreated()?>)</li>
 <?php endforeach; ?>
     <?php if(!$students): ?>
         <li class="list-group-item">Keine Studenten gefunden.</li>

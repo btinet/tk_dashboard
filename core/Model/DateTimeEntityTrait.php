@@ -10,22 +10,21 @@ trait DateTimeEntityTrait
     protected string $created;
     protected ?string $updated;
 
-    /**
-     * @return DateTime
-     */
-    public function getCreated($format = 'd.m.Y'): DateTime
+
+
+    public function getCreated(): string
     {
-        return DateTime::createFromFormat($format,$this->created);
+        return $this->created;
     }
 
     /**
-     * @return DateTime|null
+     * @return string|null
      */
-    public function getUpdated($format = 'd.m.Y'): ?DateTime
+    public function getUpdated(): ?string
     {
         if ($this->updated)
         {
-            return DateTime::createFromFormat($format,$this->updated);
+            return $this->updated;
         }
         return null;
     }
