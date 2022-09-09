@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Exam;
 use App\Entity\Student;
 use App\Entity\User;
 use App\Menu\MenuBuilder;
+use App\Repository\ExamRepository;
 use App\Repository\StudentRepository;
 use Core\Controller\AbstractController;
 
@@ -21,6 +23,8 @@ class AppController extends AbstractController
         $btn = $this->generateUrlFromRoute('app_index_id',[$luckyNumber]);
         $number = null !== $i ? $i : false;
         $students = $this->getRepositoryManager()->findAll(User::class);
+        $examRepository = new ExamRepository();
+        $exams = $examRepository->findExamsJoinTopic();
 
 
         $mainMenu = new MenuBuilder();
@@ -34,6 +38,7 @@ class AppController extends AbstractController
             'number' => $number,
             'btn' => $btn,
             'students' => $students,
+            'exams' => $exams,
             'mainMenu' => $mainMenu->render(),
         ]);
     }

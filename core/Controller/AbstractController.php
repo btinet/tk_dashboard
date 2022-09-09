@@ -16,7 +16,7 @@ use Exception;
 use League\Plates\Engine as View;
 use PDO;
 
-class AbstractController implements ControllerInterface
+abstract class AbstractController implements ControllerInterface
 {
 
     /**
