@@ -9,6 +9,7 @@
  * @var object|null $meta enthält Meta-Daten der Website
  * @var object $response enthält Response-Daten des Controllers
  * @var object $students enthält die MySQL-Tabelle "students"
+ * @var object $exams enthält die MySQL-Tabelle "exam"
  * @var object $mainMenu enthält die Hauptnavigation"
  */
 
@@ -51,7 +52,7 @@ $this->layout('_layout.standard.html',
     <a href="<?=$btn?>" class="btn btn-outline-dark">Würfeln</a>
 
 <hr>
-<ul class="list-group list-group-flush">
+<ul class="list-group list-group-flush mb-3">
 <?php foreach($students as $student): ?>
     <li class="list-group-item"><?=$student?> (erstellt: <?=$student->getCreated()?>)</li>
 <?php endforeach; ?>
@@ -59,6 +60,28 @@ $this->layout('_layout.standard.html',
         <li class="list-group-item">Keine Studenten gefunden.</li>
     <?php endif; ?>
 </ul>
+
+<div class="card">
+    <div class="card-header">
+        Prüfungen
+    </div>
+    <ul class="list-group list-group-flush">
+        <?php foreach($exams as $exam): ?>
+            <li class="list-group-item">
+                <?php foreach($exam as $key => $value): ?>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-bold"><?=$key?></span>
+                    <span class=""><?=$value?></span>
+                </div>
+
+                <?php endforeach; ?>
+            </li>
+        <?php endforeach; ?>
+        <?php if(!$exams): ?>
+            <li class="list-group-item">Keine Prüfungen gefunden.</li>
+        <?php endif; ?>
+    </ul>
+</div>
 
 <div id="contento">
 </div>
