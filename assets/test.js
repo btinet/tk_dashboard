@@ -2,7 +2,9 @@
  * Copyright (c) 2022. Benjamin Wagner
  */
 
-class Ausgabe {
+
+
+export default class Ausgabe {
 
     start;
     ende;

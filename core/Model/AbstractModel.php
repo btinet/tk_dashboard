@@ -9,7 +9,7 @@ use PDOStatement;
 use ReflectionClass;
 use ReflectionException;
 
-class AbstractModel extends PDO implements ModelInterface
+abstract class AbstractModel extends PDO implements ModelInterface
 {
     public string $dsnString;
 

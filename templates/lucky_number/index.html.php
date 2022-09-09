@@ -63,7 +63,6 @@ $this->layout('_layout.standard.html',
 <div id="contento">
 </div>
 
-<script>
-    document.getElementById('contento').innerHTML = new Ausgabe(16,22).getAusgabe();
-</script>
+
+
 <?php $this->stop() ?>

@@ -295,57 +295,6 @@
                 }
             ],
             "time": "2022-01-26T16:32:32+00:00"
-        },
-        {
-            "name": "twbs/bootstrap",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "3ef6a435be5fe13f8b46c3a949aa0ddc5c3e6ef1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/3ef6a435be5fe13f8b46c3a949aa0ddc5c3e6ef1",
-                "reference": "3ef6a435be5fe13f8b46c3a949aa0ddc5c3e6ef1",
-                "shasum": ""
-            },
-            "replace": {
-                "twitter/bootstrap": "self.version"
-            },
-            "default-branch": true,
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Otto",
-                    "email": "markdotto@gmail.com"
-                },
-                {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                }
-            ],
-            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-            "homepage": "https://getbootstrap.com/",
-            "keywords": [
-                "JS",
-                "css",
-                "framework",
-                "front-end",
-                "mobile-first",
-                "responsive",
-                "sass",
-                "web"
-            ],
-            "support": {
-                "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/main"
-            },
-            "time": "2022-03-09T15:36:50+00:00"
         }
     ],
     "packages-dev": [],
