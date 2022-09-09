@@ -2,18 +2,34 @@
 
 namespace App\Entity;
 
+use App\Repository\ExamRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 
 final class Exam
 {
+    /**
+     * Allgemeine MySQL-Felder können als Trait dazugeladen werden.
+     */
     use IdEntityTrait;
     use DateTimeEntityTrait;
 
+    /**
+     * Properties (private) sind nur für interne Zwecke
+     */
+    private ExamRepository $repository;
+
+    /**
+     * Properties (protected) in CamelCase entsprechen den MySQL-Feldern in snake_case
+     */
     protected string $keyQuestion;
     protected int $year;
-    protected string $title;
-    protected ?string $description;
+    protected int $topicId;
+
+    public function __construct()
+    {
+        $this->repository = new ExamRepository();
+    }
 
     public function __toString()
     {
@@ -57,39 +73,40 @@ final class Exam
     }
 
     /**
-     * @return string
+     * @return ?int
      */
-    public function getTitle(): string
+    public function getTopicId(): ?int
     {
-        return $this->title;
+        return $this->topicId;
     }
 
     /**
-     * @param string $title
-     * @return Exam
+     * @param int $topicId
+     * @return $this
      */
-    public function setTitle(string $title): Exam
+    public function setTopicId(int $topicId): Exam
     {
-        $this->title = $title;
+        $this->topicId = $topicId;
         return $this;
     }
 
     /**
-     * @return string
+     * @return Topic|null
      */
-    public function getDescription(): string
+    public function getTopic(): ?Topic
     {
-        return $this->description;
+        return $this->repository->findOneBy(Topic::class, [
+            'id' => $this->topicId
+        ]);
     }
 
     /**
-     * @param null|string $description
-     * @return Exam
+     * @return array|false
      */
-    public function setDescription(string $description): ?Exam
+    public function getSchoolSubjects()
     {
-        $this->description = $description;
-        return $this;
+        return $this->repository->joinSchoolSubjects($this->id, SchoolSubject::class);
+
     }
 
 }

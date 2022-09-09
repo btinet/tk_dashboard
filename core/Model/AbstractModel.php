@@ -228,9 +228,12 @@ abstract class AbstractModel extends PDO implements ModelInterface
         $entityProperties = $entityClass->getProperties();
         $columns = false;
         foreach ($entityProperties as $property) {
-            $propertyNameAsArray = preg_split('/(?=[A-Z])/', $property->getName());
-            $propertyNameAsSnakeTail = strtolower(implode('_', $propertyNameAsArray));
-            $columns .= "{$propertyNameAsSnakeTail} AS {$property->getName()},";
+            if(!$property->isPrivate())
+            {
+                $propertyNameAsArray = preg_split('/(?=[A-Z])/', $property->getName());
+                $propertyNameAsSnakeTail = strtolower(implode('_', $propertyNameAsArray));
+                $columns .= "{$propertyNameAsSnakeTail} AS {$property->getName()},";
+            }
         }
         return $columns = rtrim($columns, ',');
     }

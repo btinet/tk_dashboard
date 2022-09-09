@@ -6,6 +6,7 @@
 /**
  * @var object|null $meta enthält Meta-Daten der Website
  * @var object $response enthält Response-Daten des Controllers
+ * @var object $mainMenu Hauptnavigation
  */
 
 /**
@@ -22,19 +23,43 @@ $this->layout('base.html',
 
 <?php $this->start('body') ?>
 
-    <header id="header">
+    <header id="header" class="py-3 mb-3 border-bottom">
         <?php if ($this->section('header')): ?>
             <?=$this->section('header')?>
         <?php else: ?>
-            <div class="container">
-                <div class="py-3">
-                    <span class="small text-muted">Navigation</span>
+            <div class="container-fluid">
+                <div class="row g-3">
+                    <div class="col-2 col-md-4">
+                        <div class="dropdown">
+                            <a href="#" class="d-flex text-primary align-items-center justify-content-md-start justify-content-center mb-0 link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-microsoft" style="font-size: 1.5em"></i>
+                            </a>
+                            <ul class="dropdown-menu text-small shadow" style="">
+                                <?php foreach ($mainMenu as $item): ?>
+                                    <li class="">
+                                        <a href="<?= $item->getRoute()?>" class="dropdown-item"
+                                        <?php foreach($item->getAttrib() as $attrib => $value): ?><?=$attrib?>="<?=implode(' ',$value)?>"<?php endforeach; ?>
+                                        >
+                                        <?= $item->getLabel() ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-10 col-md-8">
+                        <div class="d-flex align-items-center">
+                            <form class="w-100" role="search">
+                                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         <?php endif ?>
     </header>
 
-    <main id="main" class="container">
+    <main id="main" class="container-fluid pb-3">
         <?php if ($this->section('main')): ?>
             <?=$this->section('main')?>
         <?php else: ?>

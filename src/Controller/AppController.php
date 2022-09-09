@@ -23,8 +23,7 @@ class AppController extends AbstractController
         $btn = $this->generateUrlFromRoute('app_index_id',[$luckyNumber]);
         $number = null !== $i ? $i : false;
         $students = $this->getRepositoryManager()->findAll(User::class);
-        $examRepository = new ExamRepository();
-        $exams = $examRepository->findExamsJoinTopic();
+        $exams = $this->getRepositoryManager()->findAll(Exam::class);
 
 
         $mainMenu = new MenuBuilder();

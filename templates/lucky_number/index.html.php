@@ -19,39 +19,49 @@
 $this->layout('_layout.standard.html',
     [
         'meta'=>$meta,
-        'response'=>$response
+        'response'=>$response,
+        'mainMenu' => $mainMenu
     ]
 );
 
 ?>
 
-<?php $this->start('header') ?>
-<div class="container">
-    <div class="py-3">
-        <ul class="nav nav-tabs">
-            <?php foreach ($mainMenu as $item): ?>
-                <li class="nav-item">
-                    <a href="<?= $item->getRoute()?>"
-                       <?php foreach($item->getAttrib() as $attrib => $value): ?><?=$attrib?>="<?=implode(' ',$value)?>"<?php endforeach; ?>
-                    >
-                        <?= $item->getLabel() ?>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-</div>
-<?php $this->stop() ?>
-
-
 <?php $this->start('main') ?>
-    <h1>Lucky Number</h1>
-    <?php if($number): ?>
-        <p class="lead">Deine Glücksnummer lautet: <?=$number?></p>
-    <?php endif ?>
-    <a href="<?=$btn?>" class="btn btn-outline-dark">Würfeln</a>
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-md-4">
+            <div class="h6 fw-light text-muted text-uppercase mb-2">Fächer</div>
+            <div class="rounded-3 border bg-light">
+                <br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+        <div class="col-12 col-md-8">
+            <div class="h6 fw-light text-muted text-uppercase mb-2">Prüfungsthemen</div>
+            <div class="list-group list-group-flush rounded-3 border">
+                <?php foreach($exams as $exam): ?>
+                    <a href="#" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
+                        <div class="d-flex flex-column justify-content-between align-items-start">
+                            <strong><?=$exam->getTopic()->getTitle() ?></strong>
+                            <small class="text-truncate text-wrap"><?=$exam->getTopic()->getDescription() ?></small>
+                            <div class="d-flex mt-2 small fw-light justify-content-start align-items-center">
+                                <?php foreach($exam->getSchoolSubjects() as $subject): ?>
+                                    <span class="badge me-1 text-capitalize <?=$subject->isMainSchoolSubject() ? 'bg-primary' :'bg-secondary' ?>"><?=$subject->getAbbr()?></span>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-end flex-column">
+                            <span class="small text-nowrap">frei ab</span>
+                            <?= $exam->getYear()+3 ?>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+                <?php if(!$exams): ?>
+                    <li class="list-group-item">Keine Prüfungen gefunden.</li>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
 
-<hr>
+
 <ul class="list-group list-group-flush mb-3">
 <?php foreach($students as $student): ?>
     <li class="list-group-item"><?=$student?> (erstellt: <?=$student->getCreated()?>)</li>
@@ -65,27 +75,7 @@ $this->layout('_layout.standard.html',
     <div class="card-header">
         Prüfungen
     </div>
-    <ul class="list-group list-group-flush">
-        <?php foreach($exams as $exam): ?>
-            <li class="list-group-item">
-                <?php foreach($exam as $key => $value): ?>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold"><?=$key?></span>
-                    <span class=""><?=$value?></span>
-                </div>
 
-                <?php endforeach; ?>
-            </li>
-        <?php endforeach; ?>
-        <?php if(!$exams): ?>
-            <li class="list-group-item">Keine Prüfungen gefunden.</li>
-        <?php endif; ?>
-    </ul>
 </div>
-
-<div id="contento">
-</div>
-
-
 
 <?php $this->stop() ?>
