@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 08. Sep 2022 um 22:24
+-- Erstellungszeit: 10. Sep 2022 um 05:58
 -- Server-Version: 10.4.24-MariaDB
 -- PHP-Version: 8.1.6
 
@@ -36,6 +36,14 @@ CREATE TABLE `exam` (
   `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Daten für Tabelle `exam`
+--
+
+INSERT INTO `exam` (`id`, `topic_id`, `key_question`, `year`, `created`, `updated`) VALUES
+(1, 4, 'Eine Untersuchung der\r\nneurophysiologischen, psychischen und gesellschaftlichen Auswirkungen des\r\nTHC-Konsums bei Jugendlichen und jungen Erwachsenen', 2021, '2022-09-09 15:20:38', NULL),
+(2, 2, 'Inwieweit können 3D-Drucker die Organspende revolutionieren?', 2019, '2022-09-09 19:58:35', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -50,6 +58,16 @@ CREATE TABLE `exam_has_school_subject` (
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `exam_has_school_subject`
+--
+
+INSERT INTO `exam_has_school_subject` (`id`, `exam_id`, `school_subject_id`, `is_main_school_subject`, `created`, `updated`) VALUES
+(1, 1, 1, 1, '2022-09-09 15:36:03', NULL),
+(2, 1, 3, 0, '2022-09-09 15:37:00', NULL),
+(3, 2, 1, 1, '2022-09-09 19:59:22', NULL),
+(4, 2, 4, 0, '2022-09-09 20:00:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -75,9 +93,20 @@ CREATE TABLE `school_subject` (
   `id` int(11) NOT NULL,
   `label` varchar(255) NOT NULL,
   `abbr` varchar(3) NOT NULL,
+  `school_subject_type_id` int(11) DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `school_subject`
+--
+
+INSERT INTO `school_subject` (`id`, `label`, `abbr`, `school_subject_type_id`, `created`, `updated`) VALUES
+(1, 'Biologie', 'bio', 1, '2022-09-09 15:22:15', '2022-09-09 15:32:42'),
+(2, 'Chemie', 'ch', 1, '2022-09-09 15:22:15', '2022-09-09 15:32:52'),
+(3, 'Psyschologie', 'psy', 9, '2022-09-09 15:36:41', NULL),
+(4, 'Informatik', 'inf', 5, '2022-09-09 19:59:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -89,10 +118,27 @@ CREATE TABLE `school_subject_type` (
   `id` int(11) NOT NULL,
   `label` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `school_subject_id` int(11) DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `school_subject_type`
+--
+
+INSERT INTO `school_subject_type` (`id`, `label`, `description`, `created`, `updated`) VALUES
+(1, 'Naturwissenschaften', NULL, '2022-09-09 15:23:49', NULL),
+(2, 'Deutsch', NULL, '2022-09-09 15:24:02', NULL),
+(3, 'Fremdsprachen', NULL, '2022-09-09 15:24:18', NULL),
+(4, 'Mathematik', NULL, '2022-09-09 15:24:29', NULL),
+(5, 'Informatik', NULL, '2022-09-09 15:24:56', NULL),
+(6, 'Technik', NULL, '2022-09-09 15:24:56', NULL),
+(7, 'Gesellschaftswissenschaften', NULL, '2022-09-09 15:25:43', NULL),
+(8, 'Musische Fächer', NULL, '2022-09-09 15:25:43', NULL),
+(9, 'Psyschologie', NULL, '2022-09-09 15:26:22', NULL),
+(10, 'Philosophie', NULL, '2022-09-09 15:26:22', NULL),
+(11, 'Ethik', NULL, '2022-09-09 15:26:46', NULL),
+(12, 'Sport', NULL, '2022-09-09 15:26:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -107,6 +153,16 @@ CREATE TABLE `topic` (
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `topic`
+--
+
+INSERT INTO `topic` (`id`, `title`, `description`, `created`, `updated`) VALUES
+(1, 'Naturheilkunde', 'Pflanzliche und natürliche Wirkstoffe', '2022-09-09 15:11:18', NULL),
+(2, 'Humanmedizin', 'Organismen und Organsysteme', '2022-09-09 15:12:36', NULL),
+(3, 'Verhaltensbiologie', 'Sozialentwicklung von Wirbeltieren', '2022-09-09 15:15:03', NULL),
+(4, 'Cannabis', 'Physische und psychische Auswirkungen', '2022-09-09 15:16:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -125,6 +181,13 @@ CREATE TABLE `user` (
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `user`
+--
+
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `is_active`, `created`, `updated`) VALUES
+(1, 'Benjamin', 'Wagner', 'bwagner', '4a84748fe21ac71ac3862699858977f7b5232c72', 'bwagner@vapita.de', 1, '2022-09-08 21:48:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -228,15 +291,15 @@ ALTER TABLE `role_permission`
 --
 ALTER TABLE `school_subject`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `abbr` (`abbr`,`label`);
+  ADD UNIQUE KEY `abbr` (`abbr`,`label`),
+  ADD KEY `school_subject_type_id` (`school_subject_type_id`);
 
 --
 -- Indizes für die Tabelle `school_subject_type`
 --
 ALTER TABLE `school_subject_type`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `label` (`label`),
-  ADD KEY `school_subject_id` (`school_subject_id`);
+  ADD UNIQUE KEY `label` (`label`);
 
 --
 -- Indizes für die Tabelle `topic`
@@ -298,13 +361,13 @@ ALTER TABLE `user_role_has_user`
 -- AUTO_INCREMENT für Tabelle `exam`
 --
 ALTER TABLE `exam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `exam_has_school_subject`
 --
 ALTER TABLE `exam_has_school_subject`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT für Tabelle `role_permission`
@@ -316,19 +379,19 @@ ALTER TABLE `role_permission`
 -- AUTO_INCREMENT für Tabelle `school_subject`
 --
 ALTER TABLE `school_subject`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT für Tabelle `school_subject_type`
 --
 ALTER TABLE `school_subject_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT für Tabelle `topic`
 --
 ALTER TABLE `topic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`
@@ -384,10 +447,10 @@ ALTER TABLE `exam_has_school_subject`
   ADD CONSTRAINT `exam_has_school_subject_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`) ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `school_subject_type`
+-- Constraints der Tabelle `school_subject`
 --
-ALTER TABLE `school_subject_type`
-  ADD CONSTRAINT `school_subject_type_ibfk_1` FOREIGN KEY (`school_subject_id`) REFERENCES `school_subject` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `school_subject`
+  ADD CONSTRAINT `school_subject_ibfk_1` FOREIGN KEY (`school_subject_type_id`) REFERENCES `school_subject_type` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `user_group`
