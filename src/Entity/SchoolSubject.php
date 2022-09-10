@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\SchoolSubjectRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -19,7 +20,7 @@ final class SchoolSubject
 
     public function __construct()
     {
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new SchoolSubjectRepository();
     }
 
     public function __toString()
@@ -76,6 +77,11 @@ final class SchoolSubject
     public function isMainSchoolSubject(): bool
     {
         return $this->isMainSchoolSubject;
+    }
+
+    public function countExams()
+    {
+        return $this->repository->countExams($this->id, SchoolSubject::class);
     }
 
 }

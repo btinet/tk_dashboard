@@ -32,7 +32,7 @@ $this->layout('base.html',
                     <div class="col-2 col-md-4">
                         <div class="dropdown">
                             <a href="#" class="d-flex text-primary align-items-center justify-content-md-start justify-content-center mb-0 link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-microsoft" style="font-size: 1.5em"></i>
+                                <i class="bi bi-microsoft me-md-2" style="font-size: 1.5em"></i><small class="small text-uppercase text-muted d-none d-md-inline-block">EASE</small>
                             </a>
                             <ul class="dropdown-menu text-small shadow" style="">
                                 <?php foreach ($mainMenu as $item): ?>
@@ -50,7 +50,11 @@ $this->layout('base.html',
                     <div class="col-10 col-md-8">
                         <div class="d-flex align-items-center">
                             <form class="w-100" role="search">
-                                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                                <div class="input-group">
+                                    <input type="search" class="form-control" placeholder="Stichwort..." aria-label="Suche">
+                                    <button class="btn btn-primary" type="submit" role="button" id="button-addon2"><i class="bi bi-search"></i> </button>
+                                </div>
+
                             </form>
                         </div>
                     </div>
@@ -73,7 +77,7 @@ $this->layout('base.html',
         <?php else: ?>
             <div class="container">
                 <div class="py-3">
-                    <span class="small text-muted">Wagner's simple MVC-PHP-Framework</span>
+                    <span class="small text-muted"><?=$meta->get('footer_text')?></span>
                 </div>
             </div>
         <?php endif ?>

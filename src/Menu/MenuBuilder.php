@@ -16,8 +16,8 @@ class MenuBuilder extends AbstractMenu
 
         $this
             ->add('home',NavigationType::class,[
-                'label' => 'Home',
-                'route' => 'app_index_id',
+                'label' => 'Übersicht',
+                'route' => 'app_index',
                 'attrib' => [
                     'class' => ['nav-link'],
                 ],
@@ -26,7 +26,7 @@ class MenuBuilder extends AbstractMenu
                 '1999'
             ])
             ->add('lucky',NavigationType::class,[
-                'label' => 'Lucky Number',
+                'label' => 'Administration',
                 'route' => 'app_index',
                 'attrib' => [
                     'class' => ['nav-link'],

@@ -43,9 +43,11 @@ class AbstractRepositoryFactory extends EntityManagerComponent
     {
         try {
             $entityClass = self::setEntityClass($entity);
+            $entityShortName = self::generateSnakeTailString($entityClass->getShortname());
+
             $columns = self::setColumns($entityClass);
             $orderData = self::createOrderData($sortBy);
-            $result = self::select("SELECT {$columns} FROM {$entityClass->getShortName()} $orderData");
+            $result = self::select("SELECT {$columns} FROM {$entityShortName} $orderData");
             return $result->fetchAll(PDO::FETCH_CLASS, $entity);
         } catch (PDOException $exception) {
             return $exception->getMessage();

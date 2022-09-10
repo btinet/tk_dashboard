@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ExamRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
+use ReflectionProperty;
 
 final class Exam
 {
@@ -55,9 +56,9 @@ final class Exam
     }
 
     /**
-     * @return int
+     * @return ?int
      */
-    public function getYear(): int
+    public function getYear(): ?int
     {
         return $this->year;
     }
@@ -105,6 +106,7 @@ final class Exam
      */
     public function getSchoolSubjects()
     {
+
         return $this->repository->joinSchoolSubjects($this->id, SchoolSubject::class);
 
     }
