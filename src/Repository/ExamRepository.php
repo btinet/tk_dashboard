@@ -43,9 +43,13 @@ class ExamRepository extends AbstractRepositoryFactory
             ("
                 SELECT ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId
                 FROM exam ex
-                    INNER JOIN exam_has_school_subject e ON (ex.id = e.exam_id)
-                    INNER JOIN school_subject s ON (e.school_subject_id = s.id)
-                WHERE e.school_subject_id = {$id} AND e.is_main_school_subject = {$isMainSchoolSubject}
+                    INNER JOIN exam_has_school_subject e
+                        ON (ex.id = e.exam_id)
+                    INNER JOIN school_subject s
+                        ON (e.school_subject_id = s.id)
+                WHERE e.school_subject_id = {$id}
+                  AND e.is_main_school_subject = {$isMainSchoolSubject}
+                GROUP BY ex.key_question
                     ");
             return $result->fetchAll(self::FETCH_CLASS, $entity);
         } catch (PDOException $exception) {

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 10. Sep 2022 um 05:58
+-- Erstellungszeit: 10. Sep 2022 um 15:26
 -- Server-Version: 10.4.24-MariaDB
--- PHP-Version: 8.1.6
+-- PHP-Version: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,7 +42,8 @@ CREATE TABLE `exam` (
 
 INSERT INTO `exam` (`id`, `topic_id`, `key_question`, `year`, `created`, `updated`) VALUES
 (1, 4, 'Eine Untersuchung der\r\nneurophysiologischen, psychischen und gesellschaftlichen Auswirkungen des\r\nTHC-Konsums bei Jugendlichen und jungen Erwachsenen', 2021, '2022-09-09 15:20:38', NULL),
-(2, 2, 'Inwieweit können 3D-Drucker die Organspende revolutionieren?', 2019, '2022-09-09 19:58:35', NULL);
+(2, 2, 'Inwieweit können 3D-Drucker die Organspende revolutionieren?', 2019, '2022-09-09 19:58:35', NULL),
+(3, 4, 'Eine Untersuchung der\r\nneurophysiologischen, psychischen und gesellschaftlichen Auswirkungen des\r\nTHC-Konsums bei Jugendlichen und jungen Erwachsenen', 1969, '2022-09-09 15:20:38', '2022-09-10 11:10:40');
 
 -- --------------------------------------------------------
 
@@ -67,7 +68,9 @@ INSERT INTO `exam_has_school_subject` (`id`, `exam_id`, `school_subject_id`, `is
 (1, 1, 1, 1, '2022-09-09 15:36:03', NULL),
 (2, 1, 3, 0, '2022-09-09 15:37:00', NULL),
 (3, 2, 1, 1, '2022-09-09 19:59:22', NULL),
-(4, 2, 4, 0, '2022-09-09 20:00:03', NULL);
+(4, 2, 4, 0, '2022-09-09 20:00:03', NULL),
+(6, 3, 1, 1, '2022-09-10 11:11:47', NULL),
+(7, 3, 3, 0, '2022-09-10 11:11:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -106,7 +109,15 @@ INSERT INTO `school_subject` (`id`, `label`, `abbr`, `school_subject_type_id`, `
 (1, 'Biologie', 'bio', 1, '2022-09-09 15:22:15', '2022-09-09 15:32:42'),
 (2, 'Chemie', 'ch', 1, '2022-09-09 15:22:15', '2022-09-09 15:32:52'),
 (3, 'Psyschologie', 'psy', 9, '2022-09-09 15:36:41', NULL),
-(4, 'Informatik', 'inf', 5, '2022-09-09 19:59:45', NULL);
+(4, 'Informatik', 'inf', 5, '2022-09-09 19:59:45', NULL),
+(5, 'Deutsch', 'de', 2, '2022-09-10 10:45:31', NULL),
+(6, 'Englisch', 'en', 3, '2022-09-10 10:45:31', NULL),
+(7, 'Französisch', 'fr', 3, '2022-09-10 10:45:59', NULL),
+(8, 'Spanisch', 'spa', 3, '2022-09-10 10:45:59', NULL),
+(9, 'Latein', 'lat', 3, '2022-09-10 10:46:27', NULL),
+(10, 'Geographie', 'geo', 7, '2022-09-10 10:46:27', NULL),
+(11, 'Philosophie', 'phi', 10, '2022-09-10 10:47:06', NULL),
+(12, 'Physik', 'ph', 1, '2022-09-10 10:47:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -361,13 +372,13 @@ ALTER TABLE `user_role_has_user`
 -- AUTO_INCREMENT für Tabelle `exam`
 --
 ALTER TABLE `exam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT für Tabelle `exam_has_school_subject`
 --
 ALTER TABLE `exam_has_school_subject`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT für Tabelle `role_permission`
@@ -379,7 +390,7 @@ ALTER TABLE `role_permission`
 -- AUTO_INCREMENT für Tabelle `school_subject`
 --
 ALTER TABLE `school_subject`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT für Tabelle `school_subject_type`
