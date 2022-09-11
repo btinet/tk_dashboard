@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ExamRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
-use ReflectionProperty;
 
 final class Exam
 {

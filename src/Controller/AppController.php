@@ -5,10 +5,19 @@ namespace App\Controller;
 use App\Entity\Exam;
 use App\Entity\SchoolSubject;
 use App\Menu\MenuBuilder;
+use App\Repository\ExamRepository;
 use Core\Controller\AbstractController;
 
 class AppController extends AbstractController
 {
+
+    private ExamRepository $repository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->repository = new ExamRepository();
+    }
 
     /**
      * @return string
@@ -16,7 +25,7 @@ class AppController extends AbstractController
     public function index(): string
     {
         $schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
-        $exams = $this->getRepositoryManager()->findAll(Exam::class,['year' => 'desc']);
+        $exams = $this->repository->findExamsGroupByKeyQuestion( Exam::class, ['year' => 'desc']);
 
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();

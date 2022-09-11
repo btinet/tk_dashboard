@@ -32,16 +32,12 @@ $this->layout('_layout.standard.html',
             <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Fächer</div>
             <div class="list-group list-group-flush rounded-3 border">
                 <?php foreach($schoolSubjects as $subject): ?>
-                    <a href="<?=$response->generateUrlFromRoute('school_subject_show',[$subject->getId()]) ?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
-                        <div class="d-flex flex-column justify-content-between align-items-start">
-                            <strong>
-                                <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$subject->getAbbr() ?></span>
-                                <?=$subject->getLabel() ?>
-                            </strong>
-                            <small class="text-truncate text-wrap"></small>
+                    <a href="<?=$response->generateUrlFromRoute('school_subject_show',[$subject->getId()]) ?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$subject->getAbbr() ?></span>
+                            <strong><?=$subject->getLabel() ?></strong>
                         </div>
-                        <div class="d-flex align-items-end flex-column">
-                        </div>
+                        <span class="badge text-bg-light text-muted"><?=$subject->countExams()?></span>
                     </a>
                 <?php endforeach; ?>
                 <?php if(!$schoolSubjects): ?>
@@ -58,11 +54,16 @@ $this->layout('_layout.standard.html',
                             <strong><?=$exam->getTopic()->getTitle() ?></strong>
                             <small class="text-truncate text-wrap"><?=$exam->getTopic()->getDescription() ?></small>
 
-                            <div class="d-flex mt-2 small fw-light justify-content-start align-items-center">
+                            <div class="d-flex my-2 small fw-light justify-content-start align-items-center">
                                 <?php foreach($exam->getSchoolSubjects() as $subject): ?>
                                     <span class="badge me-1 text-capitalize <?=$subject->isMainSchoolSubject() ? 'bg-primary' :'bg-secondary' ?>"><?=$subject->getAbbr()?></span>
                                 <?php endforeach; ?>
+                                <?php if(date('Y') < ($exam->getYear()+3)):?>
+                                    <i class="bi bi-sign-stop-fill text-danger me-1" style="font-size: 1.2em"></i>
+                                    <span class="badge badge-pill text-bg-danger small">gesperrt</span>
+                                <?php endif; ?>
                             </div>
+                            <p class="card-text small"><?=$exam->getKeyQuestion()?></p>
                         </div>
                         <div class="d-flex align-items-end flex-column">
                             <span class="small text-nowrap">frei ab</span>
