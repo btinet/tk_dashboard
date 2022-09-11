@@ -5,9 +5,26 @@ app_index:
   method: 'index'
   request: 'get'
 
-# Route zum Index der Class "AppController" mit Übergabe einer numerischen Variable
-school_subject_show:
-  expression: '/subject/([0-9]*)/show'
-  controller: 'App\Controller\SchoolSubjectController'
+app_search:
+  expression: '/'
+  controller: 'App\Controller\AppController'
+  method: 'search'
+  request: 'post'
+
+exam_index:
+  expression: '/exams'
+  controller: 'App\Controller\ExamController'
+  method: 'index'
+  request: 'get'
+
+exam_list:
+  expression: '/exams/([0-9]*)/list'
+  controller: 'App\Controller\ExamController'
+  method: 'list'
+  request: 'get'
+
+exam_show:
+  expression: '/exams/show/([0-9]*)'
+  controller: 'App\Controller\ExamController'
   method: 'show'
   request: 'get'

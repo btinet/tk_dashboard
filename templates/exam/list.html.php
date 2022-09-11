@@ -13,7 +13,10 @@
  * @var object $examsByMainSchoolSubject enthält die MySQL-Tabelle "exam"
  * @var object $examsBySecondarySchoolSubject enthält die MySQL-Tabelle "exam"
  * @var object $mainMenu enthält die Hauptnavigation"
+ * @var Session $session Session-Objekt
  */
+
+use Core\Component\SessionComponent\Session;
 
 /**
  * Übergeordnetes Template
@@ -22,7 +25,8 @@ $this->layout('_layout.standard.html',
     [
         'meta'=>$meta,
         'response'=>$response,
-        'mainMenu' => $mainMenu
+        'mainMenu' => $mainMenu,
+        'session' => $session,
     ]
 );
 
@@ -38,12 +42,11 @@ $this->layout('_layout.standard.html',
                 </a>
             </div>
 
-
             <div class="collapse show" id="collapseExample">
                 <div class="list-group list-group-flush rounded-3 border">
                     <?php foreach($schoolSubjects as $subject): ?>
                         <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active' : '';?>
-                        <a href="<?=$response->generateUrlFromRoute('school_subject_show',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
+                        <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
                             <div>
                                 <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$subject->getAbbr() ?></span>
                                 <strong><?=$subject->getLabel() ?></strong>
@@ -64,7 +67,7 @@ $this->layout('_layout.standard.html',
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Referenzfach Prüfungsthemen</div>
                     <div class="list-group list-group-flush rounded-3 border">
                         <?php foreach($examsByMainSchoolSubject as $exam): ?>
-                            <a href="#" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
+                            <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
                                 <div class="d-flex flex-column justify-content-between align-items-start">
                                     <strong><?=$exam->getTopic()->getTitle() ?></strong>
                                     <small class="text-truncate text-wrap"><?=$exam->getTopic()->getDescription() ?></small>
@@ -97,7 +100,7 @@ $this->layout('_layout.standard.html',
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Begleitfach Prüfungsthemen</div>
                     <div class="list-group list-group-flush rounded-3 border">
                         <?php foreach($examsBySecondarySchoolSubject as $exam): ?>
-                            <a href="#" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
+                            <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
                                 <div class="d-flex flex-column justify-content-between align-items-start">
                                     <strong><?=$exam->getTopic()->getTitle() ?></strong>
                                     <small class="text-truncate text-wrap"><?=$exam->getTopic()->getDescription() ?></small>

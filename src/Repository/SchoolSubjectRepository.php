@@ -42,7 +42,9 @@ class SchoolSubjectRepository extends AbstractRepositoryFactory
                 SELECT *
                 FROM school_subject s 
                     INNER JOIN exam_has_school_subject e  ON (e.school_subject_id = s.id)
+                    INNER JOIN exam ex ON (e.exam_id = ex.id)
                 WHERE s.id = {$id}
+                GROUP BY ex.key_question
                     ");
             return count($result->fetchAll(8, $entity));
         } catch (PDOException $exception) {

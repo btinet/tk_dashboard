@@ -7,11 +7,15 @@
  * @var object|null $meta enthält Meta-Daten der Website
  * @var object $response enthält Response-Daten des Controllers
  * @var object $mainMenu Hauptnavigation
+ * @var Session $session Session-Objekt
  */
 
 /**
  * Übergeordnetes Template
  */
+
+use Core\Component\SessionComponent\Session;
+
 $this->layout('base.html',
     [
         'meta'=>$meta,
@@ -49,9 +53,10 @@ $this->layout('base.html',
                     </div>
                     <div class="col-10 col-md-8">
                         <div class="d-flex align-items-center">
-                            <form class="w-100" role="search">
+                            <form class="w-100" role="search" method="post" action="<?=$response->generateUrlFromRoute('app_search')?>">
                                 <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="Stichwort..." aria-label="Suche">
+                                    <input type="search" class="form-control" name="search" placeholder="Stichwort..." aria-label="Suche" required>
+                                    <input type="hidden" class="d-none" name="csrf_token" value="<?=$session->get('csrf_token')?>">
                                     <button class="btn btn-primary" type="submit" role="button" id="button-addon2"><i class="bi bi-search"></i> </button>
                                 </div>
 

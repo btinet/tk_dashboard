@@ -20,9 +20,16 @@ class Response
 
     /**
      * @param $status
-     * @param $url
+     * @param $route
      */
-    public function redirect($status, $url = null)
+    public function redirectToRoute($status, $route = null)
+    {
+        $route = self::generateUrlFromRoute($route);
+        header('Location: ' .$route, true, $status);
+        exit;
+    }
+
+    public function redirectToUrl($status, $url = null)
     {
         header('Location: ' .$this->getProtocol().$_SERVER['HTTP_HOST'].'/'.$url, true, $status);
         exit;

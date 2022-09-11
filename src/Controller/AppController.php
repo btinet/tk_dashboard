@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Exam;
-use App\Entity\SchoolSubject;
 use App\Menu\MenuBuilder;
 use App\Repository\ExamRepository;
 use Core\Controller\AbstractController;
@@ -19,26 +19,33 @@ class AppController extends AbstractController
         $this->repository = new ExamRepository();
     }
 
-    /**
-     * @return string
-     */
-    public function index(): string
+    public function index ()
     {
-        $schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
-        $exams = $this->repository->findExamsGroupByKeyQuestion( Exam::class, ['year' => 'desc']);
+        $this->response->redirectToRoute('302','exam_index');
+    }
 
-        $mainMenu = new MenuBuilder();
-        $mainMenu->createMenu();
+    public function search()
+    {
+        if($this->request->isFormSubmitted() and $this->request->isPostRequest())
+        {
+            $queryString = $this->request->getFieldAsString('search');
+            $result = [];
+            if(!empty($queryString))
+            {
+                $result = $this->repository->search($queryString,Exam::class,['year' => 'desc']);
+            }
 
-        /**
-         * Meta-Daten müssen nicht manuell der render-Methode übergeben werden.
-         * Diese werden automatisch mit der abstrakten Controller-Klasse übergeben.
-         */
-        return $this->render('app/index.html', [
-            'schoolSubjects' => $schoolSubjects,
-            'exams' => $exams,
-            'mainMenu' => $mainMenu->render(),
-        ]);
+            $mainMenu = new MenuBuilder();
+            $mainMenu->createMenu();
+
+
+            return $this->render('app/search_result.html',[
+                'results' => $result,
+                'queryString' => $queryString,
+                'mainMenu' => $mainMenu->render(),
+            ]);
+        }
+        $this->response->redirectToRoute('302','exam_index');
     }
 
 }
