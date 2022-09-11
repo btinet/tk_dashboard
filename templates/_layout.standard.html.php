@@ -81,7 +81,8 @@ $this->layout('base.html',
             <?=$this->section('footer')?>
         <?php else: ?>
             <div class="container">
-                <div class="py-3">
+                <div class="py-3 d-flex justify-content-start align-items-center">
+                    <img class="" src="<?=$response->generateUrlFromString('/assets/images/tk_logo_24px.png')?>" height="24" width="96" alt="Treptow Kolleg Baum Logo">
                     <span class="small"><?=$meta->get('footer_text')?></span>
                 </div>
             </div>
