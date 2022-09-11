@@ -76,13 +76,13 @@ $this->layout('base.html',
         <?php endif ?>
     </main>
 
-    <footer id="footer" class="mt-auto bg-light">
+    <footer id="footer" class="mt-auto text-bg-primary">
         <?php if ($this->section('footer')): ?>
             <?=$this->section('footer')?>
         <?php else: ?>
             <div class="container">
                 <div class="py-3">
-                    <span class="small text-muted"><?=$meta->get('footer_text')?></span>
+                    <span class="small"><?=$meta->get('footer_text')?></span>
                 </div>
             </div>
         <?php endif ?>
