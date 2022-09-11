@@ -36,7 +36,7 @@ $this->layout('base.html',
                     <div class="col-2 col-md-4">
                         <div class="dropdown">
                             <a href="#" class="d-flex text-primary align-items-center justify-content-md-start justify-content-center mb-0 link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-microsoft me-md-2" style="font-size: 1.5em"></i><small class="small text-uppercase text-muted d-none d-md-inline-block">EASE</small>
+                                <i class="fa fa-bars me-md-2" style="font-size: 1.5em"></i><small class="small text-uppercase text-muted d-none d-md-inline-block">EASE</small>
                             </a>
                             <ul class="dropdown-menu text-small shadow" style="">
                                 <?php foreach ($mainMenu as $item): ?>

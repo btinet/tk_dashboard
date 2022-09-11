@@ -64,6 +64,10 @@ class ExamController extends AbstractController
         ]);
     }
 
+    /**
+     * @param int $examId
+     * @return string
+     */
     public function show(int $examId): string
     {
         $exam = $this->repository->find(Exam::class,$examId);
