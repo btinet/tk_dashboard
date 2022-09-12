@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ExamRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
+use App\Entity\User;
 
 final class Exam
 {
@@ -25,6 +26,7 @@ final class Exam
     protected string $keyQuestion;
     protected int $year;
     protected int $topicId;
+    protected ?int $userId = null;
 
     public function __construct()
     {
@@ -96,8 +98,27 @@ final class Exam
     public function getTopic(): ?Topic
     {
         return $this->repository->findOneBy(Topic::class, [
-            'id' => $this->topicId
+            'id' => $this->getTopicId()
         ]);
+    }
+
+
+    /**
+     * @return null|int
+     */
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int $userid
+     * @return Exam
+     */
+    public function setUserId(int $userid): Exam
+    {
+        $this->userId = $userid;
+        return $this;
     }
 
     /**

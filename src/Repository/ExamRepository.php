@@ -70,7 +70,7 @@ class ExamRepository extends AbstractRepositoryFactory
             $orderData = self::createOrderData($sortBy);
             $result = self::select
             ("
-                SELECT ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId
+                SELECT ex.id AS id, ex.year AS year, ex.key_question AS keyQuestion, ex.topic_id AS topicId
                 FROM exam ex
                     INNER JOIN exam_has_school_subject e
                         ON (ex.id = e.exam_id)
