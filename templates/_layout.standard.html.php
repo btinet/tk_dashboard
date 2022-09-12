@@ -33,11 +33,18 @@ $this->layout('base.html',
         <?php else: ?>
             <div class="container-fluid">
                 <div class="row g-3">
-                    <div class="col-2 col-md-4">
+                    <div class="col-5 col-md-4">
+                        <div class="d-flex justify-content-start align-items-center h-100">
+                            <a class="btn btn-light link-primary me-1" href="<?=$response->generateUrlFromRoute('app_index')?>"><i class="fa fa-fw fa-list" style="font-size: 1.2em"></i></a>
+                            <a class="btn btn-light link-primary ms-auto" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
+                        </div>
+
+                        <!--
                         <div class="dropdown">
                             <a href="#" class="d-flex text-primary align-items-center justify-content-md-start justify-content-center mb-0 link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-bars me-md-2" style="font-size: 1.5em"></i><small class="small text-uppercase text-muted d-none d-md-inline-block">EASE</small>
                             </a>
+
                             <ul class="dropdown-menu text-small shadow" style="">
                                 <?php foreach ($mainMenu as $item): ?>
                                     <li class="">
@@ -49,9 +56,11 @@ $this->layout('base.html',
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
+
                         </div>
+                        </-->
                     </div>
-                    <div class="col-10 col-md-8">
+                    <div class="col-7 col-md-8">
                         <div class="d-flex align-items-center">
                             <form class="w-100" role="search" method="post" action="<?=$response->generateUrlFromRoute('app_search')?>">
                                 <div class="input-group">

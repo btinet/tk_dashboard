@@ -39,22 +39,30 @@ $this->layout('_layout.standard.html',
         <form class="row g-3 mb-4">
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Email address</label>
+                    <input type="text" class="form-control" id="username" placeholder="Benutzername">
+                    <label for="username">E-Mail-Adresse</label>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Passwort">
+                    <label for="password">Passwort</label>
                 </div>
+            </div>
+            <div class="col-12">
+                <a href="#" class="small">Passwort vergessen?</a>
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Anmelden</button>
                 <button type="reset" class="btn btn-light border">Zurücksetzen</button>
             </div>
         </form>
-        <a href="#">Stattdessen registrieren?</a>
+        <div class="row g-3">
+            <div class="col-12">
+                <a href="#">Stattdessen registrieren?</a>
+            </div>
+        </div>
+
     </div>
 </div>
 <?php $this->stop() ?>
