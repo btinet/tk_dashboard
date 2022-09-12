@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Menu\MenuBuilder;
 use Core\Component\UserComponent\UserService;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -18,8 +19,12 @@ class AuthenticationController extends AbstractController
         $this->repository = new AbstractRepositoryFactory();
     }
 
-    public function login()
+    public function login(): string
     {
+
+        $mainMenu = new MenuBuilder();
+        $mainMenu->createMenu();
+
         /*
          * Formular-Array für den Login:
          */
@@ -28,8 +33,15 @@ class AuthenticationController extends AbstractController
             'password' => 'Passwort'
         ];
 
-        // TODO: Login-Formular erstellen und verarbeiten
-        UserService::tryLogin($this->repository,User::class,[]);
+        if($this->request->isFormSubmitted() and $this->request->isPostRequest())
+        {
+            // TODO: Login-Formular erstellen und verarbeiten
+            UserService::tryLogin($this->repository,User::class,[]);
+        }
+
+        return $this->render('authentication/login.html',[
+            'mainMenu' => $mainMenu->render(),
+        ]);
 
     }
 

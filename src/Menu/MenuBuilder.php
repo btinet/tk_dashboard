@@ -26,8 +26,8 @@ class MenuBuilder extends AbstractMenu
                 '1999'
             ])
             ->add('lucky',NavigationType::class,[
-                'label' => 'Administration',
-                'route' => 'app_index',
+                'label' => 'Anmelden',
+                'route' => 'authentication_login',
                 'attrib' => [
                     'class' => ['nav-link'],
                 ],

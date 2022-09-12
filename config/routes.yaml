@@ -28,3 +28,9 @@ exam_show:
   controller: 'App\Controller\ExamController'
   method: 'show'
   request: 'get'
+
+authentication_login:
+  expression: '/login'
+  controller: 'App\Controller\AuthenticationController'
+  method: 'login'
+  request: ['get','post']
