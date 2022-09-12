@@ -72,8 +72,6 @@ class ExamController extends AbstractController
     {
         $exam = $this->repository->find(Exam::class,$examId);
 
-
-
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
 

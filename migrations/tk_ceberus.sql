@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Erstellungszeit: 11. Sep 2022 um 05:25
+-- Host: 127.0.0.1
+-- Erstellungszeit: 12. Sep 2022 um 15:06
 -- Server-Version: 10.4.24-MariaDB
--- PHP-Version: 8.1.6
+-- PHP-Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,6 +55,7 @@ CREATE TABLE `exam_has_school_subject` (
   `id` int(11) NOT NULL,
   `exam_id` int(11) DEFAULT NULL,
   `school_subject_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `is_main_school_subject` tinyint(1) NOT NULL DEFAULT 0,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
@@ -64,13 +65,13 @@ CREATE TABLE `exam_has_school_subject` (
 -- Daten für Tabelle `exam_has_school_subject`
 --
 
-INSERT INTO `exam_has_school_subject` (`id`, `exam_id`, `school_subject_id`, `is_main_school_subject`, `created`, `updated`) VALUES
-(1, 1, 1, 1, '2022-09-09 15:36:03', NULL),
-(2, 1, 3, 0, '2022-09-09 15:37:00', NULL),
-(3, 2, 1, 1, '2022-09-09 19:59:22', NULL),
-(4, 2, 4, 0, '2022-09-09 20:00:03', NULL),
-(6, 3, 1, 1, '2022-09-10 11:11:47', NULL),
-(7, 3, 3, 0, '2022-09-10 11:11:47', NULL);
+INSERT INTO `exam_has_school_subject` (`id`, `exam_id`, `school_subject_id`, `user_id`, `is_main_school_subject`, `created`, `updated`) VALUES
+(1, 1, 1, 1, 1, '2022-09-09 15:36:03', '2022-09-12 14:43:07'),
+(2, 1, 3, NULL, 0, '2022-09-09 15:37:00', '2022-09-12 14:51:37'),
+(3, 2, 1, NULL, 1, '2022-09-09 19:59:22', '2022-09-12 15:03:20'),
+(4, 2, 4, NULL, 0, '2022-09-09 20:00:03', '2022-09-12 15:03:11'),
+(6, 3, 1, NULL, 1, '2022-09-10 11:11:47', NULL),
+(7, 3, 3, NULL, 0, '2022-09-10 11:11:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -290,7 +291,8 @@ ALTER TABLE `exam`
 ALTER TABLE `exam_has_school_subject`
   ADD PRIMARY KEY (`id`),
   ADD KEY `school_subject_id` (`school_subject_id`),
-  ADD KEY `exam_id` (`exam_id`);
+  ADD KEY `exam_id` (`exam_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indizes für die Tabelle `role_permission`
@@ -457,7 +459,8 @@ ALTER TABLE `exam`
 --
 ALTER TABLE `exam_has_school_subject`
   ADD CONSTRAINT `exam_has_school_subject_ibfk_1` FOREIGN KEY (`school_subject_id`) REFERENCES `school_subject` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `exam_has_school_subject_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `exam_has_school_subject_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `exam_has_school_subject_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `school_subject`

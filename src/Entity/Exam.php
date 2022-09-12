@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use App\Repository\ExamRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
-use App\Entity\User;
 
 final class Exam
 {
@@ -26,7 +26,6 @@ final class Exam
     protected string $keyQuestion;
     protected int $year;
     protected int $topicId;
-    protected ?int $userId = null;
 
     public function __construct()
     {
@@ -104,21 +103,11 @@ final class Exam
 
 
     /**
-     * @return null|int
+     * @return array|false|string
      */
-    public function getUserId(): ?int
+    public function getUser()
     {
-        return $this->userId;
-    }
-
-    /**
-     * @param int $userid
-     * @return Exam
-     */
-    public function setUserId(int $userid): Exam
-    {
-        $this->userId = $userid;
-        return $this;
+        return $this->repository->findUserByExamId($this->id, User::class,);
     }
 
     /**

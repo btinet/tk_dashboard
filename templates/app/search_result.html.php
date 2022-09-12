@@ -54,8 +54,10 @@ $this->layout('_layout.standard.html',
                                     <span class="badge me-1 text-capitalize <?=$subject->isMainSchoolSubject() ? 'bg-primary' :'bg-secondary' ?>"><?=$subject->getAbbr()?></span>
                                 <?php endforeach; ?>
                                 <?php if(date('Y') < ($exam->getYear()+3)):?>
-                                    <i class="bi bi-sign-stop-fill text-danger me-1" style="font-size: 1.2em"></i>
-                                    <span class="badge badge-pill text-bg-danger small">gesperrt</span>
+                                    <span class="me-1 badge badge-pill text-bg-danger small">gesperrt</span>
+                                <?php endif; ?>
+                                <?php if($exam->getUser()):?>
+                                    <span class="badge badge-pill text-bg-info small">belegt</span>
                                 <?php endif; ?>
                             </div>
                             <p class="card-text small"><?=$exam->getKeyQuestion()?></p>

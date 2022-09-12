@@ -100,7 +100,7 @@ class ExamRepository extends AbstractRepositoryFactory
                         ON (e.school_subject_id = s.id)
                 WHERE e.exam_id = {$id}
                     ");
-            return $result->fetchObject(self::FETCH_CLASS, $entity);
+            return $result->fetchObject($entity);
         } catch (PDOException $exception) {
             return $exception->getMessage();
         }
@@ -128,5 +128,24 @@ class ExamRepository extends AbstractRepositoryFactory
             return $exception->getMessage();
         }
     }
+
+    public function findUserByExamId(int $examId, string $entity, array $sortBy = [])
+    {
+        try {
+            $orderData = self::createOrderData($sortBy);
+            $result = self::select
+            ("
+                SELECT u.id as UserId
+                FROM user u
+                    INNER JOIN exam_has_school_subject e
+                        ON (u.id = e.user_id)
+                WHERE e.exam_id = {$examId}
+                    ");
+            return $result->fetchObject($entity);
+        } catch (PDOException $exception) {
+            return $exception->getMessage();
+        }
+    }
+
 
 }
