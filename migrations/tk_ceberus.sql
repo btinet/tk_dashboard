@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 10. Sep 2022 um 15:26
+-- Erstellungszeit: 12. Sep 2022 um 06:43
 -- Server-Version: 10.4.24-MariaDB
 -- PHP-Version: 7.4.28
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `exam` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `topic_id` int(11) DEFAULT NULL,
   `key_question` text NOT NULL,
   `year` year(4) NOT NULL,
@@ -40,10 +41,10 @@ CREATE TABLE `exam` (
 -- Daten für Tabelle `exam`
 --
 
-INSERT INTO `exam` (`id`, `topic_id`, `key_question`, `year`, `created`, `updated`) VALUES
-(1, 4, 'Eine Untersuchung der\r\nneurophysiologischen, psychischen und gesellschaftlichen Auswirkungen des\r\nTHC-Konsums bei Jugendlichen und jungen Erwachsenen', 2021, '2022-09-09 15:20:38', NULL),
-(2, 2, 'Inwieweit können 3D-Drucker die Organspende revolutionieren?', 2019, '2022-09-09 19:58:35', NULL),
-(3, 4, 'Eine Untersuchung der\r\nneurophysiologischen, psychischen und gesellschaftlichen Auswirkungen des\r\nTHC-Konsums bei Jugendlichen und jungen Erwachsenen', 1969, '2022-09-09 15:20:38', '2022-09-10 11:10:40');
+INSERT INTO `exam` (`id`, `user_id`, `topic_id`, `key_question`, `year`, `created`, `updated`) VALUES
+(1, NULL, 4, 'Eine Untersuchung der\r\nneurophysiologischen, psychischen und gesellschaftlichen Auswirkungen des\r\nTHC-Konsums bei Jugendlichen und jungen Erwachsenen', 2021, '2022-09-09 15:20:38', NULL),
+(2, NULL, 2, 'Inwieweit können 3D-Drucker die Organspende revolutionieren?', 2019, '2022-09-09 19:58:35', NULL),
+(3, NULL, 4, 'Eine Untersuchung der\r\nneurophysiologischen, psychischen und gesellschaftlichen Auswirkungen des\r\nTHC-Konsums bei Jugendlichen und jungen Erwachsenen', 1969, '2022-09-09 15:20:38', '2022-09-10 11:10:40');
 
 -- --------------------------------------------------------
 
@@ -117,7 +118,10 @@ INSERT INTO `school_subject` (`id`, `label`, `abbr`, `school_subject_type_id`, `
 (9, 'Latein', 'lat', 3, '2022-09-10 10:46:27', NULL),
 (10, 'Geographie', 'geo', 7, '2022-09-10 10:46:27', NULL),
 (11, 'Philosophie', 'phi', 10, '2022-09-10 10:47:06', NULL),
-(12, 'Physik', 'ph', 1, '2022-09-10 10:47:06', NULL);
+(12, 'Physik', 'ph', 1, '2022-09-10 10:47:06', NULL),
+(13, 'Sport', 'sp', 12, '2022-09-11 05:42:38', NULL),
+(14, 'Geschichte', 'ge', 7, '2022-09-11 05:42:38', NULL),
+(15, 'Politikwissenschaft', 'pw', 7, '2022-09-11 05:42:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -280,7 +284,8 @@ CREATE TABLE `user_role_has_user` (
 --
 ALTER TABLE `exam`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `exam_ibfk_1` (`topic_id`);
+  ADD KEY `exam_ibfk_1` (`topic_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indizes für die Tabelle `exam_has_school_subject`
@@ -390,7 +395,7 @@ ALTER TABLE `role_permission`
 -- AUTO_INCREMENT für Tabelle `school_subject`
 --
 ALTER TABLE `school_subject`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT für Tabelle `school_subject_type`
@@ -448,7 +453,8 @@ ALTER TABLE `user_role_has_user`
 -- Constraints der Tabelle `exam`
 --
 ALTER TABLE `exam`
-  ADD CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `exam_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `exam_has_school_subject`
