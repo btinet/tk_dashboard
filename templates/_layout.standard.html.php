@@ -8,6 +8,8 @@
  * @var object $response enthält Response-Daten des Controllers
  * @var object $mainMenu Hauptnavigation
  * @var Session $session Session-Objekt
+ * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
+ * @var null|int $current_school_subject_id Id des aktuellen Schulfachs
  */
 
 /**
@@ -19,14 +21,20 @@ use Core\Component\SessionComponent\Session;
 $this->layout('base.html',
     [
         'meta'=>$meta,
-        'response'=>$response
+        'response'=>$response,
     ]
 );
 
 ?>
 
 <?php $this->start('body') ?>
-
+<?php $this->insert('app/_offcanvas.html',[
+        'mainMenu'=>$mainMenu,
+        'response'=>$response,
+        'schoolSubjects' => $schoolSubjects,
+        'current_school_subject_id' => $current_school_subject_id
+    ]);
+?>
     <header id="header" class="py-3 mb-3 border-bottom">
         <?php if ($this->section('header')): ?>
             <?=$this->section('header')?>
@@ -35,30 +43,13 @@ $this->layout('base.html',
                 <div class="row g-3">
                     <div class="col-5 col-md-4">
                         <div class="d-flex justify-content-start align-items-center h-100">
-                            <a class="btn btn-light link-primary me-1" href="<?=$response->generateUrlFromRoute('app_index')?>"><i class="fa fa-fw fa-list" style="font-size: 1.2em"></i></a>
-                            <a class="btn btn-light link-primary ms-auto" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
-                        </div>
-
-                        <!--
-                        <div class="dropdown">
-                            <a href="#" class="d-flex text-primary align-items-center justify-content-md-start justify-content-center mb-0 link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-bars me-md-2" style="font-size: 1.5em"></i><small class="small text-uppercase text-muted d-none d-md-inline-block">EASE</small>
+                            <a class="btn btn-light link-primary me-1 d-block d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                <i class="fa fa-fw fa-list" style="font-size: 1.2em"></i>
                             </a>
 
-                            <ul class="dropdown-menu text-small shadow" style="">
-                                <?php foreach ($mainMenu as $item): ?>
-                                    <li class="">
-                                        <a href="<?= $item->getRoute()?>" class="dropdown-item"
-                                        <?php foreach($item->getAttrib() as $attrib => $value): ?><?=$attrib?>="<?=implode(' ',$value)?>"<?php endforeach; ?>
-                                        >
-                                        <?= $item->getLabel() ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-
+                            <a class="btn btn-light link-primary me-1 d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>"><i class="fa fa-fw fa-list" style="font-size: 1.2em"></i></a>
+                            <a class="btn btn-light link-primary ms-auto" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
                         </div>
-                        </-->
                     </div>
                     <div class="col-7 col-md-8">
                         <div class="d-flex align-items-center">

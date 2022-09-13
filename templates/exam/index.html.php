@@ -25,6 +25,8 @@ $this->layout('_layout.standard.html',
         'response'=>$response,
         'mainMenu' => $mainMenu,
         'session' => $session,
+        'schoolSubjects' => $schoolSubjects,
+        'current_school_subject_id' => 0
     ]
 );
 
