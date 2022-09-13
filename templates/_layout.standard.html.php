@@ -59,7 +59,6 @@ $this->layout('base.html',
                                     <input type="hidden" class="d-none" name="csrf_token" value="<?=$session->get('csrf_token')?>">
                                     <button class="btn btn-primary" type="submit" role="button" id="button-addon2"><i class="bi bi-search"></i> </button>
                                 </div>
-
                             </form>
                         </div>
                     </div>
