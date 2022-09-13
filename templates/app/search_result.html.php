@@ -12,6 +12,8 @@
  * @var object $mainMenu enthält die Hauptnavigation"
  * @var Session $session Session-Objekt
  * @var string $queryString Suche
+ * @var object $schoolSubjects Schulfächer
+ * @var int $current_school_subject_id Id des aktuellen Schulfachs
  */
 
 use Core\Component\SessionComponent\Session;
@@ -25,6 +27,9 @@ $this->layout('_layout.standard.html',
         'response'=>$response,
         'mainMenu' => $mainMenu,
         'session' => $session,
+        'schoolSubjects' => false,
+        'current_school_subject_id' => 0
+
     ]
 );
 

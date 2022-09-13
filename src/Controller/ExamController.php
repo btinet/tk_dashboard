@@ -60,7 +60,8 @@ class ExamController extends AbstractController
             'examsByMainSchoolSubject' => $examsByMainSchoolSubject,
             'examsBySecondarySchoolSubject' => $examsBySecondarySchoolSubject,
             'mainMenu' => $mainMenu->render(),
-            'current_school_subject_id' => $id
+            'current_school_subject_id' => $id,
+            'currentSchoolSubject' => $this->repository->find(SchoolSubject::class,$id)
         ]);
     }
 

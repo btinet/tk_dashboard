@@ -35,7 +35,7 @@ $this->layout('base.html',
         'current_school_subject_id' => $current_school_subject_id
     ]);
 ?>
-    <header id="header" class="py-3 mb-3 border-bottom">
+    <header id="header" class="py-2 mb-3 border-bottom sticky-top">
         <?php if ($this->section('header')): ?>
             <?=$this->section('header')?>
         <?php else: ?>

@@ -12,6 +12,7 @@
  * @var int $current_school_subject_id Id des aktuellen Schulfachs
  * @var object $examsByMainSchoolSubject enthält die MySQL-Tabelle "exam"
  * @var object $examsBySecondarySchoolSubject enthält die MySQL-Tabelle "exam"
+ * @var object $currentSchoolSubject enthält aktuelles Schulfach
  * @var object $mainMenu enthält die Hauptnavigation"
  * @var Session $session Session-Objekt
  */
@@ -36,6 +37,19 @@ $this->layout('_layout.standard.html',
 
 <?php $this->start('main') ?>
     <div class="row g-3 mb-3">
+
+        <div class="col-12">
+            <div class="d-block d-md-none">
+                <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Aktuelles Fach</div>
+                <div class="border rounded-3 bg-white lh-sm p-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$currentSchoolSubject->getAbbr() ?></span>
+                        <strong><?=$currentSchoolSubject->getLabel();?></strong>
+                    </div>
+                    <span class="badge text-bg-light text-muted"><?=$currentSchoolSubject->countExams()?></span>
+                </div>
+            </div>
+        </div>
 
         <div class="col-12 col-md-4">
             <div class="d-none d-md-block">

@@ -24,8 +24,9 @@ class AbstractRepositoryFactory extends EntityManagerComponent
         $preparedStatement = " id = :id ";
         try {
             $entityClass = self::setEntityClass($entity);
+            $tableName = self::generateSnakeTailString($entityClass->getShortName());
             $columns = self::setColumns($entityClass);
-            $result = self::select("SELECT {$columns} FROM {$entityClass->getShortName()} WHERE {$preparedStatement}", ['id' => $id]);
+            $result = self::select("SELECT {$columns} FROM {$tableName} WHERE {$preparedStatement}", ['id' => $id]);
             return $result->fetchObject($entity);
         } catch (PDOException $exception) {
             return $exception->getMessage();
@@ -68,11 +69,12 @@ class AbstractRepositoryFactory extends EntityManagerComponent
     {
         try {
             $entityClass = self::setEntityClass($entity);
+            $tableName = self::generateSnakeTailString($entityClass->getShortName());
             $columns = self::setColumns($entityClass);
             $orderData = self::createOrderData($sortBy);
             $preparedStatement = self::setPreparedStatement($data);
             $data = self::setBindValues($data);
-            $result = self::select("SELECT {$columns} FROM {$entityClass->getShortName()} WHERE ($preparedStatement) $orderData", $data);
+            $result = self::select("SELECT {$columns} FROM {$tableName} WHERE ($preparedStatement) $orderData", $data);
             return $result->fetchAll(PDO::FETCH_CLASS, $entity);
         } catch (PDOException $exception) {
             return $exception->getMessage();
@@ -90,10 +92,11 @@ class AbstractRepositoryFactory extends EntityManagerComponent
     {
         try {
             $entityClass = self::setEntityClass($entity);
+            $tableName = self::generateSnakeTailString($entityClass->getShortName());
             $columns = self::setColumns($entityClass);
             $preparedStatement = self::setPreparedStatement($data);
             $data = self::setBindValues($data);
-            $result = self::select("SELECT {$columns} FROM {$entityClass->getShortName()} WHERE ({$preparedStatement}) LIMIT 0,1", $data);
+            $result = self::select("SELECT {$columns} FROM {$tableName} WHERE ({$preparedStatement}) LIMIT 0,1", $data);
             if (false === $object = $result->fetchObject($entity)) return new stdClass();
             return $object;
         } catch (PDOException $exception) {
