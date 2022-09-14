@@ -79,6 +79,7 @@ class ExamRepository extends AbstractRepositoryFactory
                 WHERE e.school_subject_id = {$id}
                   AND e.is_main_school_subject = {$isMainSchoolSubject}
                 GROUP BY ex.key_question
+                {$orderData}
                     ");
             return $result->fetchAll(self::FETCH_CLASS, $entity);
         } catch (PDOException $exception) {
