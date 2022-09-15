@@ -86,7 +86,7 @@ class AbstractRepositoryFactory extends EntityManagerComponent
     /**
      * @param string $entity
      * @param array $data
-     * @return false|mixed|object|stdClass|string
+     * @return false|object|stdClass|string|array
      */
     public function findOneBy(string $entity, array $data)
     {
