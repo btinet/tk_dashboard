@@ -54,8 +54,8 @@ $this->layout('_layout.standard.html',
         <form class="row g-3 mb-4" method="post">
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Benutzername" required>
-                    <label for="username">Benutzername</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="<?=$trans->getConfig('username')?>" required>
+                    <label for="username"><?=$trans->getConfig('username')?></label>
                 </div>
             </div>
             <div class="col-12">
