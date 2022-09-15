@@ -34,6 +34,7 @@ class ExamRepository extends AbstractRepositoryFactory
                     OR t.title LIKE '%{$queryString}%'
                     OR t.description LIKE '%{$queryString}%'
                 GROUP BY ex.key_question
+                {$orderData}
                     ");
             return $result->fetchAll(self::FETCH_CLASS, $entity);
         } catch (PDOException $exception) {
@@ -54,6 +55,7 @@ class ExamRepository extends AbstractRepositoryFactory
                 FROM school_subject s 
                     INNER JOIN exam_has_school_subject e ON (e.school_subject_id = s.id)
                 WHERE e.exam_id = {$id}
+                {$orderData}
                     ");
             return $result->fetchAll(self::FETCH_CLASS, $entity);
         } catch (PDOException $exception) {
@@ -123,6 +125,7 @@ class ExamRepository extends AbstractRepositoryFactory
                     INNER JOIN school_subject s
                         ON (e.school_subject_id = s.id)
                 GROUP BY ex.key_question
+                {$orderData}
                     ");
             return $result->fetchAll(self::FETCH_CLASS, $entity);
         } catch (PDOException $exception) {
