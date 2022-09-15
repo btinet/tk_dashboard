@@ -17,8 +17,14 @@ class ExamController extends AbstractController
     public function __construct()
     {
         parent::__construct();
+        $mainMenu = new MenuBuilder();
+        $mainMenu->createMenu();
         $this->repository = new ExamRepository();
         $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->getView()->addData([
+            'schoolSubjects' => $this->schoolSubjects,
+            'mainMenu' => $mainMenu->render(),
+            ]);
     }
 
     /**
@@ -26,20 +32,15 @@ class ExamController extends AbstractController
      */
     public function index(): string
     {
-        $schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $schoolSubjects = $this->schoolSubjects;
         $exams = $this->repository->findExamsGroupByKeyQuestion( Exam::class, ['year' => 'desc']);
-
-        $mainMenu = new MenuBuilder();
-        $mainMenu->createMenu();
 
         /**
          * Meta-Daten müssen nicht manuell der render-Methode übergeben werden.
          * Diese werden automatisch mit der abstrakten Controller-Klasse übergeben.
          */
         return $this->render('exam/index.html', [
-            'schoolSubjects' => $schoolSubjects,
             'exams' => $exams,
-            'mainMenu' => $mainMenu->render(),
         ]);
     }
 
@@ -52,14 +53,9 @@ class ExamController extends AbstractController
         $examsByMainSchoolSubject = $this->repository->findBySubject($id,1, Exam::class, ['year' => 'desc']);
         $examsBySecondarySchoolSubject = $this->repository->findBySubject($id,0, Exam::class, ['year' => 'desc']);
 
-        $mainMenu = new MenuBuilder();
-        $mainMenu->createMenu();
-
         return $this->render('exam/list.html', [
-            'schoolSubjects' => $this->schoolSubjects,
             'examsByMainSchoolSubject' => $examsByMainSchoolSubject,
             'examsBySecondarySchoolSubject' => $examsBySecondarySchoolSubject,
-            'mainMenu' => $mainMenu->render(),
             'current_school_subject_id' => $id,
             'currentSchoolSubject' => $this->repository->find(SchoolSubject::class,$id)
         ]);
@@ -77,9 +73,7 @@ class ExamController extends AbstractController
         $mainMenu->createMenu();
 
         return $this->render('exam/show.html', [
-            'schoolSubjects' => $this->schoolSubjects,
             'exam' => $exam,
-            'mainMenu' => $mainMenu->render(),
         ]);
     }
 

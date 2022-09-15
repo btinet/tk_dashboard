@@ -23,13 +23,7 @@ use Core\Component\SessionComponent\Session;
  */
 $this->layout('_layout.standard.html',
     [
-        'meta'=>$meta,
-        'response'=>$response,
-        'mainMenu' => $mainMenu,
-        'session' => $session,
-        'schoolSubjects' => false,
         'current_school_subject_id' => 0
-
     ]
 );
 

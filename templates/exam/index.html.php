@@ -4,14 +4,9 @@
  */
 
 /**
- * @var int|null $number Glücksnummer
- * @var string $btn href-link
- * @var object|null $meta enthält Meta-Daten der Website
  * @var object $response enthält Response-Daten des Controllers
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var object $exams enthält die MySQL-Tabelle "exam"
- * @var object $mainMenu enthält die Hauptnavigation"
- * @var Session $session Session-Objekt
  */
 
 use Core\Component\SessionComponent\Session;
@@ -21,11 +16,6 @@ use Core\Component\SessionComponent\Session;
  */
 $this->layout('_layout.standard.html',
     [
-        'meta'=>$meta,
-        'response'=>$response,
-        'mainMenu' => $mainMenu,
-        'session' => $session,
-        'schoolSubjects' => $schoolSubjects,
         'current_school_subject_id' => 0
     ]
 );

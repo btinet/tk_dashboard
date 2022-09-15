@@ -8,6 +8,7 @@ use Core\Component\HttpComponent\Request;
 use Core\Component\HttpComponent\Response;
 use Core\Component\SeoComponent\Meta;
 use Core\Component\SessionComponent\Session;
+use Core\Component\SessionComponent\Translation;
 use Core\ErrorHandler\Exception\ResponseException;
 use Core\ErrorHandler\ExceptionHandler;
 use Core\Model\AbstractModel;
@@ -44,6 +45,8 @@ abstract class AbstractController implements ControllerInterface
      */
     private RouteConfig $routes;
 
+    protected Config $trans;
+
     /**
      * @var array
      */
@@ -64,12 +67,25 @@ abstract class AbstractController implements ControllerInterface
         $this->request = new Request($this->session->get('csrf_token'));
         $this->generateToken();
 
-        $this->meta = new Meta($config->getConfig('meta'));
-        $this->addTemplateData('response', $this->response);
-        $this->addTemplateData('meta', $this->meta);
-        $this->addTemplateData('session', $this->session);
-        $this->view = new View(project_root . $config->getConfig('template_base_path'));
+        $trans = new Translation($config, $this->session);
+        $this->trans = $trans->parse();
 
+        $this->meta = new Meta($config->getConfig('meta'));
+        $this->view = new View(project_root . $config->getConfig('template_base_path'));
+        $this->view->addData([
+            'response' => $this->response,
+            'meta'=> $this->meta,
+            'session'=> $this->session,
+            'trans' => $this->trans,
+            'locale'=> $trans->locale,
+            'locales'=> $trans->availableLanguages,
+        ]);
+
+    }
+
+    public function getView(): View
+    {
+        return $this->view;
     }
 
     /**

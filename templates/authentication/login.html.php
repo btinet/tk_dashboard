@@ -8,9 +8,11 @@
  * @var object $response enthält Response-Daten des Controllers
  * @var object $mainMenu enthält die Hauptnavigation"
  * @var Session $session Session-Objekt
+ * @var Config $trans TranslationConfig-Objekt
  * @var int $lastError Fehlernummer
  */
 
+use Core\Component\ConfigComponent\Config;
 use Core\Component\SessionComponent\Session;
 
 /**
@@ -18,11 +20,6 @@ use Core\Component\SessionComponent\Session;
  */
 $this->layout('_layout.standard.html',
     [
-        'meta'=>$meta,
-        'response'=>$response,
-        'mainMenu' => $mainMenu,
-        'session' => $session,
-        'schoolSubjects' => false,
         'current_school_subject_id' => 0
     ]
 );
@@ -46,7 +43,7 @@ $this->layout('_layout.standard.html',
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                     <div class="toast-body">
-                        <span>Fehlercode: <?=$lastError?></span>
+                        <span><?=$trans->getConfig($lastError)?></span>
                     </div>
                 </div>
             </div>
@@ -58,7 +55,7 @@ $this->layout('_layout.standard.html',
             <div class="col-12">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="username" name="username" placeholder="Benutzername" required>
-                    <label for="username">E-Mail-Adresse</label>
+                    <label for="username">Benutzername</label>
                 </div>
             </div>
             <div class="col-12">

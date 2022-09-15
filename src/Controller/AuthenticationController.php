@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\SchoolSubject;
 use App\Entity\User;
 use App\Menu\MenuBuilder;
 use Core\Component\UserComponent\UserService;
@@ -12,12 +13,22 @@ class AuthenticationController extends AbstractController
 {
 
     protected AbstractRepositoryFactory $repository;
+    /**
+     * @var array|false|string
+     */
+    private $schoolSubjects;
 
     public function __construct()
     {
         parent::__construct();
-
         $this->repository = new AbstractRepositoryFactory();
+        $mainMenu = new MenuBuilder();
+        $mainMenu->createMenu();
+        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->getView()->addData([
+            'schoolSubjects' => $this->schoolSubjects,
+            'mainMenu' => $mainMenu->render(),
+        ]);
     }
 
     public function login(): string

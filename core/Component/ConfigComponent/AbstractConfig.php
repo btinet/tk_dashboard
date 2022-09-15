@@ -5,6 +5,7 @@
 
 namespace Core\Component\ConfigComponent;
 
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 abstract class AbstractConfig
@@ -15,7 +16,13 @@ abstract class AbstractConfig
     public function __construct(string $file)
     {
         $file = "/{$file}";
-        $this->setArgument(Yaml::parseFile(project_root.$file));
+        try {
+            $this->setArgument(Yaml::parseFile(project_root.$file));
+        } catch (ParseException $parseException)
+        {
+            echo $parseException->getParsedFile();
+        }
+
     }
 
     public function setConfig(Array $data): self
