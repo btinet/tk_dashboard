@@ -48,7 +48,11 @@ $this->layout('base.html',
                             </a>
 
                             <a class="btn btn-light link-primary me-1 d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>"><i class="fa fa-fw fa-list" style="font-size: 1.2em"></i></a>
-                            <a class="btn btn-light link-primary ms-auto" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
+                            <?php if(!$session->get('login')): ?>
+                                <a class="btn btn-light link-primary ms-auto" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
+                            <?php else: ?>
+                                <a class="btn btn-light link-danger ms-auto" href="<?=$response->generateUrlFromRoute('authentication_logout')?>"><i class="fa fa-fw fa-sign-out" style="font-size: 1.2em"></i></a>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="col-7 col-md-8">
