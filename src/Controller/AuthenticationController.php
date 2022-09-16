@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\SchoolSubject;
 use App\Entity\User;
 use App\Menu\MenuBuilder;
+use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\UserComponent\UserService;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -70,33 +71,50 @@ class AuthenticationController extends AbstractController
         $this->response->redirectToRoute('app_index');
     }
 
-    public function register()
+    public function register(): string
     {
         if($this->session->get('login')) $this->response->redirectToRoute(302,'app_index');
 
-        /*
-         * Formular-Array für die Registrierung:
-         */
+        $validationLastError = false;
 
         if($this->request->isPostRequest() and $this->request->isFormSubmitted())
         {
-            $loginData = [
-                'username' => 'Benutzername',
+            $userInputData = [
+                'username' => $this->request->getFieldAsString('username'),
                 'password' => [
-                    'password' =>'Passwort',
-                    'passwordRetype' => 'Passwortwiederholung'
+                    'password' =>$this->request->getFieldAsString('password'),
+                    'passwordRepeat' => $this->request->getFieldAsString('password_repeat')
                 ],
-                'email' => 'E-Mail-Adresse',
-                'firstName' => 'Vorname',
-                'lastName' => 'Nachname'
+                'email' => $this->request->getFieldAsString('email'),
+                'firstName' => $this->request->getFieldAsString('first_name'),
+                'lastName' => $this->request->getFieldAsString('last_name'),
+                'isActive' => true,
+                'language' => $this->request->getFieldAsString('user_locale')
             ];
 
-            // TODO: Register-Formular erstellen und verarbeiten
-            UserService::validate($this->repository,[]);
+            if(0 === ($validationLastError = UserService::validate(User::class, $this->getRepositoryManager(), $userInputData))){
+                $user = new User();
+                $user->setUsername($userInputData['username']);
+                $user->setEmail($userInputData['email']);
+                $user->setPassword($userInputData['password'][0]);
+                $user->setFirstname($userInputData['firstname']);
+                $user->setLastname($userInputData['lastname']);
+                $user->setIsActive(1);
+                $user->setUserLocale($userInputData['language']);
+
+                $rm = new EntityManager();
+                try {
+                    $rm->persist($user);
+                } catch (\ReflectionException $e) {
+                    return $e->getMessage();
+                }
+
+                $this->response->redirectToRoute(302,'authentication_login');
+            }
         }
 
         return $this->render('authentication/register.html',[
-            'lastError' => 0
+            'lastError' => $validationLastError
         ]);
     }
 

@@ -98,25 +98,9 @@ abstract class AbstractModel extends PDO implements ModelInterface
     /**
      * @param string $table
      * @param array $data
-     * @param int|null $id
-     * @return int|string
-     */
-    protected function persist(string $table, array $data, int $id = null)
-    {
-        if ($id) {
-            if (false !== $result = self::select("SELECT * FROM $table WHERE id = :id", ['id' => $id])) {
-                return self::update($table, $data, ['id' => $id]);
-            }
-        }
-        return self::insert($table, $data);
-    }
-
-    /**
-     * @param string $table
-     * @param array $data
      * @return string
      */
-    private function insert(string $table, array $data): string
+    protected function insert(string $table, array $data): string
     {
         ksort($data);
 
@@ -140,7 +124,7 @@ abstract class AbstractModel extends PDO implements ModelInterface
      * @param array $where
      * @return int
      */
-    private function update(string $table, array $data, array $where): int
+    protected function update(string $table, array $data, array $where): int
     {
         ksort($data);
 

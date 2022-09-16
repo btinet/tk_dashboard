@@ -3,6 +3,8 @@
 namespace Core\Component\UserComponent;
 
 
+use App\Entity\User;
+
 class UserService
 {
     private static string $entity;
@@ -19,8 +21,9 @@ class UserService
     }
 
     // Benutzer Register
-    public static function validate($repository, array $data): int
+    public static function validate($entity, $repository, array $data): int
     {
+        self::$entity = $entity;
         if(0 != $usernameLastError = self::isString('username',$data,21031)) return $usernameLastError;
         if(0 != $usernameLastError = self::isUnique($repository,'username',$data,21011)) return $usernameLastError;
         if(0 != $emailLastError = self::isUnique($repository,'email',$data,21012)) return $emailLastError;
@@ -34,7 +37,7 @@ class UserService
 
     public static function isUnique($repository, $needle, $array, $errorCode = 2101): int
     {
-        return ($repository->findOneBy([$needle => $array[$needle]])) ? $errorCode : 0;
+        return ($repository->findOneBy(self::$entity,[$needle => $array[$needle]])) ? $errorCode : 0;
     }
 
     public static function isMatch($repository,$array, $errorCode = 210112): int
