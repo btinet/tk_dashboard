@@ -1,4 +1,11 @@
 210111: Benutzername nicht gefunden.
 210112: Benutzername und Passwort stimmen nicht überein.
 
+email: E-Mail-Adresse
 username: Benutzername
+password: Passwort
+password_repeat: Passwortwiederholung
+first_name: Vorname
+last_name: Nachname
+user_locale: bevorzugte Sprache
+

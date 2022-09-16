@@ -35,9 +35,6 @@ class AuthenticationController extends AbstractController
     {
         if($this->session->get('login')) $this->response->redirectToRoute(302,'app_index');
 
-        $mainMenu = new MenuBuilder();
-        $mainMenu->createMenu();
-
         $tryLoginLastError = null;
 
         if($this->request->isFormSubmitted() and $this->request->isPostRequest())
@@ -62,7 +59,6 @@ class AuthenticationController extends AbstractController
         }
 
         return $this->render('authentication/login.html',[
-            'mainMenu' => $mainMenu->render(),
             'lastError' => $tryLoginLastError
         ]);
 
@@ -76,22 +72,32 @@ class AuthenticationController extends AbstractController
 
     public function register()
     {
+        if($this->session->get('login')) $this->response->redirectToRoute(302,'app_index');
+
         /*
          * Formular-Array für die Registrierung:
          */
-        $loginData = [
-            'username' => 'Benutzername',
-            'password' => [
-                'password' =>'Passwort',
-                'passwordRetype' => 'Passwortwiederholung'
-            ],
-            'email' => 'E-Mail-Adresse',
-            'firstName' => 'Vorname',
-            'lastName' => 'Nachname'
-        ];
 
-        // TODO: Register-Formular erstellen und verarbeiten
-        UserService::validate($this->repository,[]);
+        if($this->request->isPostRequest() and $this->request->isFormSubmitted())
+        {
+            $loginData = [
+                'username' => 'Benutzername',
+                'password' => [
+                    'password' =>'Passwort',
+                    'passwordRetype' => 'Passwortwiederholung'
+                ],
+                'email' => 'E-Mail-Adresse',
+                'firstName' => 'Vorname',
+                'lastName' => 'Nachname'
+            ];
+
+            // TODO: Register-Formular erstellen und verarbeiten
+            UserService::validate($this->repository,[]);
+        }
+
+        return $this->render('authentication/register.html',[
+            'lastError' => 0
+        ]);
     }
 
 }

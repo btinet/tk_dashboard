@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 14. Sep 2022 um 11:51
+-- Host: localhost
+-- Erstellungszeit: 16. Sep 2022 um 06:04
 -- Server-Version: 10.4.24-MariaDB
--- PHP-Version: 7.4.29
+-- PHP-Version: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -351,15 +351,16 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
+  `updated` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  `user_locale` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `is_active`, `created`, `updated`) VALUES
-(1, 'Benjamin', 'Wagner', 'bwagner', '4a84748fe21ac71ac3862699858977f7b5232c72', 'bwagner@vapita.de', 1, '2022-09-08 21:48:02', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `is_active`, `created`, `updated`, `user_locale`) VALUES
+(1, 'Benjamin', 'Wagner', 'bwagner', '4a84748fe21ac71ac3862699858977f7b5232c72', 'bwagner@vapita.de', 1, '2022-09-08 21:48:02', NULL, NULL);
 
 -- --------------------------------------------------------
 

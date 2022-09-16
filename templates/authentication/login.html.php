@@ -75,7 +75,7 @@ $this->layout('_layout.standard.html',
         </form>
         <div class="row g-3">
             <div class="col-12">
-                <a href="#">Stattdessen registrieren?</a>
+                <a href="<?=$response->generateUrlFromRoute('authentication_register')?>">Stattdessen registrieren?</a>
             </div>
         </div>
 

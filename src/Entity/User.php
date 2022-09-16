@@ -16,6 +16,7 @@ final class User
     protected string $password;
     protected string $email;
     protected bool $isActive;
+    protected ?string $userLocale;
 
     public function __toString()
     {
@@ -127,6 +128,24 @@ final class User
     public function setIsActive(bool $isActive): User
     {
         $this->isActive = $isActive;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUserLocale(): string
+    {
+        return $this->userLocale;
+    }
+
+    /**
+     * @param string $userLocale
+     * @return User
+     */
+    public function setUserLocale(string $userLocale): User
+    {
+        $this->userLocale = $userLocale;
         return $this;
     }
 

@@ -34,3 +34,9 @@ authentication_login:
   controller: 'App\Controller\AuthenticationController'
   method: 'login'
   request: ['get','post']
+
+authentication_register:
+  expression: '/register'
+  controller: 'App\Controller\AuthenticationController'
+  method: 'register'
+  request: ['get','post']
