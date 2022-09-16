@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Core\Component\UserComponent\PasswordService;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 
@@ -91,7 +92,7 @@ final class User
      */
     public function setPassword(string $password): User
     {
-        $this->password = $password;
+        $this->password = PasswordService::hash($password);
         return $this;
     }
 
@@ -116,7 +117,7 @@ final class User
     /**
      * @return bool
      */
-    public function isActive(): bool
+    public function getIsActive(): bool
     {
         return $this->isActive;
     }

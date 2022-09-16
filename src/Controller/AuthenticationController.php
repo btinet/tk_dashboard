@@ -49,7 +49,7 @@ class AuthenticationController extends AbstractController
                 if (0 === ($tryLoginLastError = UserService::tryLogin($this->repository, User::class, $loginData))) {
                     $user = $this->repository->findOneBy(User::class, ['username' => $loginData['username']]);
                     if ($user) {
-                        $this->session->set('user', $user['id']);
+                        $this->session->set('user', $user->getId());
                         $this->session->set('login', true);
                     }
                     $this->response->redirectToRoute(302, 'app_index');
@@ -67,8 +67,8 @@ class AuthenticationController extends AbstractController
 
     public function logout()
     {
-        $this->session->destroy();
-        $this->response->redirectToRoute('app_index');
+        if($this->session->get('login')) $this->session->destroy();
+        $this->response->redirectToRoute(302,'app_index');
     }
 
     public function register(): string
@@ -82,8 +82,8 @@ class AuthenticationController extends AbstractController
             $userInputData = [
                 'username' => $this->request->getFieldAsString('username'),
                 'password' => [
-                    'password' =>$this->request->getFieldAsString('password'),
-                    'passwordRepeat' => $this->request->getFieldAsString('password_repeat')
+                    $this->request->getFieldAsString('password'),
+                    $this->request->getFieldAsString('password_repeat')
                 ],
                 'email' => $this->request->getFieldAsString('email'),
                 'firstName' => $this->request->getFieldAsString('first_name'),
@@ -97,19 +97,17 @@ class AuthenticationController extends AbstractController
                 $user->setUsername($userInputData['username']);
                 $user->setEmail($userInputData['email']);
                 $user->setPassword($userInputData['password'][0]);
-                $user->setFirstname($userInputData['firstname']);
-                $user->setLastname($userInputData['lastname']);
+                $user->setFirstName($userInputData['firstName']);
+                $user->setLastName($userInputData['lastName']);
                 $user->setIsActive(1);
                 $user->setUserLocale($userInputData['language']);
 
-                $rm = new EntityManager();
-                try {
-                    $rm->persist($user);
-                } catch (\ReflectionException $e) {
-                    return $e->getMessage();
-                }
-
-                $this->response->redirectToRoute(302,'authentication_login');
+               $rm = new EntityManager();
+               if(false !== $result = $rm->persist($user))
+               {
+                   $this->response->redirectToRoute(302,'authentication_login');
+               }
+                $validationLastError = 500;
             }
         }
 

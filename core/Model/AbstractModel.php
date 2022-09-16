@@ -105,6 +105,7 @@ abstract class AbstractModel extends PDO implements ModelInterface
         ksort($data);
 
         $table = strtolower($table);
+
         $fieldNames = implode(', ', array_keys($data));
         $fieldValues = ':' . implode(', :', array_keys($data));
 

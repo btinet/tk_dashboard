@@ -82,7 +82,7 @@ class Session
      */
     public function destroy(): Session
     {
-        if ($this->sessionStarted == true) {
+        if ($this->sessionStarted) {
             session_unset();
             session_destroy();
         }
