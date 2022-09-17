@@ -18,6 +18,15 @@ class Response
         $this->config = $config;
     }
 
+    public function formatDate(?string $stringDate, string $format =  'd.m.Y')
+    {
+        if($stringDate)
+        {
+            return date ( $format , strtotime ($stringDate));
+        }
+        return '-';
+    }
+
     /**
      * @param $status
      * @param $route

@@ -1,2 +1,4 @@
-body,.offcanvas,#header {background-color: #f5f5f7}
+.offcanvas,#header {background-color: #f5f5f7!important;}
+.placeholder{cursor: default!important;}
+body{background-color: #f5f5f8!important;}
 

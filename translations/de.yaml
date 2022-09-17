@@ -31,4 +31,16 @@ user_locale: bevorzugte Sprache
 
 user: Kennungen
 dashboard: Dashboard
+role: Rolle
+roles: Rollen
+
+id: ID
+label: Bezeichnung
+description: Beschreibung
+created: erstellt
+updated: aktualisiert
+group: Gruppe
+groups: Gruppen
+permission: Berechtigung
+permissions: Berechtigungen
 

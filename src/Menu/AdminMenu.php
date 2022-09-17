@@ -19,14 +19,28 @@ class AdminMenu extends AbstractMenu
                 'label' => 'dashboard',
                 'route' => 'admin_index',
                 'attrib' => [
-                    'class' => ['list-group-item list-group-item-action'],
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
             ])
-            ->add('user',NavigationType::class,[
-                'label' => 'user',
-                'route' => 'authentication_login',
+            ->add('roles',NavigationType::class,[
+                'label' => 'roles',
+                'route' => 'admin_role_index',
                 'attrib' => [
-                    'class' => ['list-group-item list-group-item-action'],
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ])
+            ->add('group',NavigationType::class,[
+                'label' => 'groups',
+                'route' => 'admin_group_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ])
+            ->add('permission',NavigationType::class,[
+                'label' => 'permissions',
+                'route' => 'admin_permission_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
             ])
         ;

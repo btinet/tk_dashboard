@@ -2,6 +2,9 @@
 
 namespace Core\Component\DataStorageComponent;
 
+use Core\Model\AbstractModel;
+use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
+use Core\Repository\AbstractRepository;
 use Exception;
 use ReflectionClass;
 use ReflectionException;
@@ -75,5 +78,11 @@ class EntityManager extends EntityManagerComponent
         } catch (ReflectionException $reflectionException){
             return 'Exception abgefangen: '. $reflectionException->getMessage() . "\n";
         }
+    }
+
+    public function isUnique(string $entity, string $column, string $data, AbstractRepositoryFactory $repositoryFactory): int
+    {
+        $result = $repositoryFactory->findOneBy($entity,[$column => $data]);
+        return (bool)array_filter((array)$result);
     }
 }

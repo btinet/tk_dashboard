@@ -52,3 +52,39 @@ admin_index:
   controller: 'App\Controller\AdminController'
   method: 'index'
   request: 'get'
+
+admin_role_index:
+  expression: '/admin/role'
+  controller: 'App\Controller\Admin\RoleCrudController'
+  method: 'index'
+  request: 'get'
+
+admin_role_new:
+  expression: '/admin/role/new'
+  controller: 'App\Controller\Admin\RoleCrudController'
+  method: 'new'
+  request: 'post'
+
+admin_group_index:
+  expression: '/admin/group'
+  controller: 'App\Controller\Admin\UserGroupCrudController'
+  method: 'index'
+  request: 'get'
+
+admin_group_new:
+  expression: '/admin/group/new'
+  controller: 'App\Controller\Admin\UserGroupCrudController'
+  method: 'new'
+  request: 'post'
+
+admin_permission_index:
+  expression: '/admin/permission'
+  controller: 'App\Controller\Admin\RolePermissionCrudController'
+  method: 'index'
+  request: 'get'
+
+admin_permission_new:
+  expression: '/admin/permission/new'
+  controller: 'App\Controller\Admin\RolePermissionCrudController'
+  method: 'new'
+  request: 'post'

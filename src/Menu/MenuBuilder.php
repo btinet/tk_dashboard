@@ -21,9 +21,13 @@ class MenuBuilder extends AbstractMenu
                 'attrib' => [
                     'class' => ['nav-link'],
                 ],
-            ],
-            [
-                '1999'
+            ])
+            ->add('dashboard',NavigationType::class,[
+                'label' => 'dashboard',
+                'route' => 'admin_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action'],
+                ],
             ])
         ;
 
