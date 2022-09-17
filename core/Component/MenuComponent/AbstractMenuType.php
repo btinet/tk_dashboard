@@ -10,6 +10,7 @@ abstract class AbstractMenuType
     protected string $label = '';
     protected string $route = '#';
     protected array $attrib = [];
+    protected array $class = [];
 
     /**
      * @return string
@@ -49,7 +50,6 @@ abstract class AbstractMenuType
     }
 
     /**
-     * @param $key
      * @return array
      */
     public function getAttrib(): array
@@ -74,4 +74,31 @@ abstract class AbstractMenuType
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getClass(): array
+    {
+
+        return $this->class;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @return Menu
+     */
+    public function setClass($key, $value = null): AbstractMenuType
+    {
+        if($value)
+        {
+            $this->class[$key][] = $value;
+        } else {
+            $this->class = $key;
+        }
+
+        return $this;
+    }
+
 }

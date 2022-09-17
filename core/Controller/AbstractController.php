@@ -48,9 +48,9 @@ abstract class AbstractController implements ControllerInterface
     protected Config $trans;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private array $templateData;
+    private ?array $templateData = [];
 
     /**
      * @var View

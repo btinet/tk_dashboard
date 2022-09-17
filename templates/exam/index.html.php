@@ -24,6 +24,7 @@ $this->layout('_layout.standard.html',
 
 <?php $this->start('main') ?>
     <div class="row g-3 mb-3">
+        <div></div>
 
         <div class="col-12 col-md-4">
             <div class="d-none d-md-block">

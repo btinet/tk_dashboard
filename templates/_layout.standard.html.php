@@ -44,14 +44,48 @@ $this->layout('base.html',
                     <div class="col-5 col-md-4">
                         <div class="d-flex justify-content-start align-items-center h-100">
                             <a class="btn btn-light link-primary me-1 d-block d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                                <i class="fa fa-fw fa-list" style="font-size: 1.2em"></i>
+                                <i class="fa fa-fw fa-navicon" style="font-size: 1.2em"></i>
                             </a>
 
-                            <a class="btn btn-light link-primary me-1 d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>"><i class="fa fa-fw fa-list" style="font-size: 1.2em"></i></a>
+                            <a class="btn btn-light link-primary me-1 d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
+                                <i class="fa fa-fw fa-home" style="font-size: 1.2em"></i>
+                            </a>
                             <?php if(!$session->get('login')): ?>
-                                <a class="btn btn-light link-primary ms-auto" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
+                                <a class="btn btn-light link-primary" data-bs-toggle="tooltip" data-bs-title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
                             <?php else: ?>
-                                <a class="btn btn-light link-danger ms-auto" href="<?=$response->generateUrlFromRoute('authentication_logout')?>"><i class="fa fa-fw fa-sign-out" style="font-size: 1.2em"></i></a>
+                                <div class="dropdown">
+                                    <button class="btn btn-light link-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-fw fa-user" style="font-size: 1.2em"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="#">
+                                                <i class="fa fa-fw fa-user me-1"></i>
+                                                Profil
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="#">
+                                                <i class="fa fa-fw fa-file-text me-1"></i>
+                                                Meine Themen
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('admin_index')?>">
+                                                <i class="fa fa-fw fa-dashboard me-1"></i>
+                                                Administration
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('authentication_logout')?>">
+                                                <i class="fa fa-fw fa-sign-out text-danger me-1"></i>
+                                                Abmelden
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>

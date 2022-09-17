@@ -49,19 +49,33 @@ $this->layout('_layout.standard.html',
             </div>
         <?php endif; ?>
 
+        <div class="mt-2 mb-5 my-md-5">
+            <h1>Anmelden</h1>
+            <p class="lead">
+                Melde dich an und verwalte dein Präsentationsthema bequem und digital.
+            </p>
+        </div>
+
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Login</div>
 
-        <form class="row g-3 mb-4" method="post">
+        <form class="row g-3 mb-4 needs-validation" method="post" novalidate>
             <div class="col-12">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="username" name="username" placeholder="<?=$trans->getConfig('username')?>" required>
                     <label for="username"><?=$trans->getConfig('username')?></label>
+                    <div class="invalid-feedback">
+                        Bitte gib deine Kennung an.
+                    </div>
                 </div>
+
             </div>
             <div class="col-12">
                 <div class="form-floating">
                     <input type="password" class="form-control" id="password" name="password" placeholder="Passwort" required>
                     <label for="password">Passwort</label>
+                    <div class="invalid-feedback">
+                        Bitte gib dein Passwort an.
+                    </div>
                 </div>
             </div>
             <div class="col-12">

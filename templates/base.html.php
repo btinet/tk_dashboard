@@ -17,7 +17,7 @@
         <?php if ($this->section('css')): ?>
             <?=$this->section('css')?>
             <?php else: ?>
-                <link rel="stylesheet" href="<?= $response->generateUrlFromString('/assets/styles/app.css')?>">
+                <link rel="stylesheet" href="<?= $response->generateUrlFromString('/assets/styles/main.css')?>">
         <?php endif ?>
 
         <script type="text/javascript" src="<?= $response->generateUrlFromString('/dist/bundle.js')?>"></script>

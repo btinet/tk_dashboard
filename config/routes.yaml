@@ -46,3 +46,9 @@ authentication_register:
   controller: 'App\Controller\AuthenticationController'
   method: 'register'
   request: ['get','post']
+
+admin_index:
+  expression: '/admin'
+  controller: 'App\Controller\AdminController'
+  method: 'index'
+  request: 'get'

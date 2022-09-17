@@ -14,6 +14,7 @@ class AuthenticationController extends AbstractController
 {
 
     protected AbstractRepositoryFactory $repository;
+
     /**
      * @var array|false|string
      */
@@ -76,6 +77,7 @@ class AuthenticationController extends AbstractController
         if($this->session->get('login')) $this->response->redirectToRoute(302,'app_index');
 
         $validationLastError = false;
+        $userInputData = false;
 
         if($this->request->isPostRequest() and $this->request->isFormSubmitted())
         {
@@ -112,7 +114,8 @@ class AuthenticationController extends AbstractController
         }
 
         return $this->render('authentication/register.html',[
-            'lastError' => $validationLastError
+            'lastError' => $validationLastError,
+            'userData' => $userInputData
         ]);
     }
 

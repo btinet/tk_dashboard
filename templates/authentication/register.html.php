@@ -9,6 +9,7 @@
  * @var object $mainMenu enthält die Hauptnavigation"
  * @var Session $session Session-Objekt
  * @var Config $trans TranslationConfig-Objekt
+ * @var array|false $userData Formulardaten des Benutzers
  * @var int $lastError Fehlernummer
  */
 
@@ -48,44 +49,69 @@ $this->layout('_layout.standard.html',
                 </div>
             </div>
         <?php endif; ?>
+        <div class="mt-2 mb-5 my-md-5">
+            <h1>Registrieren</h1>
+            <p class="lead">
+                Registriere dich und reiche dein Präsentationsthema bequem und digital bei deinem Tutorium ein.
+            </p>
+        </div>
+
 
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Registrieren</div>
 
-        <form class="row g-3 mb-4" method="post">
+        <form class="row g-3 mb-4 needs-validation" method="post" novalidate>
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="<?=$trans->getConfig('email')?>" required>
+                    <input type="email" class="form-control" id="email" name="email" value="<?=$userData?$userData['email']:false?>" placeholder="<?=$trans->getConfig('email')?>" required>
                     <label for="email"><?=$trans->getConfig('email')?></label>
+                    <div class="invalid-feedback">
+                        Bitte gib deine Kennung an.
+                    </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="<?=$trans->getConfig('username')?>" required>
+                    <input type="text" class="form-control" id="username" name="username" value="<?=$userData?$userData['username']:false?>" placeholder="<?=$trans->getConfig('username')?>" required>
                     <label for="username"><?=$trans->getConfig('username')?></label>
+                    <div class="invalid-feedback">
+                        Bitte gib deine Kennung an.
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-6">
                 <div class="form-floating">
                     <input type="password" class="form-control" id="password" name="password" placeholder="<?=$trans->getConfig('password')?>" required>
                     <label for="password"><?=$trans->getConfig('password')?></label>
+                    <div class="invalid-feedback">
+                        Bitte gib deine Kennung an.
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-6">
                 <div class="form-floating">
                     <input type="password" class="form-control" id="password_repeat" name="password_repeat" placeholder="<?=$trans->getConfig('password_repeat')?>" required>
                     <label for="password_repeat"><?=$trans->getConfig('password_repeat')?></label>
+                    <div class="invalid-feedback">
+                        Bitte gib deine Kennung an.
+                    </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="<?=$trans->getConfig('first_name')?>" required>
+                    <input type="text" class="form-control" id="first_name" name="first_name" value="<?=$userData?$userData['firstName']:false?>" placeholder="<?=$trans->getConfig('first_name')?>" required>
                     <label for="first_name"><?=$trans->getConfig('first_name')?></label>
+                    <div class="invalid-feedback">
+                        Bitte gib deine Kennung an.
+                    </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="<?=$trans->getConfig('last_name')?>" required>
+                    <input type="text" class="form-control" id="last_name" name="last_name" value="<?=$userData?$userData['lastName']:false?>" placeholder="<?=$trans->getConfig('last_name')?>" required>
                     <label for="first_name"><?=$trans->getConfig('last_name')?></label>
+                    <div class="invalid-feedback">
+                        Bitte gib deine Kennung an.
+                    </div>
                 </div>
             </div>
             <div class="col-12">
@@ -95,6 +121,9 @@ $this->layout('_layout.standard.html',
                     <option value="de">Deutsch</option>
                     <option value="en">Englisch</option>
                 </select>
+                <div class="invalid-feedback">
+                    Bitte gib deine Kennung an.
+                </div>
             </div>
             <div class="col-12">
                 <span class=""></span>
