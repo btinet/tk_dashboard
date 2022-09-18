@@ -25,10 +25,12 @@ class EntityManager extends EntityManagerComponent
             $class_name = self::generateSnakeTailString($entity_class->getShortName());
             foreach($entity_class->getProperties() as $property){
                 if(!in_array($property->getName(),['id','created','updated'])) {
-                    $propertyName = ucfirst($property->getName());
-                    $method = "get$propertyName";
+                    if($property->isProtected()){
+                        $propertyName = ucfirst($property->getName());
+                        $method = "get$propertyName";
 
-                    $data[self::generateSnakeTailString($propertyName)] = $entity->$method();
+                        $data[self::generateSnakeTailString($propertyName)] = $entity->$method();
+                    }
                 }
             };
 
