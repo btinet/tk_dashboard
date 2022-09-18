@@ -57,7 +57,7 @@ admin_role_index:
   expression: '/admin/role'
   controller: 'App\Controller\Admin\RoleCrudController'
   method: 'index'
-  request: 'get'
+  request: ['get','post']
 
 admin_role_show:
   expression: '/admin/role/([0-9]*)/show'

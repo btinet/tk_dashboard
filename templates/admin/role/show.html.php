@@ -58,7 +58,11 @@ $this->layout('_layout.standard.html',
     <div class="col-12 col-md-3">
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Details von <?=$object->getLabel()?></div>
 
-        <div class="py-3">
+        <div class="mb-3 d-flex justify-content-start">
+            <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>"  class="btn btn-primary me-2 w-100 d-block">Zur Übersicht</a>
+        </div>
+
+        <div class="">
             <form class="row row-cols-1 g-3">
                 <div>
                     <label for="label" class="form-label"><?=$trans->getConfig('label')?></label>
@@ -76,7 +80,6 @@ $this->layout('_layout.standard.html',
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('permissions')?></div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>"  class="btn btn-light link-primary me-2">Zur Übersicht</a>
             <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung zuordnen</button>
         </div>
 
@@ -85,7 +88,7 @@ $this->layout('_layout.standard.html',
                 <caption class="px-2 small">Übersicht der Berechtigungen</caption>
                 <thead>
                 <tr>
-                    <th><?=$trans->getConfig('label')?></th>
+                    <th><?=$trans->getConfig('permission')?></th>
                     <th><?=$trans->getConfig('description')?></th>
                 </tr>
                 </thead>

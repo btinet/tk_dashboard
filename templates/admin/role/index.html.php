@@ -10,6 +10,7 @@
  * @var Object $adminMenu Set of menu objects
  * @var Object $trans Translation object
  * @var Object $objects Translation object
+ * @var Session $session Session-Objekt
  * @var array|false $userData Formulardaten des Benutzers
  */
 
@@ -67,8 +68,24 @@ $this->layout('_layout.standard.html',
 
         <div class="mb-3 d-flex justify-content-start">
             <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Rolle anlegen</button>
-            <a href="#" class="btn btn-light link-primary">Benutzer zuordnen</a>
+            <div class="dropdown">
+                <a class="btn btn-light link-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    markierte Elemente
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <button form="delete_entry" id="list_delete" type="submit" class="dropdown-item">
+                            <i class="fa fa-fw fa-trash me-1 text-danger"></i>
+                            Löschen
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
+
+        <form id="delete_entry" method="post" onsubmit="return confirm('Möchten Sie die gewählten Elemente wirklich löschen?');"></form>
+        <input form="delete_entry" type="hidden" name="csrf_token" value="<?=$session->get('csrf_token')?>">
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">
@@ -89,6 +106,7 @@ $this->layout('_layout.standard.html',
                 <caption class="px-2 small">Rollenübersicht</caption>
                 <thead>
                 <tr>
+                    <th></th>
                     <th><?=$trans->getConfig('label')?></th>
                     <th><?=$trans->getConfig('description')?></th>
                     <th><?=$trans->getConfig('created')?></th>
@@ -99,6 +117,12 @@ $this->layout('_layout.standard.html',
                 <?php if (array_filter((array)$objects)): ?>
                     <?php foreach ($objects as $object): ?>
                         <tr>
+                            <td class="text-center">
+                                <div class="form-check form-switch">
+                                    <input form="delete_entry" class="form-check-input" name="mark_row[]" value="<?=$object->getId()?>" type="checkbox" role="switch" id="switch_<?=$object->getId()?>">
+                                    <label class="form-check-label d-none" for="switch_<?=$object->getId()?>"></label>
+                                </div>
+                            </td>
                             <td><a href="<?=$response->generateUrlFromRoute('admin_role_show',[$object->getId()])?>"><?=$object->getLabel()?></a></td>
                             <td class="text-nowrap"><?=$object->getDescription()?:''?></td>
                             <td><?=$response->formatDate($object->getCreated())?></td>
@@ -109,6 +133,7 @@ $this->layout('_layout.standard.html',
                     <?php for ($i = 1; $i <= 3;$i++): ?>
                         <?php $randInt = rand(6,12); ?>
                             <tr>
+                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
                                 <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
                                 <?php for ($k = 1; $k <= 2;$k++): ?>
                                     <?php $randInt = rand(6,12); ?>
@@ -124,6 +149,7 @@ $this->layout('_layout.standard.html',
                     <?php for ($i = 1; $i <= 3;$i++): ?>
                         <?php $randInt = rand(6,12); ?>
                         <tr>
+                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
                             <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
                             <?php for ($k = 1; $k <= 1;$k++): ?>
                                 <?php $randInt = rand(6,12); ?>

@@ -53,11 +53,9 @@ class Request
 
     /**
      * @param string $FormFieldName
-     * @return array|false
      */
-    public function getFieldAsArray(string $FormFieldName): ?array
+    public function getFieldAsArray(string $FormFieldName)
     {
-        $query = filter_input_array(INPUT_POST, $FormFieldName, FILTER_DEFAULT);
-        return $this->query = $query ?? false;
+        return $query = (isset($_POST[$FormFieldName]))?$_POST[$FormFieldName]:false;
     }
 }

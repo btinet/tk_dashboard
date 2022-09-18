@@ -50,12 +50,12 @@ class EntityManager extends EntityManagerComponent
 
     public function remove($entity, $id)
     {
-        $entity_class = self::generateReflectionClass($entity);
-        $class_name = strtolower($entity_class->getShortName());
+        $entityClass = self::setEntityClass($entity);
+        $tableName = self::generateSnakeTailString($entityClass->getShortName());
         if ($id) {
-            $row = $this->select("SELECT * FROM $class_name WHERE id = :id", ['id' => $id]);
+            $row = $this->select("SELECT * FROM $tableName WHERE id = :id", ['id' => $id]);
             if ($row) {
-                return $this->delete($class_name, ['id' => $id]);
+                return $this->delete($tableName, ['id' => $id]);
             }
         }
         return false;

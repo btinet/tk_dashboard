@@ -41,6 +41,19 @@ class RoleCrudController extends AbstractController
 
     public function index(): string
     {
+
+        if($this->request->isPostRequest() and $this->request->isFormSubmitted())
+        {
+            $em = new EntityManager();
+
+            foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
+            {
+                print_r($id);
+                $em->remove(UserRole::class,$id);
+            }
+        }
+
+
         $this->adminMenu->createMenu();
         $userData = [];
 
