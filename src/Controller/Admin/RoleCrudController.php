@@ -2,10 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
 use App\Entity\UserRole;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Repository\UserRoleRepository;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
@@ -25,7 +27,7 @@ class RoleCrudController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new UserRoleRepository();
         $mainMenu = new MenuBuilder();
         $this->adminMenu = new AdminMenu();
         $mainMenu->createMenu();
@@ -33,6 +35,7 @@ class RoleCrudController extends AbstractController
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
+            'repository' => $this->repository
         ]);
     }
 
@@ -44,6 +47,30 @@ class RoleCrudController extends AbstractController
         return $this->render('admin/role/index.html',[
             'adminMenu' => $this->adminMenu->render(),
             'objects' => $this->getRepositoryManager()->findAll(UserRole::class),
+            'userData' => $userData
+        ]);
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function show(int $id = null):string
+    {
+        $this->adminMenu->createMenu();
+        $userData = [];
+
+        $object = $this->getRepositoryManager()->find(UserRole::class, $id);
+        $permissions = $this->repository->findAll(RolePermission::class);
+
+        if(!array_filter((array)$object))
+        {
+            $this->response->redirectToRoute(302,'admin_role_index');
+        }
+
+        return $this->render('admin/role/show.html',[
+            'adminMenu' => $this->adminMenu->render(),
+            'object' => $object,
+            'permissions' => $permissions,
             'userData' => $userData
         ]);
     }

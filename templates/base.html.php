@@ -18,6 +18,7 @@
             <?=$this->section('css')?>
             <?php else: ?>
                 <link rel="stylesheet" href="<?= $response->generateUrlFromString('/assets/styles/main.css')?>">
+                <link rel="stylesheet" href="<?= $response->generateUrlFromString('/assets/apps/sorter/css/sortable-theme-bootstrap.css";')?>">
         <?php endif ?>
 
         <script type="text/javascript" src="<?= $response->generateUrlFromString('/dist/bundle.js')?>"></script>

@@ -59,6 +59,12 @@ admin_role_index:
   method: 'index'
   request: 'get'
 
+admin_role_show:
+  expression: '/admin/role/([0-9]*)/show'
+  controller: 'App\Controller\Admin\RoleCrudController'
+  method: 'show'
+  request: 'get'
+
 admin_role_new:
   expression: '/admin/role/new'
   controller: 'App\Controller\Admin\RoleCrudController'

@@ -85,7 +85,7 @@ $this->layout('_layout.standard.html',
         </nav>
 
         <div class="table-responsive rounded-3 bg-white border mb-3">
-            <table class="table table-hover table-striped mb-0">
+            <table class="table table-hover table-striped mb-0 sortable-theme-bootstrap" data-sortable>
                 <caption class="px-2 small">Rollenübersicht</caption>
                 <thead>
                 <tr>
@@ -99,7 +99,7 @@ $this->layout('_layout.standard.html',
                 <?php if (array_filter((array)$objects)): ?>
                     <?php foreach ($objects as $object): ?>
                         <tr>
-                            <th><?=$object->getLabel()?></th>
+                            <td><a href="<?=$response->generateUrlFromRoute('admin_role_show',[$object->getId()])?>"><?=$object->getLabel()?></a></td>
                             <td class="text-nowrap"><?=$object->getDescription()?:''?></td>
                             <td><?=$response->formatDate($object->getCreated())?></td>
                             <td><?=$response->formatDate($object->getUpdated())?></td>
@@ -109,7 +109,7 @@ $this->layout('_layout.standard.html',
                     <?php for ($i = 1; $i <= 3;$i++): ?>
                         <?php $randInt = rand(6,12); ?>
                             <tr>
-                                <th class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></th>
+                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
                                 <?php for ($k = 1; $k <= 2;$k++): ?>
                                     <?php $randInt = rand(6,12); ?>
                                     <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
@@ -124,7 +124,7 @@ $this->layout('_layout.standard.html',
                     <?php for ($i = 1; $i <= 3;$i++): ?>
                         <?php $randInt = rand(6,12); ?>
                         <tr>
-                            <th class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></th>
+                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
                             <?php for ($k = 1; $k <= 1;$k++): ?>
                                 <?php $randInt = rand(6,12); ?>
                                 <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>

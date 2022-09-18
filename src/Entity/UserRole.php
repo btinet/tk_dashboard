@@ -2,16 +2,30 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRoleRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
+use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
 final class UserRole
 {
     use IdEntityTrait;
     use DateTimeEntityTrait;
 
+    private AbstractRepositoryFactory $repository;
+
     protected string $label;
     protected string $description;
+
+    public function __construct()
+    {
+        $this->repository = new UserRoleRepository();
+    }
+
+    public function __toString()
+    {
+        return $this->label;
+    }
 
     /**
      * @return string
@@ -47,6 +61,13 @@ final class UserRole
     {
         $this->description = $description;
         return $this;
+    }
+
+    public function getPermissions()
+    {
+        $permission = $this->repository->findByIdJoinPermissions($this->id,['label' => 'asc']);
+        if(!array_filter((array)$permission)) return false;
+        return $permission;
     }
 
 }
