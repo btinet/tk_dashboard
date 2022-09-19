@@ -46,10 +46,12 @@ class RoleCrudController extends AbstractController
         {
             $em = new EntityManager();
 
-            foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
-            {
-                print_r($id);
-                $em->remove(UserRole::class,$id);
+            if($this->request->getFieldAsArray('mark_row')){
+                foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
+                {
+                    print_r($id);
+                    $em->remove(UserRole::class,$id);
+                }
             }
         }
 

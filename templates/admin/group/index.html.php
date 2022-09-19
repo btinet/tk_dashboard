@@ -69,8 +69,7 @@ $this->layout('_layout.standard.html',
 
         <div class="mb-3 d-flex justify-content-start">
             <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Gruppe anlegen</button>
-            <a href="#" class="btn btn-light link-primary">Rolle zuordnen</a>
-            <a href="#" class="btn btn-light link-primary">Benutzer zuordnen</a>
+            <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 
         <div class="table-responsive bg-white rounded-3 border mb-3">
