@@ -56,11 +56,14 @@ $this->layout('_layout.standard.html',
 <div class="row g-3 mb-3">
     <div></div>
     <div class="col-12 col-md-3">
+
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Details von <?=$object->getLabel()?></div>
 
         <div class="mb-3 d-flex justify-content-start">
             <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>"  class="btn btn-primary me-2 w-100 d-block">Zur Übersicht</a>
         </div>
+
+        <h1>Rolleneigenschaften</h1>
 
         <div class="">
             <form class="row row-cols-1 g-3">
@@ -80,7 +83,7 @@ $this->layout('_layout.standard.html',
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('permissions')?></div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung zuordnen</button>
+            <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Zuordnen</button>
             <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 
@@ -138,7 +141,7 @@ $this->layout('_layout.standard.html',
         </div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung zuordnen</button>
+            <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Zuordnen</button>
             <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 

@@ -38,6 +38,18 @@ class RolePermissionCrudController extends AbstractController
 
     public function index(): string
     {
+        if($this->request->isPostRequest() and $this->request->isFormSubmitted())
+        {
+            $em = new EntityManager();
+
+            if($this->request->getFieldAsArray('mark_row')){
+                foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
+                {
+                    $em->remove(RolePermission::class,$id);
+                }
+            }
+        }
+
         $this->adminMenu->createMenu();
         $userData = [];
 

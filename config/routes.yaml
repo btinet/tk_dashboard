@@ -93,7 +93,7 @@ admin_permission_index:
   expression: '/admin/permission'
   controller: 'App\Controller\Admin\RolePermissionCrudController'
   method: 'index'
-  request: 'get'
+  request: ['get','post']
 
 admin_permission_new:
   expression: '/admin/permission/new'
