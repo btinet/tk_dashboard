@@ -49,12 +49,10 @@ class RoleCrudController extends AbstractController
             if($this->request->getFieldAsArray('mark_row')){
                 foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
                 {
-                    print_r($id);
                     $em->remove(UserRole::class,$id);
                 }
             }
         }
-
 
         $this->adminMenu->createMenu();
         $userData = [];
@@ -71,10 +69,18 @@ class RoleCrudController extends AbstractController
      */
     public function show(int $id = null):string
     {
+        $object = $this->getRepositoryManager()->find(UserRole::class, $id);
+
+        if($this->request->getFieldAsArray('mark_row')){
+            foreach($this->request->getFieldAsArray('mark_row') as $key => $permissionId)
+            {
+                $object->removePermission($permissionId);
+            }
+        }
+
         $this->adminMenu->createMenu();
         $userData = [];
 
-        $object = $this->getRepositoryManager()->find(UserRole::class, $id);
         $permissions = $this->repository->findAll(RolePermission::class);
 
         if(!array_filter((array)$object))
@@ -92,11 +98,9 @@ class RoleCrudController extends AbstractController
 
     public function new()
     {
-        $this->adminMenu->createMenu();
-        $userData = [];
-
         if($this->request->isFormSubmitted() and $this->request->isPostRequest())
         {
+            die('TODO: Speichern implementieren!');
             $em = new EntityManager();
             $role = new UserRole();
 

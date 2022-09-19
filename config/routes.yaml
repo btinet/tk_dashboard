@@ -63,7 +63,7 @@ admin_role_show:
   expression: '/admin/role/([0-9]*)/show'
   controller: 'App\Controller\Admin\RoleCrudController'
   method: 'show'
-  request: 'get'
+  request: ['get','post']
 
 admin_role_new:
   expression: '/admin/role/new'

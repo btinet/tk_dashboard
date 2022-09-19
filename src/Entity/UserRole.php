@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRoleRepository;
+use Core\Component\DataStorageComponent\EntityManager;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -13,6 +14,7 @@ final class UserRole
     use DateTimeEntityTrait;
 
     private AbstractRepositoryFactory $repository;
+    private EntityManager $entityManager;
 
     protected string $label;
     protected string $description;
@@ -20,6 +22,7 @@ final class UserRole
     public function __construct()
     {
         $this->repository = new UserRoleRepository();
+        $this->entityManager = new EntityManager();
     }
 
     public function __toString()
@@ -68,6 +71,18 @@ final class UserRole
         $permission = $this->repository->findByIdJoinPermissions($this->id,['label' => 'asc']);
         if(!array_filter((array)$permission)) return false;
         return $permission;
+    }
+
+    public function removePermission($permissionId): UserRole
+    {
+        if($permissionId)
+        {
+            $rolePermission = $this->repository->findOneBy(UserRoleHasRolePermission::class,[
+                'role_permission_id' => $permissionId
+            ]);
+            $this->entityManager->remove(UserRoleHasRolePermission::class,$rolePermission->getId());
+        }
+        return $this;
     }
 
 }

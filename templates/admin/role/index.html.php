@@ -91,7 +91,7 @@ $this->layout('_layout.standard.html',
                 <caption class="px-2 small">Rollenübersicht</caption>
                 <thead>
                 <tr>
-                    <th></th>
+                    <td></td>
                     <th><?=$trans->getConfig('label')?></th>
                     <th><?=$trans->getConfig('description')?></th>
                     <th><?=$trans->getConfig('created')?></th>
