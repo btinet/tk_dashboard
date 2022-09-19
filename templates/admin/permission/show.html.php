@@ -46,7 +46,7 @@ $this->layout('_layout.standard.html',
         </div>
 
         <div class="table-responsive rounded-3 bg-white border mb-3">
-            <table class="table table-hover table-striped  rounded-3 mb-0">
+            <table class="table table-hover table-striped  rounded-3 mb-0 sortable-theme-bootstrap" data-sortable>
                 <caption class="px-2 small">Übersicht der Berechtigungen</caption>
                 <thead>
                 <tr>

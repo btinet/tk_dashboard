@@ -71,10 +71,11 @@ $this->layout('_layout.standard.html',
         </div>
 
         <div class="table-responsive rounded-3 bg-white border mb-3">
-            <table class="table table-hover table-striped  rounded-3 mb-0">
+            <table class="table table-hover table-striped  rounded-3 mb-0 sortable-theme-bootstrap" data-sortable>
                 <caption class="px-2 small">Übersicht der Berechtigungen</caption>
                 <thead>
                 <tr>
+                    <td></td>
                     <th><?=$trans->getConfig('label')?></th>
                     <th><?=$trans->getConfig('description')?></th>
                     <th><?=$trans->getConfig('created')?></th>
@@ -85,7 +86,13 @@ $this->layout('_layout.standard.html',
                 <?php if (array_filter((array)$objects)): ?>
                     <?php foreach ($objects as $object): ?>
                         <tr>
-                            <th><?=$object->getLabel()?></th>
+                            <td class="text-center">
+                                <div class="form-check form-switch">
+                                    <input form="delete_entry" class="form-check-input" name="mark_row[]" value="<?=$object->getId()?>" type="checkbox" role="switch" id="switch_<?=$object->getId()?>">
+                                    <label class="form-check-label d-none" for="switch_<?=$object->getId()?>"></label>
+                                </div>
+                            </td>
+                            <td><?=$object->getLabel()?></td>
                             <td class="text-nowrap"><?=$object->getDescription()?:''?></td>
                             <td><?=$response->formatDate($object->getCreated())?></td>
                             <td><?=$response->formatDate($object->getUpdated())?></td>
@@ -95,7 +102,8 @@ $this->layout('_layout.standard.html',
                     <?php for ($i = 1; $i <= 3;$i++): ?>
                         <?php $randInt = rand(6,12); ?>
                             <tr>
-                                <th class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></th>
+                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
+                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
                                 <?php for ($k = 1; $k <= 1;$k++): ?>
                                     <?php $randInt = rand(6,12); ?>
                                     <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
@@ -110,7 +118,8 @@ $this->layout('_layout.standard.html',
                     <?php for ($i = 1; $i <= 3;$i++): ?>
                         <?php $randInt = rand(6,12); ?>
                         <tr>
-                            <th class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></th>
+                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
+                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
                             <?php for ($k = 1; $k <= 1;$k++): ?>
                                 <?php $randInt = rand(6,12); ?>
                                 <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
@@ -126,7 +135,7 @@ $this->layout('_layout.standard.html',
 
         <div class="mb-3 d-flex justify-content-start">
             <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
-            <a href="#" class="btn btn-light link-primary">Gruppe zuordnen</a>
+            <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 
     </div>

@@ -81,7 +81,7 @@ admin_group_index:
   expression: '/admin/group'
   controller: 'App\Controller\Admin\UserGroupCrudController'
   method: 'index'
-  request: 'get'
+  request: ['get','post']
 
 admin_group_new:
   expression: '/admin/group/new'

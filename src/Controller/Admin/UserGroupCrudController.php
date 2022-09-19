@@ -44,6 +44,18 @@ class UserGroupCrudController extends AbstractController
         $this->adminMenu->createMenu();
         $userData = [];
 
+        if($this->request->isPostRequest() and $this->request->isFormSubmitted())
+        {
+            $em = new EntityManager();
+
+            if($this->request->getFieldAsArray('mark_row')){
+                foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
+                {
+                    $em->remove(UserGroup::class,$id);
+                }
+            }
+        }
+
         return $this->render('admin/group/index.html',[
             'adminMenu' => $this->adminMenu->render(),
             'objects' => $this->getRepositoryManager()->findAll(UserGroup::class),

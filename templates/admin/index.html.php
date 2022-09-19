@@ -27,7 +27,7 @@ $this->layout('_layout.standard.html',
 <?php $this->start('main') ?>
 <div class="row g-3 mb-3">
     <div></div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
         <div class="d-none d-md-block">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">Menü</div>
@@ -40,7 +40,7 @@ $this->layout('_layout.standard.html',
         </div>
     </div>
 
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-md-9">
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Administration</div>
         <div class="rounded-3 border bg-light p-3">
             <h1>Dashboard</h1>
