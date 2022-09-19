@@ -71,6 +71,12 @@ admin_role_new:
   method: 'new'
   request: 'post'
 
+admin_role_add_permission:
+  expression: '/admin/role/add-permission'
+  controller: 'App\Controller\Admin\RoleCrudController'
+  method: 'addPermission'
+  request: 'post'
+
 admin_group_index:
   expression: '/admin/group'
   controller: 'App\Controller\Admin\UserGroupCrudController'

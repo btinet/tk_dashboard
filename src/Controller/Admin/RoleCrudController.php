@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
 use App\Entity\UserRole;
+use App\Entity\UserRoleHasRolePermission;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
 use App\Repository\UserRoleRepository;
@@ -100,7 +101,6 @@ class RoleCrudController extends AbstractController
     {
         if($this->request->isFormSubmitted() and $this->request->isPostRequest())
         {
-            die('TODO: Speichern implementieren!');
             $em = new EntityManager();
             $role = new UserRole();
 
@@ -114,6 +114,26 @@ class RoleCrudController extends AbstractController
             }
         }
         $this->response->redirectToRoute(302,'admin_role_index');
+    }
+
+    public function addPermission()
+    {
+        if($this->request->isFormSubmitted() and $this->request->isPostRequest())
+        {
+            $em = new EntityManager();
+            $rolePermission = new UserRoleHasRolePermission();
+
+            foreach ($this->request->getFieldAsArray('permissions') as $permissionId)
+            {
+                if($permissionId)
+                {
+                    $rolePermission->setUserRoleId($this->request->getFieldAsArray('role_id'));
+                    $rolePermission->setRolePermissionId($permissionId);
+                    $em->persist($rolePermission);
+                }
+            }
+        }
+        $this->response->redirectToRoute(302,$this->generateUrlFromRoute('admin_role_show',[$this->request->getFieldAsArray('role_id')]),true);
     }
 
 }

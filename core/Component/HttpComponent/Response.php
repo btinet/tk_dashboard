@@ -31,9 +31,9 @@ class Response
      * @param $status
      * @param $route
      */
-    public function redirectToRoute($status, $route = null)
+    public function redirectToRoute($status, $route = null,bool $isUrl = false)
     {
-        $route = self::generateUrlFromRoute($route);
+        $route= (!$isUrl) ? self::generateUrlFromRoute($route) : $route;
         header('Location: ' .$route, true, $status);
         exit;
     }

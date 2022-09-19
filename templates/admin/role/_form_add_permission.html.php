@@ -22,19 +22,19 @@ use Core\Component\SessionComponent\Session;
 
 ?>
 
-<form method="post" id="role_form" class="row g-3 mb-4 needs-validation" action="<?=$response->generateUrlFromRoute('admin_role_new')?>" novalidate>
+<form method="post" id="role_form" class="row g-3 mb-4 needs-validation" action="<?=$response->generateUrlFromRoute('admin_role_add_permission')?>" novalidate>
     <?php if (array_filter((array)$permissions)): ?>
         <?php foreach ($permissions as $permission): ?>
             <?php if (!$repository->findOnePermission($object->getId(),$permission->getId())):?>
                 <div class="col-12">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" name="<?=$permission->getId()?>" type="checkbox" role="switch" id="switch_<?=$permission->getId()?>">
+                        <input class="form-check-input" name="permissions[]" type="checkbox" role="switch" value="<?=$permission->getId()?>" id="switch_<?=$permission->getId()?>">
                         <label class="form-check-label" for="switch_<?=$permission->getId()?>"><?=$permission->getLabel()?></label>
-                        <span class=""></span>
                     </div>
                 </div>
             <?php endif; ?>
         <?php endforeach;?>
     <?php endif;?>
     <input type="hidden" id="csrf_token" name="csrf_token" value="<?=$session->get('csrf_token')?>">
+    <input type="hidden" id="role_id" name="role_id" value="<?=$object->getId()?>">
 </form>
