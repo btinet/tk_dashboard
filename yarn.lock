@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
+"@ibm/plex@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@ibm/plex/-/plex-6.1.1.tgz#eddfd98fe86ecafc74bc8ec7595e7615bb88eb34"
+  integrity sha512-b2z/Gsc8KHOVrYo/yPauRvRDNMwF6zhEZZsvogs1rCmmyfVXBTY9uUkf6TyplhQs/L4UcjBus8R/RDp7yASTBA==
+
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.2.tgz#c1aedc61e853f2bb9f5dfe6d4442d3b565b253b9"

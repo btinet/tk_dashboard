@@ -2,7 +2,23 @@ $blue: #255372;
 
 $enable-caret: true;
 $fa-font-path: "../../node_modules/font-awesome/fonts";
+$font-size-base: 1rem;
+$font-weight-normal: 300;
+
+$enable-shadows: true;
+$enable-gradients: true;
+
+$font-prefix: "../../node_modules/@ibm/plex";;
+@import '../../node_modules/@ibm/plex/scss/ibm-plex.scss';
+
+$font-family-sans-serif: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+$font-family-monospace: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 @import "../../node_modules/font-awesome/scss/font-awesome";
+
+
+.sortable-theme-bootstrap{
+  font-family: $font-family-sans-serif!important;
+}
