@@ -4,15 +4,23 @@ namespace App\Entity;
 
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
+use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
 final class UserGroup
 {
     use IdEntityTrait;
     use DateTimeEntityTrait;
 
+    private AbstractRepositoryFactory $repository;
+
     protected string $label;
     protected string $description;
     protected int $roleId;
+
+    public function __construct()
+    {
+        $this->repository = new AbstractRepositoryFactory();
+    }
 
     /**
      * @return string
@@ -66,6 +74,15 @@ final class UserGroup
     {
         $this->roleId = $roleId;
         return $this;
+    }
+
+    public function getRole()
+    {
+        $role = $this->repository->findOneBy(UserRole::class,[
+            'id' => $this->roleId
+        ]);
+        if(!array_filter((array)$role)) return false;
+        return $role;
     }
 
 }

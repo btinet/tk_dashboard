@@ -95,8 +95,8 @@ $this->layout('_layout.standard.html',
                                     <label class="form-check-label d-none" for="switch_<?=$object->getId()?>"></label>
                                 </div>
                             </td>
-                            <td><?=$object->getLabel()?></td>
-                            <td><?=$object->getRoleId()?></td>
+                            <td><a href="#"><?=$object->getLabel()?></a></td>
+                            <td><a href="<?=$response->generateUrlFromRoute('admin_role_show',[$object->getRoleId()])?>"><?=$object->getRole()?></a></td>
                             <td class="text-nowrap"><?=$object->getDescription()?:''?></td>
                             <td><?=$response->formatDate($object->getCreated())?></td>
                             <td><?=$response->formatDate($object->getUpdated())?></td>
