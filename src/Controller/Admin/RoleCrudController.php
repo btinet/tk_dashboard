@@ -52,6 +52,8 @@ class RoleCrudController extends AbstractController
                 {
                     $em->remove(UserRole::class,$id);
                 }
+                $this->setFlash('role_deleted');
+                $this->response->redirectToRoute(302,'admin_role_index');
             }
         }
 
@@ -73,10 +75,12 @@ class RoleCrudController extends AbstractController
         $object = $this->getRepositoryManager()->find(UserRole::class, $id);
 
         if($this->request->getFieldAsArray('mark_row')){
-            foreach($this->request->getFieldAsArray('mark_row') as $key => $permissionId)
+            foreach($this->request->getFieldAsArray('mark_row') as $permission)
             {
-                $object->removePermission($permissionId);
+                $object->removePermission($permission);
             }
+            $this->setFlash('permission_removed');
+            $this->response->redirectToRoute(302,$this->generateUrlFromRoute('admin_role_show',[$id]),true);
         }
 
         $this->adminMenu->createMenu();
@@ -86,6 +90,7 @@ class RoleCrudController extends AbstractController
 
         if(!array_filter((array)$object))
         {
+            $this->setFlash('role_not_found','danger');
             $this->response->redirectToRoute(302,'admin_role_index');
         }
 
@@ -110,6 +115,7 @@ class RoleCrudController extends AbstractController
                 $role->setDescription($this->request->getFieldAsString('description'));
                 $em->persist($role);
 
+                $this->setFlash('role_saved');
                 $this->response->redirectToRoute(302,'admin_role_index');
             }
         }
@@ -132,6 +138,7 @@ class RoleCrudController extends AbstractController
                     $em->persist($rolePermission);
                 }
             }
+            $this->setFlash('permission_added');
         }
         $this->response->redirectToRoute(302,$this->generateUrlFromRoute('admin_role_show',[$this->request->getFieldAsArray('role_id')]),true);
     }

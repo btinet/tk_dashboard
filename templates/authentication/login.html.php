@@ -35,20 +35,6 @@ $this->layout('_layout.standard.html',
     </div>
     <div class="col-12 col-md-4">
 
-        <?php if($lastError): ?>
-            <div class="toast-container position-fixed top-0 end-0 p-3" style="position: absolute; z-index: 10000">
-                <div id="liveToast" class="toast show text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <strong class="me-auto">Fehlermeldung</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        <span><?=$trans->getConfig($lastError)?></span>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-
         <div class="mt-2 mb-5 my-md-5">
             <h1>Anmelden</h1>
             <p class="lead">

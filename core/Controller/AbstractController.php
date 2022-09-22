@@ -79,6 +79,7 @@ abstract class AbstractController implements ControllerInterface
             'trans' => $this->trans,
             'locale'=> $trans->locale,
             'locales'=> $trans->availableLanguages,
+            'flash' => $this->getFlash()
         ]);
 
     }
@@ -138,6 +139,43 @@ abstract class AbstractController implements ControllerInterface
     {
         return new AbstractRepositoryFactory();
     }
+
+    /**
+     * @param string|null $message
+     * @param string|null $type
+     */
+    public function getFlash(string $message = null, string $type = null): ?string
+    {
+
+        $message = $message ? $message : $this->session->get('message');
+        $type = $type ? $type : $this->session->get('message_type');
+        $type = $type ? $type : 'success';
+
+        if ($message) {
+
+            $flash = $this->render('/app/_toast.html', [
+                'type' => $type,
+                'message' => $message,
+                'trans' => $this->trans,
+            ]);
+            $this->session->clear('message');
+            $this->session->clear('message_type');
+            return $flash;
+        }
+        return null;
+    }
+
+    /**
+     * @param string $message
+     * @param string $type
+     * @return void
+     */
+    public function setFlash(string $message, string $type = 'success'): void
+    {
+        $this->session->set('message', $message);
+        $this->session->set('message_type', $type);
+    }
+
 
     /**
      * @param string $template path to the template being rendered without ".php"

@@ -1,3 +1,5 @@
+200: Login erfolgreich.
+201: Logout erfolgreich.
 500: interner Server-Fehler
 
 1601: Passwort ist keine Zeichenkette
@@ -33,6 +35,16 @@ user: Kennungen
 dashboard: Dashboard
 role: Rolle
 roles: Rollen
+
+role_saved: Rolle erfolgreich angelegt.
+role_updated: Rolle erfolgreich aktualisiert.
+role_deleted: Rolle(n) erfolgreich gelöscht.
+role_not_found: Rolle nicht gefunden.
+
+permission_added: Berechtigung(en) erfolgreich zugeordnet.
+permission_removed: Berechtigung(en) erfolgreich entfernt.
+
+
 
 id: ID
 label: Bezeichnung

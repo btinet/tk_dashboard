@@ -52,13 +52,17 @@ class AuthenticationController extends AbstractController
                     if ($user) {
                         $this->session->set('user', $user->getId());
                         $this->session->set('login', true);
+                        $this->setFlash(200);
                     }
-                    $this->response->redirectToRoute(302, 'app_index');
+
+                    $this->response->redirectToRoute(302, 'exam_index');
                 }
             }
-
-
+            $this->setFlash($tryLoginLastError,'danger');
+            $this->response->redirectToRoute(302, 'authentication_login');
         }
+
+
 
         return $this->render('authentication/login.html',[
             'lastError' => $tryLoginLastError
