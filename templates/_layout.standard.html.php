@@ -43,18 +43,18 @@ $this->layout('base.html',
                 <div class="row g-3">
                     <div class="col-5 col-md-4">
                         <div class="d-flex justify-content-start align-items-center h-100">
-                            <a class="btn btn-light link-primary me-1 d-block d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                            <a class="btn btn-light  me-1 d-block d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                                 <i class="fa fa-fw fa-navicon" style="font-size: 1.2em"></i>
                             </a>
 
-                            <a class="btn btn-light link-primary me-1 d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
+                            <a class="btn btn-light  me-1 d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
                                 <i class="fa fa-fw fa-home" style="font-size: 1.2em"></i>
                             </a>
                             <?php if(!$session->get('login')): ?>
-                                <a class="btn btn-light link-primary" data-bs-toggle="tooltip" data-bs-title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
+                                <a class="btn btn-light " data-bs-toggle="tooltip" data-bs-title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
                             <?php else: ?>
                                 <div class="dropdown">
-                                    <button class="btn btn-light link-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn btn-light  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-fw fa-user" style="font-size: 1.2em"></i>
                                     </button>
                                     <ul class="dropdown-menu">
@@ -113,13 +113,12 @@ $this->layout('base.html',
         <?php endif ?>
     </main>
 
-    <footer id="footer" class="mt-auto text-bg-primary">
+    <footer id="footer" class="mt-auto text-bg-lighter">
         <?php if ($this->section('footer')): ?>
             <?=$this->section('footer')?>
         <?php else: ?>
             <div class="container">
                 <div class="py-3 d-flex justify-content-start align-items-center">
-                    <img class="" src="<?=$response->generateUrlFromString('/assets/images/tk_logo_24px.png')?>" height="24" width="96" alt="Treptow Kolleg Baum Logo">
                     <span class="small"><?=$meta->get('footer_text')?></span>
                 </div>
             </div>

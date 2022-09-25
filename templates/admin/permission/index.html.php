@@ -40,7 +40,7 @@ $this->layout('_layout.standard.html',
                 <?=$this->insert('admin/permission/_form.html',['userData'=>$userData]) ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light link-primary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-light " data-bs-dismiss="modal">Abbrechen</button>
                 <button role="button" form="role_form" type="submit" class="btn btn-primary">Speichern</button>
             </div>
         </div>
@@ -66,7 +66,7 @@ $this->layout('_layout.standard.html',
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('roles')?></div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
+            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
             <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 
@@ -113,7 +113,7 @@ $this->layout('_layout.standard.html',
                             </tr>
                     <?php endfor;?>
                     <tr>
-                        <td colspan="5" class="text-center"><button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Neue Berechtigung erstellen</button></td>
+                        <td colspan="5" class="text-center"><button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Neue Berechtigung erstellen</button></td>
                     </tr>
                     <?php for ($i = 1; $i <= 3;$i++): ?>
                         <?php $randInt = rand(6,12); ?>
@@ -134,7 +134,7 @@ $this->layout('_layout.standard.html',
         </div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
+            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
             <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 

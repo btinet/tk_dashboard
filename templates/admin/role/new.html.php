@@ -39,7 +39,7 @@ $this->layout('_layout.standard.html',
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('roles')?></div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>" class="btn btn-light link-primary me-2">Übersicht</a>
+            <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>" class="btn btn-light  me-2">Übersicht</a>
             <button role="button" form="role_form" type="submit" class="btn btn-primary">Speichern</button>
         </div>
 
@@ -64,7 +64,7 @@ $this->layout('_layout.standard.html',
         </form>
 
         <div class="mb-3 d-flex justify-content-start">
-            <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>" class="btn btn-light link-primary me-2">Übersicht</a>
+            <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>" class="btn btn-light  me-2">Übersicht</a>
             <button role="button" form="role_form" type="submit" class="btn btn-primary">Speichern</button>
         </div>
 

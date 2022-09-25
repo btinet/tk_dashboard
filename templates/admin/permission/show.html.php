@@ -41,8 +41,8 @@ $this->layout('_layout.standard.html',
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('roles')?></div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
-            <a href="#" class="btn btn-light link-primary">Gruppe zuordnen</a>
+            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
+            <a href="#" class="btn btn-light ">Gruppe zuordnen</a>
         </div>
 
         <div class="table-responsive rounded-3 bg-white border mb-3">
@@ -80,7 +80,7 @@ $this->layout('_layout.standard.html',
                             </tr>
                     <?php endfor;?>
                     <tr>
-                        <td colspan="5" class="text-center"><button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Neue Berechtigung erstellen</button></td>
+                        <td colspan="5" class="text-center"><button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Neue Berechtigung erstellen</button></td>
                     </tr>
                     <?php for ($i = 1; $i <= 3;$i++): ?>
                         <?php $randInt = rand(6,12); ?>
@@ -100,8 +100,8 @@ $this->layout('_layout.standard.html',
         </div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light link-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
-            <a href="#" class="btn btn-light link-primary">Gruppe zuordnen</a>
+            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung anlegen</button>
+            <a href="#" class="btn btn-light ">Gruppe zuordnen</a>
         </div>
 
     </div>
