@@ -45,8 +45,10 @@ class RolePermissionCrudController extends AbstractController
             if($this->request->getFieldAsArray('mark_row')){
                 foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
                 {
-                    $em->remove(RolePermission::class,$id);
+                    $result = $em->remove(RolePermission::class,$id);
+                    $this->setFlash($result,'warning');
                 }
+                $this->response->redirectToRoute(302,'admin_permission_index');
             }
         }
 

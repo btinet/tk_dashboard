@@ -50,9 +50,11 @@ class RoleCrudController extends AbstractController
             if($this->request->getFieldAsArray('mark_row')){
                 foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
                 {
-                    $em->remove(UserRole::class,$id);
+                    $result = $em->remove(UserRole::class,$id);
+                    print_r($result);
                 }
                 $this->setFlash('role_deleted');
+
                 $this->response->redirectToRoute(302,'admin_role_index');
             }
         }

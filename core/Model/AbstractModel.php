@@ -194,7 +194,12 @@ abstract class AbstractModel extends PDO implements ModelInterface
             $stmt->bindValue(":$key", $value);
         }
 
-        self::execute($stmt);
+        try {
+            self::execute($stmt);
+        } catch (PDOException $exception){
+            return $exception->getCode();
+        }
+
         return $stmt->rowCount();
     }
 

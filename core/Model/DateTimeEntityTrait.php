@@ -22,11 +22,7 @@ trait DateTimeEntityTrait
      */
     public function getUpdated(): ?string
     {
-        if ($this->updated)
-        {
-            return $this->updated;
-        }
-        return null;
+        return $this->updated ? $this->updated : null;
     }
 
 

@@ -23,6 +23,8 @@
 21034: Vorname ist keine Zeichenkette
 21035: Nachname ist keine Zeichenkette
 
+23000: Das Element kann nicht gelöscht werden. Es wird noch verwendet.
+
 email: E-Mail-Adresse
 username: Kennung
 password: Passwort
