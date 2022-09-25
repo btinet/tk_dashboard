@@ -8,6 +8,94 @@ $font-weight-normal: 300;
 $enable-shadows: true;
 $enable-gradients: true;
 
+$systemBlue: #255372;
+$systemGreen:	rgba( 52,199, 89,1);
+$systemIndigo:	rgba( 88, 86,214,1);
+$systemOrange:	rgba(255,149,  0,1);
+$systemPink:	rgba(255, 45, 85,1);
+$systemPurple:	rgba(175, 82,222,1);
+$systemRed:	    rgba(255, 59, 48,1);
+$systemTeal:	rgba( 90,200,250,1);
+$systemYellow:	rgba(255,204,  0,1);
+
+$systemGray:	rgba(142,142,147,1);
+$systemGray2:	rgba(174,174,178,1);
+$systemGray3:	rgba(199,199,204,1);
+$systemGray4:	rgba(209,209,214,1);
+$systemGray5:	rgba(229,229,234,1);
+$systemGray6:	rgba(242,242,247,.8);
+
+$clear: 		rgba(  0,  0,  0,0);
+$full-black:	rgba( 8, 8, 12,1);
+$black:		    rgba( 54, 54, 54,1);
+$white:		    rgba(255,255,255,1);
+
+
+$body-bg:       lighten($systemGray6,3);
+$body-color:    rgba($black,.9);
+
+.bg-lighter{background-color: lighten($systemGray6,1)}
+
+
+$grays: (
+        "100": $systemGray6,
+        "200": $systemGray6,
+        "300": $systemGray5,
+        "400": $systemGray5,
+        "500": $systemGray4,
+        "600": $systemGray4,
+        "700": $systemGray3,
+        "800": $systemGray2,
+        "900": $systemGray,
+);
+
+$input-bg:                              rgba($white,.8);
+$input-disabled-bg:                     rgba($systemGray5,.8);
+$input-color:                           $body-color;
+$input-border-color:                    $systemGray6;
+$border-color:                      $systemGray5;
+$input-border-color:                $systemGray5;
+$input-focus-border-color:          $systemBlue;
+
+$theme-colors: (
+        "primary":    $systemBlue,
+        "secondary":  $systemGray2,
+        "success":    $systemGreen,
+        "warning":    $systemOrange,
+        "danger":     $systemRed,
+        "info":       $systemTeal,
+        "light":      $systemGray6,
+        "dark":       $black,
+        "black":       $full-black,
+        "white":      $white,
+);
+
+#header,.offcanvas,.modal-header,.modal-footer{
+  background-color: map-get($theme-colors, 'light');
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+#header{
+  position: sticky; width: 100%; z-index: 1000;
+}
+
+$component-active-bg:               map-get($theme-colors, 'primary');
+$input-btn-focus-width:             1px;
+$link-hover-color:                  $systemBlue;
+
+$border-color:                      $systemGray5;
+$input-border-color:                $systemGray5;
+$input-focus-border-color:          $systemBlue;
+
+$border-radius:                     .3rem;
+$border-radius-lg:                  .3rem;
+$border-radius-sm:                  .2rem;
+
 $font-prefix: "../../node_modules/@ibm/plex";;
 @import '../../node_modules/@ibm/plex/scss/ibm-plex.scss';
 
