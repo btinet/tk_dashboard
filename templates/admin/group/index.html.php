@@ -73,7 +73,7 @@ $this->layout('_layout.standard.html',
         </div>
 
         <div class="table-responsive bg-white rounded-3 border mb-3">
-            <table class="table table-hover  table-striped mb-0 sortable-theme-bootstrap" data-sortable>
+            <table class="table table-hover table-striped mb-0 sortable-theme-bootstrap" data-sortable>
                 <caption class="px-2 small">Gruppenübersicht</caption>
                 <thead>
                 <tr>
