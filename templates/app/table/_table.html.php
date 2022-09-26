@@ -10,9 +10,13 @@ use Core\Component\HttpComponent\Response;
 ?>
 
 <table>
-    <?php $this->section('caption') ?>
-    <?php $this->section('thead') ?>
-    <?php $this->section('tbody') ?>
+    <thead>
+    <tr>
+        <?php foreach ($fields as $column): ?>
+        <td><?=$column?></td>
+        <?php endforeach; ?>
+    </tr>
+    </thead>
 </table>
 
 

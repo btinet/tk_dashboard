@@ -9,6 +9,7 @@ use App\Entity\UserRoleHasRolePermission;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
 use App\Repository\UserRoleRepository;
+use App\Type\TableType;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
@@ -42,6 +43,15 @@ class RoleCrudController extends AbstractController
 
     public function index(): string
     {
+        $table = new TableType($this->getView());
+        $table
+            ->configureComponent(UserRole::class)
+            ->setData($this->getRepositoryManager()->findAll(UserRole::class))
+            ->add('id')
+            ->add('label')
+            ->add('description')
+            ->setTemplateFile('app/table/_table.html')
+        ;
 
         if($this->request->isPostRequest() and $this->request->isFormSubmitted())
         {
@@ -65,7 +75,8 @@ class RoleCrudController extends AbstractController
         return $this->render('admin/role/index.html',[
             'adminMenu' => $this->adminMenu->render(),
             'objects' => $this->getRepositoryManager()->findAll(UserRole::class),
-            'userData' => $userData
+            'userData' => $userData,
+            'table' => $table->render()
         ]);
     }
 

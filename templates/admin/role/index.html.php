@@ -170,4 +170,6 @@ $this->layout('_layout.standard.html',
 
     </div>
 </div>
+<hr>
+<?= $table ?>
 <?php $this->stop() ?>
