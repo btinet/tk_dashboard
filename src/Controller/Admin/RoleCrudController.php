@@ -82,9 +82,9 @@ class RoleCrudController extends AbstractController
     }
 
     /**
-     * @param int|null $id
+     * @param int $id
      */
-    public function show(int $id = null):string
+    public function show(int $id):string
     {
         $object = $this->getRepositoryManager()->find(UserRole::class, $id);
 
@@ -102,6 +102,15 @@ class RoleCrudController extends AbstractController
 
         $permissions = $this->repository->findAll(RolePermission::class);
 
+        $table = new TableType($this->getView());
+        $table
+            ->configureComponent(RolePermission::class)
+            ->setData($object->getPermissions())
+            ->setCaption('Berechtigungen')
+            ->add('label')
+            ->add('description')
+        ;
+
         if(!array_filter((array)$object))
         {
             $this->setFlash('role_not_found','danger');
@@ -112,7 +121,8 @@ class RoleCrudController extends AbstractController
             'adminMenu' => $this->adminMenu->render(),
             'object' => $object,
             'permissions' => $permissions,
-            'userData' => $userData
+            'userData' => $userData,
+            'table' => $table->render()
         ]);
     }
 

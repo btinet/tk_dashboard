@@ -27,26 +27,40 @@ use Core\Component\HttpComponent\Response;
         </tr>
         </thead>
         <tbody>
-            <?php foreach ($data as $item): ?>
-                <tr>
-                    <td class="text-center">
-                        <div class="form-check form-switch">
-                            <input form="delete_entry" class="form-check-input" name="mark_row[]" value="<?=$item->getId()?>" type="checkbox" role="switch" id="switch_<?=$item->getId()?>">
-                            <label class="form-check-label d-none" for="switch_<?=$item->getId()?>"></label>
-                        </div>
-                    </td>
-                    <?php foreach ($fields as $column): ?>
-                    <?php $getter = "get{$column['label']}"; ?>
-                        <td>
-                            <?php if(isset($column['route_name'])):?>
-                                <a href="<?=$response->generateUrlFromRoute($column['route_name'],[$item->getId()])?>"><?=$item->$getter()?></a>
-                                <?php else: ?>
-                                <?=$item->$getter()?>
-                            <?php endif; ?>
+            <?php if (!empty($data)):?>
+                <?php foreach ($data as $item): ?>
+                    <tr>
+                        <td class="text-center">
+                            <div class="form-check form-switch">
+                                <input form="delete_entry" class="form-check-input" name="mark_row[]" value="<?=$item->getId()?>" type="checkbox" role="switch" id="switch_<?=$item->getId()?>">
+                                <label class="form-check-label d-none" for="switch_<?=$item->getId()?>"></label>
+                            </div>
                         </td>
-                    <?php endforeach; ?>
-                </tr>
-            <?php endforeach; ?>
+                        <?php foreach ($fields as $column): ?>
+                        <?php $getter = "get{$column['label']}"; ?>
+                            <td>
+                                <?php if(isset($column['route_name'])):?>
+                                    <a href="<?=$response->generateUrlFromRoute($column['route_name'],[$item->getId()])?>"><?=$item->$getter()?></a>
+                                    <?php else: ?>
+                                    <?=$item->$getter()?>
+                                <?php endif; ?>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <?php for($a = 1; $a <= 5;$a++):?>
+                    <tr>
+                        <?php if ($a !== 3):?>
+                            <?php for($i = 0; $i <= count($fields);$i++):?>
+                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
+                            <?php endfor; ?>
+                        <?php else: ?>
+                            <td colspan="<?=count($fields)+1?>" class="text-center">Noch keine Einträge vorhanden!</td>
+                        <?php endif; ?>
+                    </tr>
+                <?php endfor; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>

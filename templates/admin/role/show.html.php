@@ -87,58 +87,7 @@ $this->layout('_layout.standard.html',
             <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 
-        <div class="table-responsive rounded-3 bg-white border mb-3">
-            <table class="table table-hover table-striped rounded-3 mb-0 sortable-theme-bootstrap" data-sortable>
-                <caption class="px-2 small">Übersicht der Berechtigungen</caption>
-                <thead>
-                <tr>
-                    <td></td>
-                    <th><?=$trans->getConfig('permission')?></th>
-                    <th><?=$trans->getConfig('description')?></th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php if (array_filter((array)$object->getPermissions())): ?>
-                    <?php foreach ($object->getPermissions() as $permission): ?>
-                        <tr>
-                            <td class="text-center">
-                                <div class="form-check form-switch">
-                                    <input form="delete_entry" class="form-check-input" name="mark_row[]" value="<?=$permission->getId()?>" type="checkbox" role="switch" id="switch_<?=$permission->getId()?>">
-                                    <label class="form-check-label d-none" for="switch_<?=$permission->getId()?>"></label>
-                                </div>
-                            </td>
-                            <td><?=$permission->getLabel()?></td>
-                            <td class="text-nowrap"><?=$permission->getDescription()?:''?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <?php for ($i = 1; $i <= 3;$i++): ?>
-                        <?php $randInt = rand(6,12); ?>
-                            <tr>
-                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                                <?php for ($k = 1; $k <= 2;$k++): ?>
-                                    <?php $randInt = rand(6,12); ?>
-                                    <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
-                                <?php endfor; ?>
-                            </tr>
-                    <?php endfor;?>
-                    <tr>
-                        <td colspan="3" class="text-center"><button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Berechtigung zuordnen</button></td>
-                    </tr>
-                    <?php for ($i = 1; $i <= 3;$i++): ?>
-                        <?php $randInt = rand(6,12); ?>
-                        <tr>
-                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                            <?php for ($k = 1; $k <= 2;$k++): ?>
-                                <?php $randInt = rand(6,12); ?>
-                                <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
-                            <?php endfor; ?>
-                        </tr>
-                    <?php endfor;?>
-                <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
+        <?= $table ?>
 
         <div class="mb-3 d-flex justify-content-start">
             <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Zuordnen</button>

@@ -93,9 +93,10 @@ abstract class AbstractTemplateComponent
         return $this;
     }
 
-    public function setData(array $data):self
+    public function setData($data):self
     {
-        $this->data['data'] = $data;
+        $this->data['data'] = ($data) ?: null;
+
         return $this;
     }
 

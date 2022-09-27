@@ -12,6 +12,7 @@
  * @var Object $objects Translation object
  * @var Session $session Session-Objekt
  * @var array|false $userData Formulardaten des Benutzers
+ * @var array $table Tabledata for current entitx
  */
 
 
@@ -86,68 +87,7 @@ $this->layout('_layout.standard.html',
             </ul>
         </nav>
 
-        <div class="table-responsive rounded-3 bg-white border mb-3">
-            <table class="table table-hover table-striped mb-0 sortable-theme-bootstrap" data-sortable>
-                <caption class="px-2 small">Rollenübersicht</caption>
-                <thead>
-                <tr>
-                    <td></td>
-                    <th><?=$trans->getConfig('label')?></th>
-                    <th><?=$trans->getConfig('description')?></th>
-                    <th><?=$trans->getConfig('created')?></th>
-                    <th><?=$trans->getConfig('updated')?></th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php if (array_filter((array)$objects)): ?>
-                    <?php foreach ($objects as $object): ?>
-                        <tr>
-                            <td class="text-center">
-                                <div class="form-check form-switch">
-                                    <input form="delete_entry" class="form-check-input" name="mark_row[]" value="<?=$object->getId()?>" type="checkbox" role="switch" id="switch_<?=$object->getId()?>">
-                                    <label class="form-check-label d-none" for="switch_<?=$object->getId()?>"></label>
-                                </div>
-                            </td>
-                            <td><a href="<?=$response->generateUrlFromRoute('admin_role_show',[$object->getId()])?>"><?=$object->getLabel()?></a></td>
-                            <td class="text-nowrap"><?=$object->getDescription()?:''?></td>
-                            <td><?=$response->formatDate($object->getCreated())?></td>
-                            <td><?=$response->formatDate($object->getUpdated())?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <?php for ($i = 1; $i <= 3;$i++): ?>
-                        <?php $randInt = rand(6,12); ?>
-                            <tr>
-                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                                <?php for ($k = 1; $k <= 2;$k++): ?>
-                                    <?php $randInt = rand(6,12); ?>
-                                    <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
-                                <?php endfor; ?>
-                                <td class="placeholder-wave"><span class="placeholder col-12 bg-light"></span></td>
-                                <td class="placeholder-wave"><span class="placeholder col-12 bg-light"></span></td>
-                            </tr>
-                    <?php endfor;?>
-                    <tr>
-                        <td colspan="5" class="text-center"><a href="<?=$response->generateUrlFromRoute('admin_role_new')?>" class="btn btn-light ">Neue Rolle erstellen</a></td>
-                    </tr>
-                    <?php for ($i = 1; $i <= 3;$i++): ?>
-                        <?php $randInt = rand(6,12); ?>
-                        <tr>
-                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                            <?php for ($k = 1; $k <= 1;$k++): ?>
-                                <?php $randInt = rand(6,12); ?>
-                                <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
-                            <?php endfor; ?>
-                            <td class="placeholder-wave"><span class="placeholder col-12 bg-light"></span></td>
-                            <td class="placeholder-wave"><span class="placeholder col-12 bg-light"></span></td>
-                        </tr>
-                    <?php endfor;?>
-                <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
+        <?= $table ?>
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">
@@ -170,6 +110,5 @@ $this->layout('_layout.standard.html',
 
     </div>
 </div>
-<hr>
-<?= $table ?>
+
 <?php $this->stop() ?>
