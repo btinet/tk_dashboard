@@ -22,6 +22,13 @@ class AdminMenu extends AbstractMenu
                     'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
             ])
+            ->add('exams',NavigationType::class,[
+                'label' => 'exams',
+                'route' => 'admin_exam_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ])
             ->add('roles',NavigationType::class,[
                 'label' => 'roles',
                 'route' => 'admin_role_index',

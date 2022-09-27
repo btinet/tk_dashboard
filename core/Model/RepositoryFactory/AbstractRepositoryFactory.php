@@ -40,15 +40,25 @@ class AbstractRepositoryFactory extends EntityManagerComponent
      * @param array $sortBy
      * @return array|false|string
      */
-    public function findAll(string $entity, array $sortBy = [])
+    public function findAll(string $entity, array $sortBy = [], int $limit = 10, int $offset = 0 )
     {
+        if($limit){
+            $limit = "LIMIT $limit";
+    } else {
+            $limit = '';
+        }
+        if($offset){
+            $offset = "OFFSET $offset";
+        } else {
+            $offset = '';
+        }
         try {
             $entityClass = self::setEntityClass($entity);
             $entityShortName = self::generateSnakeTailString($entityClass->getShortname());
 
             $columns = self::setColumns($entityClass);
             $orderData = self::createOrderData($sortBy);
-            $result = self::select("SELECT {$columns} FROM {$entityShortName} $orderData");
+            $result = self::select("SELECT {$columns} FROM {$entityShortName} $orderData $limit $offset");
             return $result->fetchAll(PDO::FETCH_CLASS, $entity);
         } catch (PDOException $exception) {
             return $exception->getMessage();

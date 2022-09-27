@@ -53,6 +53,12 @@ admin_index:
   method: 'index'
   request: 'get'
 
+admin_exam_index:
+  expression: '/admin/exam'
+  controller: 'App\Controller\Admin\ExamCrudController'
+  method: 'index'
+  request: [ 'get','post' ]
+
 admin_role_index:
   expression: '/admin/role'
   controller: 'App\Controller\Admin\RoleCrudController'
