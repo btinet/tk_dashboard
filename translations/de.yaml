@@ -49,10 +49,15 @@ permission_removed: Berechtigung(en) erfolgreich entfernt.
 
 
 id: ID
+Id: ID
 label: Bezeichnung
+Label: Bezeichnung
 description: Beschreibung
+Description: Beschreibung
 created: erstellt
+Created: erstellt
 updated: aktualisiert
+Updated: aktualisiert
 group: Gruppe
 groups: Gruppen
 permission: Berechtigung

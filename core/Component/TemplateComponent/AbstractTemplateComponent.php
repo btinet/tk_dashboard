@@ -15,6 +15,9 @@ abstract class AbstractTemplateComponent
     protected array $templateData;
     private View $view;
     protected HtmlComponentFactory $componentFactory;
+    protected array $options = [
+        'is_header' => true
+    ];
     /**
      * @var array $data
      */
@@ -46,14 +49,42 @@ abstract class AbstractTemplateComponent
         return $this;
     }
 
-    public function add(string $field): self
+    public function add(string $field,array $options = []): self
     {
         try {
             $reflectionProperty = new ReflectionProperty($this->entity, $field);
             if($reflectionProperty->isProtected()){
                 $field = ucfirst($field);
                 $getProperty = "get$field";
-                $this->fields['fields'][] = $field;
+                $this->fields['fields'][$field]['label'] = $field;
+                $options = (!empty($options)) ? $options : $this->options;
+                foreach ($options as $option => $value)
+                {
+                    $this->fields['fields'][$field][$option] = $value;
+                }
+            }
+        } catch (ReflectionException $e) {
+            die('Fehler');
+        }
+
+        return $this;
+    }
+
+    public function addIdentifier(string $field,string $routeName,array $options = []): self
+    {
+        try {
+            $reflectionProperty = new ReflectionProperty($this->entity, $field);
+            if($reflectionProperty->isProtected()){
+                $field = ucfirst($field);
+                $getProperty = "get$field";
+                $this->fields['fields'][$field]['label'] = $field;
+                $this->fields['fields'][$field]['route_name'] = $routeName;
+                $options = (!empty($options)) ? $options : $this->options;
+                foreach ($options as $option => $value)
+                {
+                    $this->fields['fields'][$field][$option] = $value;
+                }
+
             }
         } catch (ReflectionException $e) {
             die('Fehler');
@@ -64,7 +95,13 @@ abstract class AbstractTemplateComponent
 
     public function setData(array $data):self
     {
-        $this->data = $data;
+        $this->data['data'] = $data;
+        return $this;
+    }
+
+    public function setCaption(string $caption):self
+    {
+        $this->addTemplateData(['caption' => $caption]);
         return $this;
     }
 
@@ -78,6 +115,7 @@ abstract class AbstractTemplateComponent
         if(!$templateData)
         {
             $this->addTemplateData($this->fields);
+            $this->addTemplateData($this->data);
             $templateData = $this->templateData;
         }
 

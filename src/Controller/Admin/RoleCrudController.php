@@ -47,10 +47,11 @@ class RoleCrudController extends AbstractController
         $table
             ->configureComponent(UserRole::class)
             ->setData($this->getRepositoryManager()->findAll(UserRole::class))
-            ->add('id')
-            ->add('label')
+            ->setCaption('Rollenübersicht')
+            ->addIdentifier('label','admin_role_show')
             ->add('description')
-            ->setTemplateFile('app/table/_table.html')
+            ->add('created')
+            ->add('updated')
         ;
 
         if($this->request->isPostRequest() and $this->request->isFormSubmitted())
