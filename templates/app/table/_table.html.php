@@ -37,10 +37,13 @@ use Core\Component\HttpComponent\Response;
                             </div>
                         </td>
                         <?php foreach ($fields as $column): ?>
-                        <?php $getter = "get{$column['label']}"; ?>
+                            <?php $getter = "get{$column['label']}"; ?>
+                            <?php if(isset($column['route_identifier'])):?>
+                                <?php $routeIdentifier = "get{$column['route_identifier']}"; ?>
+                            <?php endif; ?>
                             <td>
                                 <?php if(isset($column['route_name'])):?>
-                                    <a href="<?=$response->generateUrlFromRoute($column['route_name'],[$item->getId()])?>"><?=$item->$getter()?></a>
+                                    <a href="<?=$response->generateUrlFromRoute($column['route_name'],[$item->$routeIdentifier()])?>"><?=$item->$getter()?></a>
                                     <?php else: ?>
                                     <?=$item->$getter()?>
                                 <?php endif; ?>

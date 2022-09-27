@@ -48,7 +48,7 @@ class RoleCrudController extends AbstractController
             ->configureComponent(UserRole::class)
             ->setData($this->getRepositoryManager()->findAll(UserRole::class))
             ->setCaption('Rollenübersicht')
-            ->addIdentifier('label','admin_role_show')
+            ->addIdentifier('label','admin_role_show','id')
             ->add('description')
             ->add('created')
             ->add('updated')

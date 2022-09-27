@@ -12,6 +12,7 @@ final class UserGroup
     use DateTimeEntityTrait;
 
     private AbstractRepositoryFactory $repository;
+    private UserRole $role;
 
     protected string $label;
     protected string $description;

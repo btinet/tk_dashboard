@@ -9,6 +9,7 @@ use App\Entity\UserGroup;
 use App\Entity\UserRole;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Type\TableType;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
@@ -56,11 +57,24 @@ class UserGroupCrudController extends AbstractController
             }
         }
 
+        $table = new TableType($this->getView());
+        $table
+            ->configureComponent(UserGroup::class)
+            ->setData($this->getRepositoryManager()->findAll(UserGroup::class))
+            ->setCaption('Gruppenübersicht')
+            ->addIdentifier('label','admin_group_index','id')
+            ->addIdentifier('role','admin_role_show','roleId')
+            ->add('description')
+            ->add('created')
+            ->add('updated')
+        ;
+
         return $this->render('admin/group/index.html',[
             'adminMenu' => $this->adminMenu->render(),
             'objects' => $this->getRepositoryManager()->findAll(UserGroup::class),
             'userRoles' => $this->repository->findAll(UserRole::class),
-            'userData' => $userData
+            'userData' => $userData,
+            'table' => $table->render()
         ]);
     }
 

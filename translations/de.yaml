@@ -1,3 +1,4 @@
+1: Aktion erfolgreich ausgeführt.
 200: Login erfolgreich.
 201: Logout erfolgreich.
 500: interner Server-Fehler
@@ -36,7 +37,9 @@ user_locale: bevorzugte Sprache
 user: Kennungen
 dashboard: Dashboard
 role: Rolle
+Role: Rolle
 roles: Rollen
+RoleId: Rolle
 
 role_saved: Rolle erfolgreich angelegt.
 role_updated: Rolle erfolgreich aktualisiert.

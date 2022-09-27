@@ -12,6 +12,7 @@
  * @var Object $objects Translation object
  * @var UserRole $userRoles Objekt mit allen Benutzerrollen
  * @var array|false $userData Formulardaten des Benutzers
+ * @var array $table Tabledata for current entitx
  */
 
 
@@ -72,70 +73,7 @@ $this->layout('_layout.standard.html',
             <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 
-        <div class="table-responsive bg-white rounded-3 border mb-3">
-            <table class="table table-hover table-striped mb-0 sortable-theme-bootstrap" data-sortable>
-                <caption class="px-2 small">Gruppenübersicht</caption>
-                <thead>
-                <tr>
-                    <td></td>
-                    <th><?=$trans->getConfig('label')?></th>
-                    <th><?=$trans->getConfig('role')?></th>
-                    <th><?=$trans->getConfig('description')?></th>
-                    <th><?=$trans->getConfig('created')?></th>
-                    <th><?=$trans->getConfig('updated')?></th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php if (array_filter((array)$objects)): ?>
-                    <?php foreach ($objects as $object): ?>
-                        <tr>
-                            <td class="text-center">
-                                <div class="form-check form-switch">
-                                    <input form="delete_entry" class="form-check-input" name="mark_row[]" value="<?=$object->getId()?>" type="checkbox" role="switch" id="switch_<?=$object->getId()?>">
-                                    <label class="form-check-label d-none" for="switch_<?=$object->getId()?>"></label>
-                                </div>
-                            </td>
-                            <td><a href="#"><?=$object->getLabel()?></a></td>
-                            <td><a href="<?=$response->generateUrlFromRoute('admin_role_show',[$object->getRoleId()])?>"><?=$object->getRole()?></a></td>
-                            <td class="text-nowrap"><?=$object->getDescription()?:''?></td>
-                            <td><?=$response->formatDate($object->getCreated())?></td>
-                            <td><?=$response->formatDate($object->getUpdated())?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <?php for ($i = 1; $i <= 3;$i++): ?>
-                        <?php $randInt = rand(6,12); ?>
-                            <tr>
-                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                                <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                                <?php for ($k = 1; $k <= 2;$k++): ?>
-                                    <?php $randInt = rand(6,12); ?>
-                                    <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
-                                <?php endfor; ?>
-                                <td class="placeholder-wave"><span class="placeholder col-12 bg-light"></span></td>
-                                <td class="placeholder-wave"><span class="placeholder col-12 bg-light"></span></td>
-                            </tr>
-                    <?php endfor;?>
-                    <tr>
-                        <td colspan="6" class="text-center"><a href="<?=$response->generateUrlFromRoute('admin_group_new')?>" class="btn btn-light ">Neue Gruppe erstellen</a></td>
-                    </tr>
-                    <?php for ($i = 1; $i <= 3;$i++): ?>
-                        <?php $randInt = rand(6,12); ?>
-                        <tr>
-                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                            <td class="placeholder-wave"><span class="placeholder col-6 bg-light"></span></td>
-                            <?php for ($k = 1; $k <= 2;$k++): ?>
-                                <?php $randInt = rand(6,12); ?>
-                                <td class="placeholder-wave"><span class="placeholder col-<?=$randInt?> bg-light"></span></td>
-                            <?php endfor; ?>
-                            <td class="placeholder-wave"><span class="placeholder col-12 bg-light"></span></td>
-                            <td class="placeholder-wave"><span class="placeholder col-12 bg-light"></span></td>
-                        </tr>
-                    <?php endfor;?>
-                <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
+        <?= $table ?>
 
         <div class="mb-3 d-flex justify-content-start">
             <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Gruppe anlegen</button>

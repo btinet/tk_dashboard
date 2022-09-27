@@ -4,8 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
+use App\Entity\UserGroup;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Type\TableType;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
@@ -46,7 +48,13 @@ class RolePermissionCrudController extends AbstractController
                 foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
                 {
                     $result = $em->remove(RolePermission::class,$id);
-                    $this->setFlash($result,'warning');
+                    if($result == 1)
+                    {
+                        $this->setFlash($result);
+                    } else {
+                        $this->setFlash($result,'warning');
+                    }
+
                 }
                 $this->response->redirectToRoute(302,'admin_permission_index');
             }
@@ -55,10 +63,22 @@ class RolePermissionCrudController extends AbstractController
         $this->adminMenu->createMenu();
         $userData = [];
 
+        $table = new TableType($this->getView());
+        $table
+            ->configureComponent(RolePermission::class)
+            ->setData($this->getRepositoryManager()->findAll(RolePermission::class))
+            ->setCaption('Gruppenübersicht')
+            ->addIdentifier('label','admin_permission_index','id')
+            ->add('description')
+            ->add('created')
+            ->add('updated')
+        ;
+
         return $this->render('admin/permission/index.html',[
             'adminMenu' => $this->adminMenu->render(),
             'objects' => $this->getRepositoryManager()->findAll(RolePermission::class),
-            'userData' => $userData
+            'userData' => $userData,
+            'table' => $table->render()
         ]);
     }
 

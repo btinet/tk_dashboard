@@ -70,14 +70,14 @@ abstract class AbstractTemplateComponent
         return $this;
     }
 
-    public function addIdentifier(string $field,string $routeName,array $options = []): self
+    public function addIdentifier(string $field,string $routeName, string $identifier, array $options = []): self
     {
         try {
             $reflectionProperty = new ReflectionProperty($this->entity, $field);
-            if($reflectionProperty->isProtected()){
                 $field = ucfirst($field);
                 $getProperty = "get$field";
                 $this->fields['fields'][$field]['label'] = $field;
+                $this->fields['fields'][$field]['route_identifier'] = $identifier;
                 $this->fields['fields'][$field]['route_name'] = $routeName;
                 $options = (!empty($options)) ? $options : $this->options;
                 foreach ($options as $option => $value)
@@ -85,9 +85,8 @@ abstract class AbstractTemplateComponent
                     $this->fields['fields'][$field][$option] = $value;
                 }
 
-            }
         } catch (ReflectionException $e) {
-            die('Fehler');
+            die($e->getMessage());
         }
 
         return $this;
