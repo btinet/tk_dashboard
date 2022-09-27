@@ -16,7 +16,9 @@
 }
 
 #header {
-  position: sticky;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
 }
@@ -16900,6 +16902,10 @@ textarea.form-control-lg {
   margin: 0;
   overflow: visible;
   clip: auto;
+}
+
+body {
+  padding-top: 3.5rem;
 }
 
 .sortable-theme-bootstrap {

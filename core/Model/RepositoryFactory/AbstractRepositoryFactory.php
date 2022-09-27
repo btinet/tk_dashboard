@@ -14,6 +14,29 @@ use stdClass;
 class AbstractRepositoryFactory extends EntityManagerComponent
 {
 
+
+    /**
+     * @param string $entity
+     * @return false|mixed|string|null
+     */
+    public function count(string $entity)
+    {
+        try {
+            $entityClass = self::setEntityClass($entity);
+            $entityShortName = self::generateSnakeTailString($entityClass->getShortname());
+
+            $result = self::select("SELECT COUNT(*) FROM {$entityShortName}");
+            $count = $result->fetch(PDO::FETCH_NUM);
+            return array_pop($count);
+        } catch (PDOException $exception) {
+            return $exception->getMessage();
+        } catch (ReflectionException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+
+    }
+
     /**
      * @param $id
      * @param string $entity
@@ -38,6 +61,8 @@ class AbstractRepositoryFactory extends EntityManagerComponent
     /**
      * @param string $entity
      * @param array $sortBy
+     * @param int $limit
+     * @param int $offset
      * @return array|false|string
      */
     public function findAll(string $entity, array $sortBy = [], int $limit = 10, int $offset = 0 )

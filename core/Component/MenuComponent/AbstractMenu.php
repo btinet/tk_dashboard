@@ -23,9 +23,13 @@ abstract class AbstractMenu
     }
 
 
+    /**
+     * @param array $collection
+     * @return AbstractMenu
+     */
     public function createMenu(array $collection = []): AbstractMenu
     {
-
+        return $this;
     }
 
     protected function add(string $name, string $menuType, array $options = [], array $mandatory = null): AbstractMenu

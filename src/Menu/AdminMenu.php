@@ -28,7 +28,9 @@ class AdminMenu extends AbstractMenu
                 'attrib' => [
                     'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
-            ])
+            ],
+                [0]
+            )
             ->add('roles',NavigationType::class,[
                 'label' => 'roles',
                 'route' => 'admin_role_index',

@@ -54,7 +54,7 @@ admin_index:
   request: 'get'
 
 admin_exam_index:
-  expression: '/admin/exam'
+  expression: '/admin/exam/([0-9]*)'
   controller: 'App\Controller\Admin\ExamCrudController'
   method: 'index'
   request: [ 'get','post' ]

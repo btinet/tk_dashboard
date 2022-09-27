@@ -38,7 +38,7 @@ class ExamCrudController extends AbstractController
         ]);
     }
 
-    public function index(): string
+    public function index($offset = 0): string
     {
         if($this->request->isPostRequest() and $this->request->isFormSubmitted())
         {
@@ -63,19 +63,23 @@ class ExamCrudController extends AbstractController
         $this->adminMenu->createMenu();
         $userData = [];
 
+        $rows = $this->getRepositoryManager()->count(Exam::class);
+
         $table = new TableType($this->getView());
         $table
             ->configureComponent(Exam::class)
-            ->setData($this->getRepositoryManager()->findAll(Exam::class,[],5))
+            ->setData($this->getRepositoryManager()->findAll(Exam::class,[],10,$offset*10))
             ->setCaption('Prüfungen')
             ->addIdentifier('keyQuestion','admin_exam_index','id')
             ->add('year','year')
         ;
 
-        return $this->render('admin/permission/index.html',[
+        return $this->render('admin/exam/index.html',[
             'adminMenu' => $this->adminMenu->render(),
             'userData' => $userData,
-            'table' => $table->render()
+            'table' => $table->render(),
+            'rows' => ($rows/10),
+            'currentPage' => $offset
         ]);
     }
 
