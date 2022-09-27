@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import "../sortable-main/sortable.min.css";
 .bg-lighter {
   background-color: rgba(245, 245, 249, 0.8);
 }
@@ -16903,6 +16904,14 @@ textarea.form-control-lg {
 
 .sortable-theme-bootstrap {
   font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif !important;
+}
+
+th {
+  color: rgb(54, 54, 54) !important;
+}
+
+td {
+  background-color: rgb(255, 255, 255) !important;
 }
 
 /*# sourceMappingURL=app.css.map */

@@ -69,7 +69,7 @@ class ExamCrudController extends AbstractController
             ->setData($this->getRepositoryManager()->findAll(Exam::class,[],5))
             ->setCaption('Prüfungen')
             ->addIdentifier('keyQuestion','admin_exam_index','id')
-            ->add('year')
+            ->add('year','year')
         ;
 
         return $this->render('admin/permission/index.html',[

@@ -49,7 +49,7 @@ abstract class AbstractTemplateComponent
         return $this;
     }
 
-    public function add(string $field,array $options = []): self
+    public function add(string $field,string $format = 'string', array $options = []): self
     {
         try {
             $reflectionProperty = new ReflectionProperty($this->entity, $field);
@@ -57,6 +57,7 @@ abstract class AbstractTemplateComponent
                 $field = ucfirst($field);
                 $getProperty = "get$field";
                 $this->fields['fields'][$field]['label'] = $field;
+                $this->fields['fields'][$field]['format'] = $format;
                 $options = (!empty($options)) ? $options : $this->options;
                 foreach ($options as $option => $value)
                 {
@@ -70,7 +71,7 @@ abstract class AbstractTemplateComponent
         return $this;
     }
 
-    public function addIdentifier(string $field,string $routeName, string $identifier, array $options = []): self
+    public function addIdentifier(string $field,string $routeName, string $identifier, string $format = 'string', array $options = []): self
     {
         try {
             $reflectionProperty = new ReflectionProperty($this->entity, $field);
@@ -78,6 +79,7 @@ abstract class AbstractTemplateComponent
                 $getProperty = "get$field";
                 $this->fields['fields'][$field]['label'] = $field;
                 $this->fields['fields'][$field]['route_identifier'] = $identifier;
+                $this->fields['fields'][$field]['format'] = $format;
                 $this->fields['fields'][$field]['route_name'] = $routeName;
                 $options = (!empty($options)) ? $options : $this->options;
                 foreach ($options as $option => $value)

@@ -3,6 +3,7 @@ import './styles/app.css';
 
 require('bootstrap');
 require('./apps/sorter/js/sortable.min');
+require('./sortable-main/sortable.min');
 
 
 

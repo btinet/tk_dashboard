@@ -12,7 +12,7 @@ use Core\Component\HttpComponent\Response;
 
 ?>
 <div class="table-responsive rounded-3 bg-white border mb-3">
-    <table class="table table-hover table-striped mb-0 sortable-theme-bootstrap" data-sortable>
+    <table class="table table-hover table-striped mb-0 sortable">
         <caption class="px-2 small"><?= $caption ?? 'Tabelle' ?></caption>
         <thead>
         <tr>
@@ -37,15 +37,32 @@ use Core\Component\HttpComponent\Response;
                             </div>
                         </td>
                         <?php foreach ($fields as $column): ?>
-                            <?php $getter = "get{$column['label']}"; ?>
+                            <?php
+                            $columnValue = null;
+                            $getter = "get{$column['label']}";
+                            switch ($column['format'])
+                            {
+                                case 'int':
+                                    $columnValue = intval($item->$getter());
+                                    break;
+                                case 'year':
+                                    $columnValue = date("Y", mktime(0, 0, 0, 1, 1, $item->$getter()));
+                                    break;
+                                default:
+                                    $columnValue = $item->$getter();
+                                    break;
+                            }
+                            ?>
                             <?php if(isset($column['route_identifier'])):?>
                                 <?php $routeIdentifier = "get{$column['route_identifier']}"; ?>
                             <?php endif; ?>
                             <td>
                                 <?php if(isset($column['route_name'])):?>
-                                    <a href="<?=$response->generateUrlFromRoute($column['route_name'],[$item->$routeIdentifier()])?>"><?=$item->$getter()?></a>
+                                    <a href="<?=$response->generateUrlFromRoute($column['route_name'],[$item->$routeIdentifier()])?>">
+                                        <?=$columnValue?>
+                                    </a>
                                     <?php else: ?>
-                                    <?=$item->$getter()?>
+                                    <?=$columnValue?>
                                 <?php endif; ?>
                             </td>
                         <?php endforeach; ?>
