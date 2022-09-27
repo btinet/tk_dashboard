@@ -66,9 +66,9 @@ groups: Gruppen
 KeyQuestion: Leitfrage
 permission: Berechtigung
 permissions: Berechtigungen
-exam: Prüfung
-Exam: Prüfung
-exams: Prüfungen
-Exams: Prüfungen
+exam: Leitfrage
+Exam: Leitfrage
+exams: Leitfragen
+Exams: Leitfragen
 Year: Jahr
 
