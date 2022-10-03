@@ -68,7 +68,7 @@ class ExamCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(Exam::class)
-            ->setData($this->getRepositoryManager()->findAll(Exam::class,[],10,$offset*10))
+            ->setData($this->getRepositoryManager()->findAll(Exam::class,['year'=>'desc'],20,$offset*20))
             ->setCaption('Prüfungen')
             ->addIdentifier('keyQuestion','admin_exam_index','id')
             ->add('year','year')
@@ -78,7 +78,7 @@ class ExamCrudController extends AbstractController
             'adminMenu' => $this->adminMenu->render(),
             'userData' => $userData,
             'table' => $table->render(),
-            'rows' => ($rows/10),
+            'rows' => ($rows/20),
             'currentPage' => $offset
         ]);
     }

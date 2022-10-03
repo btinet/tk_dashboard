@@ -89,7 +89,7 @@ abstract class AbstractModel extends PDO implements ModelInterface
             $i = 0;
             foreach ($sortBy as $column => $direction) {
                 $orderData .= "$column $direction";
-                $orderData .= (++$i === count($sortBy)) ? ';' : ',';
+                $orderData .= (++$i === count($sortBy)) ? '' : ',';
             }
         }
         return $orderData;

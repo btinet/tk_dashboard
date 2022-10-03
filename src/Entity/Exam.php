@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
 use App\Repository\ExamRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
+use stdClass;
 
 final class Exam
 {
@@ -92,9 +92,9 @@ final class Exam
     }
 
     /**
-     * @return Topic|null
+     * @return array|false|object|stdClass|string
      */
-    public function getTopic(): ?Topic
+    public function getTopic()
     {
         return $this->repository->findOneBy(Topic::class, [
             'id' => $this->getTopicId()
