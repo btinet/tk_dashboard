@@ -47,7 +47,15 @@ abstract class AbstractMenu
         }
         $requestUri = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
         $requestUri .= "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        if($menuType->getRoute() === $requestUri)
+
+        if(strpos($requestUri,'?'))
+        {
+            $requestUriArray = explode('?',$requestUri);
+        } else {
+            $requestUriArray[0] = $requestUri;
+        }
+
+        if($menuType->getRoute() === $requestUriArray[0])
         {
             $menuType->setAttrib('class', 'active');
         }

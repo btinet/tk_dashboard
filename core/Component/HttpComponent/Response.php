@@ -44,8 +44,9 @@ class Response
         exit;
     }
 
-    public function generateUrlFromRoute(string $route, array $mandatory = null,$anchor = null): string
+    public function generateUrlFromRoute(string $route, array $mandatory = null, array $query = null,$anchor = null): string
     {
+        $queryString = null;
         $routeData = $this->config->getRoute($route);
         $routeExpression = ltrim($routeData['expression'],'/');
         $routeArray = explode('/',$routeExpression);
@@ -67,11 +68,17 @@ class Response
         }
         $this->parsedRoute = '/'.implode('/',$routeArray);
 
+        if($query){
+            $queryString .= '?';
+            foreach($query as $key => $value) {
+                $queryString .= "$key=$value";
+            }
+        }
 
         if($anchor){
-            $route .= "#$anchor";
+            $queryString .= "#$anchor";
         }
-        return $this->getProtocol().$_SERVER['HTTP_HOST'].$this->parsedRoute;
+        return $this->getProtocol().$_SERVER['HTTP_HOST'].$this->parsedRoute.$queryString;
     }
 
     public function generateUrlFromString(string $route, array $mandatory = null,$anchor = null): string

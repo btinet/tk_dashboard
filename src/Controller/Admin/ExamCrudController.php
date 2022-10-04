@@ -41,8 +41,11 @@ class ExamCrudController extends AbstractController
         ]);
     }
 
-    public function index($offset = 0): string
+    public function index(): string
     {
+
+        $offset = $this->request->getQueryAsString('page') ?: 0;
+
         if($this->request->isPostRequest() and $this->request->isFormSubmitted())
         {
             $em = new EntityManager();

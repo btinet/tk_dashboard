@@ -108,7 +108,7 @@ final class Exam
      */
     public function getUser()
     {
-        return $this->repository->findUserByExamId($this->id, User::class,);
+         return $this->repository->findUserByExamId($this->id, User::class);
     }
 
     /**

@@ -58,34 +58,44 @@ $this->layout('_layout.standard.html',
     <div></div>
     <div class="col-12 col-md-3">
 
-        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Details von leitfrage <?=$object->getId()?></div>
-
-        <div class="mb-3 d-flex justify-content-start">
-            <a href="<?=$response->generateUrlFromRoute('admin_exam_index',[0])?>"  class="btn btn-primary me-2 w-100 d-block">Zur Übersicht</a>
-        </div>
-
     </div>
 
     <div class="col-12 col-md-6">
 
+        <div class="mb-3 d-flex justify-content-start">
+            <a href="<?=$response->generateUrlFromRoute('admin_exam_index',[0])?>"  class="btn btn-primary me-2 d-block d-md-inline-block">Zur Übersicht</a>
+        </div>
+
         <h1><?=$trans->getConfig('Exam')?></h1>
 
         <div class="">
-            <form class="row row-cols-1 g-3">
-                <div>
+            <form class="row g-3">
+                <div class="col-5">
                     <label for="label" class="form-label"><?=$trans->getConfig('Id')?></label>
                     <input id="label" type="text" readonly disabled class="form-control" value="<?=$object->getId()?>">
                 </div>
+                <div class="col-7">
+                    <label for="label" class="form-label"><?=$trans->getConfig('User')?></label>
+                    <input id="label" type="text" readonly disabled class="form-control" value="<?=$object->getUser()?>">
+                </div>
+                <div class="col-6">
+                    <label for="label" class="form-label"><?=$trans->getConfig('Created')?></label>
+                    <input id="label" type="date" readonly disabled class="form-control" value="<?=(new DateTime($object->getCreated()))->format('Y-m-d')?>">
+                </div>
+                <div class="col-6">
+                    <label for="label" class="form-label"><?=$trans->getConfig('Updated')?></label>
+                    <input id="label" type="date" readonly disabled class="form-control" value="<?=(new DateTime($object->getUpdated()))->format('Y-m-d')?>">
+                </div>
                 <div>
                     <label for="description" class="form-label"><?=$trans->getConfig('KeyQuestion')?></label>
-                    <textarea id="description" readonly disabled class="form-control"><?=$object->getKeyQuestion()?></textarea>
+                    <textarea id="description" rows="4" readonly disabled class="form-control"><?=$object->getKeyQuestion()?></textarea>
                 </div>
                 <div>
                     <label for="topic" class="form-label"><?=$trans->getConfig('Topic')?></label>
                     <input id="topic" type="text" readonly disabled class="form-control" value="<?=$object->getTopic()?>">
                 </div>
                 <div>
-                    <label for="year" class="form-label"><?=$trans->getConfig('Topic')?></label>
+                    <label for="year" class="form-label"><?=$trans->getConfig('Year')?></label>
                     <input id="year" type="text" readonly disabled class="form-control" value="<?=$object->getYear()?>">
                 </div>
             </form>

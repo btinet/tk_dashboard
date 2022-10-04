@@ -79,7 +79,7 @@ $this->layout('_layout.standard.html',
                 <ul class="pagination justify-content-start">
                     <?php for ($i=0;$i < $rows;$i++):?>
                     <?php $current = $currentPage == $i ? 'active' : null ?>
-                    <li class="page-item <?=$current?>"><a class="page-link" href="<?=$response->generateUrlFromRoute('admin_exam_index',[$i])?>"><?=$i+1?></a></li>
+                    <li class="page-item <?=$current?>"><a class="page-link" href="<?=$response->generateUrlFromRoute('admin_exam_index',null,['page'=>$i])?>"><?=$i+1?></a></li>
                     <?php endfor;?>
                 </ul>
             </nav>

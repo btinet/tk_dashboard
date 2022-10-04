@@ -53,9 +53,29 @@ class Request
 
     /**
      * @param string $FormFieldName
+     * @return false|mixed
      */
     public function getFieldAsArray(string $FormFieldName)
     {
         return $query = (isset($_POST[$FormFieldName]))?$_POST[$FormFieldName]:false;
+    }
+
+    /**
+     * @param string $key
+     * @return string|false
+     */
+    public function getQueryAsString(string $key): ?string
+    {
+        $query = filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRIPPED);
+        return $this->query = $query ?? false;
+    }
+
+    /**
+     * @param string $key
+     * @return false|mixed
+     */
+    public function getQueryAsArray(string $key)
+    {
+        return $query = (isset($_GET[$key]))?$_GET[$key]:false;
     }
 }

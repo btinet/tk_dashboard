@@ -139,7 +139,7 @@ class ExamRepository extends AbstractRepositoryFactory
             $orderData = self::createOrderData($sortBy);
             $result = self::select
             ("
-                SELECT u.id as UserId
+                SELECT *
                 FROM user u
                     INNER JOIN exam_has_school_subject e
                         ON (u.id = e.user_id)
