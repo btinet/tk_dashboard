@@ -12,7 +12,7 @@
  * @var Object $objects Translation object
  * @var Session $session Session-Objekt
  * @var array|false $userData Formulardaten des Benutzers
- * @var array $table Tabledata for current entitx
+ * @var array $table Tabledata for current entity
  */
 
 

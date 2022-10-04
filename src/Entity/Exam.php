@@ -19,6 +19,7 @@ final class Exam
      * Properties (private) sind nur für interne Zwecke
      */
     private ExamRepository $repository;
+    private ?Topic $topic;
 
     /**
      * Properties (protected) in CamelCase entsprechen den MySQL-Feldern in snake_case

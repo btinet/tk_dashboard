@@ -9,7 +9,7 @@
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var Object $adminMenu Set of menu objects
  * @var Object $trans Translation object
- * @var UserRole $object UserRole object
+ * @var Exam $object UserRole object
  * @var RolePermission $permissions RolePermission object
  * @var array|false $userData Formulardaten des Benutzers
  * @var array $table Tabledata for current entity
@@ -17,7 +17,7 @@
 
 
 use App\Entity\RolePermission;
-use App\Entity\UserRole;
+use App\Entity\Exam;
 
 /**
  * Übergeordnetes Template
@@ -41,10 +41,10 @@ $this->layout('_layout.standard.html',
             </div>
             <div class="modal-body">
                 <?=$this->insert('admin/role/_form_add_permission.html',[
-                        'userData'=>$userData,
-                        'object' => $object,
-                        'permissions' => $permissions,
-                    ]) ?>
+                    'userData'=>$userData,
+                    'object' => $object,
+                    'permissions' => $permissions,
+                ]) ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light " data-bs-dismiss="modal">Abbrechen</button>
@@ -58,41 +58,37 @@ $this->layout('_layout.standard.html',
     <div></div>
     <div class="col-12 col-md-3">
 
-        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Details von <?=$object->getLabel()?></div>
+        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Details von leitfrage <?=$object->getId()?></div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>"  class="btn btn-primary me-2 w-100 d-block">Zur Übersicht</a>
+            <a href="<?=$response->generateUrlFromRoute('admin_exam_index',[0])?>"  class="btn btn-primary me-2 w-100 d-block">Zur Übersicht</a>
         </div>
 
-        <h1>Rolleneigenschaften</h1>
+    </div>
+
+    <div class="col-12 col-md-6">
+
+        <h1><?=$trans->getConfig('Exam')?></h1>
 
         <div class="">
             <form class="row row-cols-1 g-3">
                 <div>
-                    <label for="label" class="form-label"><?=$trans->getConfig('label')?></label>
-                    <input id="label" type="text" readonly disabled class="form-control" value="<?=$object->getLabel()?>">
+                    <label for="label" class="form-label"><?=$trans->getConfig('Id')?></label>
+                    <input id="label" type="text" readonly disabled class="form-control" value="<?=$object->getId()?>">
                 </div>
                 <div>
-                    <label for="description" class="form-label"><?=$trans->getConfig('description')?></label>
-                    <textarea id="description" readonly disabled class="form-control"><?=$object->getDescription()?></textarea>
+                    <label for="description" class="form-label"><?=$trans->getConfig('KeyQuestion')?></label>
+                    <textarea id="description" readonly disabled class="form-control"><?=$object->getKeyQuestion()?></textarea>
+                </div>
+                <div>
+                    <label for="topic" class="form-label"><?=$trans->getConfig('Topic')?></label>
+                    <input id="topic" type="text" readonly disabled class="form-control" value="<?=$object->getTopic()?>">
+                </div>
+                <div>
+                    <label for="year" class="form-label"><?=$trans->getConfig('Topic')?></label>
+                    <input id="year" type="text" readonly disabled class="form-control" value="<?=$object->getYear()?>">
                 </div>
             </form>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-9">
-        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('permissions')?></div>
-
-        <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Zuordnen</button>
-            <?=$this->insert('/app/_batch_delete_form.html')?>
-        </div>
-
-        <?= $table ?>
-
-        <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Zuordnen</button>
-            <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 
     </div>

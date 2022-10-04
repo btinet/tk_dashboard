@@ -5,6 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Exam;
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
+use App\Entity\Topic;
+use App\Entity\UserGroup;
+use App\Entity\UserRole;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
 use App\Type\TableType;
@@ -70,7 +73,8 @@ class ExamCrudController extends AbstractController
             ->configureComponent(Exam::class)
             ->setData($this->getRepositoryManager()->findAll(Exam::class,['year'=>'desc'],20,$offset*20))
             ->setCaption('Prüfungen')
-            ->addIdentifier('keyQuestion','admin_exam_index','id')
+            ->addIdentifier('keyQuestion','admin_exam_show','id')
+            ->addIdentifier('topic','admin_exam_index','topicId')
             ->add('year','year')
         ;
 
@@ -80,6 +84,43 @@ class ExamCrudController extends AbstractController
             'table' => $table->render(),
             'rows' => ($rows/20),
             'currentPage' => $offset
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public function show(int $id):string
+    {
+        $object = $this->getRepositoryManager()->find(Exam::class, $id);
+
+
+        $this->adminMenu->createMenu();
+        $userData = [];
+
+        $permissions = $this->repository->findAll(RolePermission::class);
+
+        $table = new TableType($this->getView());
+        $table
+            ->configureComponent(Topic::class)
+            ->setData($object->getTopic())
+            ->setCaption('Thema')
+            ->add('title')
+            ->add('description')
+        ;
+
+        if(!array_filter((array)$object))
+        {
+            $this->setFlash('exam_not_found','danger');
+            $this->response->redirectToRoute(302,'admin_exam_index');
+        }
+
+        return $this->render('admin/exam/show.html',[
+            'adminMenu' => $this->adminMenu->render(),
+            'object' => $object,
+            'userData' => $userData,
+            'table' => $table->render()
         ]);
     }
 

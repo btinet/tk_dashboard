@@ -83,6 +83,7 @@ class RoleCrudController extends AbstractController
 
     /**
      * @param int $id
+     * @return string
      */
     public function show(int $id):string
     {
