@@ -121,4 +121,12 @@ final class Exam
 
     }
 
+    /**
+     * @return ExamRepository
+     */
+    public function getRepository(): ExamRepository
+    {
+        return $this->repository;
+    }
+
 }

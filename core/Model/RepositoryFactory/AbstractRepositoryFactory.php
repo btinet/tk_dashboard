@@ -110,7 +110,7 @@ class AbstractRepositoryFactory extends EntityManagerComponent
             $preparedStatement = self::setPreparedStatement($data);
             $data = self::setBindValues($data);
             $result = self::select("SELECT {$columns} FROM {$tableName} WHERE ($preparedStatement) $orderData", $data);
-            return $result->fetchAll(PDO::FETCH_CLASS, $entity);
+            return ($result->rowCount() !== 0 ) ? $result->fetchAll(PDO::FETCH_CLASS, $entity):false;
         } catch (PDOException $exception) {
             return $exception->getMessage();
         } catch (ReflectionException $e) {

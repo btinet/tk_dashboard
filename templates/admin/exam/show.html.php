@@ -54,19 +54,17 @@ $this->layout('_layout.standard.html',
     </div>
 </div>
 
-<div class="row g-3 mb-3">
-    <div></div>
-    <div class="col-12 col-md-3">
-
-    </div>
-
-    <div class="col-12 col-md-6">
-
+<div class="row g-3 mb-3 my-3">
+    <div class="col-12 col-md-6 offset-md-3">
         <div class="mb-3 d-flex justify-content-start">
             <a href="<?=$response->generateUrlFromRoute('admin_exam_index',[0])?>"  class="btn btn-primary me-2 d-block d-md-inline-block">Zur Übersicht</a>
         </div>
 
-        <h1><?=$trans->getConfig('Exam')?></h1>
+        <h1><?=$trans->getConfig('Exam')?> anzeigen</h1>
+    </div>
+    <div class="col-12 col-md-6 offset-md-3">
+
+
 
         <div class="">
             <form class="row g-3">
@@ -108,7 +106,32 @@ $this->layout('_layout.standard.html',
                 </div>
             </form>
         </div>
-
     </div>
+
+    <?php
+    $exams = $object->getRepository()->findBy(Exam::class,['keyQuestion' => $object->getKeyQuestion()]);
+    ?>
+
+    <div class="col-12 col-md-3">
+        <div class="h6 fw-light text-muted mb-2 ps-3">Weitere Verknüpfungen</div>
+        <div class="card">
+            <?php if(count((array)$exams)>1):?>
+                <div class="list-group list-group-flush">
+                    <?php foreach($exams as $exam):?>
+                        <?php if($exam->getId() !== $object->getId()):?>
+                            <a class="list-group-item list-group-item-action" href="<?=$response->generateUrlFromRoute('admin_exam_show',[$exam->getId()])?>">
+                                <?=$exam->getYear()?>
+                            </a>
+                        <?php endif;?>
+                    <?php endforeach;?>
+                </div>
+            <?php else:?>
+            <div class="card-body">
+                <p class="card-text">Keine weiteren Verknüpfungen gefunden.</p>
+            </div>
+            <?php endif;?>
+        </div>
+    </div>
+
 </div>
 <?php $this->stop() ?>
