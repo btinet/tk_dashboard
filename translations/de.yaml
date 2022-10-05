@@ -70,6 +70,10 @@ exam: Leitfrage
 Exam: Leitfrage
 exams: Leitfragen
 Exams: Leitfragen
+Subject: Fach
+MainSchoolSubject: Referenzfach
+SecondarySchoolSubject: Begleitfach
+Student: Kollegiat:in
 Title: Titel
 Topic: Thema
 User: Benutzer

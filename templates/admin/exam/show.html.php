@@ -75,7 +75,7 @@ $this->layout('_layout.standard.html',
                     <input id="label" type="text" readonly disabled class="form-control" value="<?=$object->getId()?>">
                 </div>
                 <div class="col-7">
-                    <label for="label" class="form-label"><?=$trans->getConfig('User')?></label>
+                    <label for="label" class="form-label"><?=$trans->getConfig('Student')?></label>
                     <input id="label" type="text" readonly disabled class="form-control" value="<?=$object->getUser()?>">
                 </div>
                 <div class="col-6">
@@ -87,13 +87,21 @@ $this->layout('_layout.standard.html',
                     <input id="label" type="date" readonly disabled class="form-control" value="<?=(new DateTime($object->getUpdated()))->format('Y-m-d')?>">
                 </div>
                 <div>
-                    <label for="description" class="form-label"><?=$trans->getConfig('KeyQuestion')?></label>
-                    <textarea id="description" rows="4" readonly disabled class="form-control"><?=$object->getKeyQuestion()?></textarea>
-                </div>
-                <div>
                     <label for="topic" class="form-label"><?=$trans->getConfig('Topic')?></label>
                     <input id="topic" type="text" readonly disabled class="form-control" value="<?=$object->getTopic()?>">
                 </div>
+                <div>
+                    <label for="description" class="form-label"><?=$trans->getConfig('KeyQuestion')?></label>
+                    <textarea id="description" rows="4" readonly disabled class="form-control"><?=$object->getKeyQuestion()?></textarea>
+                </div>
+                <?php foreach($object->getSchoolSubjects() as $subject) :?>
+                <div class="col-6">
+                    <label for="label" class="form-label">
+                        <?= $subject->isMainSchoolSubject() ? $trans->getConfig('MainSchoolSubject'):$trans->getConfig('SecondarySchoolSubject')?>
+                    </label>
+                    <input id="label" type="text" readonly disabled class="form-control" value="<?=$subject->getLabel()?>">
+                </div>
+                <?php endforeach;?>
                 <div>
                     <label for="year" class="form-label"><?=$trans->getConfig('Year')?></label>
                     <input id="year" type="text" readonly disabled class="form-control" value="<?=$object->getYear()?>">
