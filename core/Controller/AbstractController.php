@@ -89,6 +89,39 @@ abstract class AbstractController implements ControllerInterface
         return $this->view;
     }
 
+    public function denyAccessUnlessGranted(string $role)
+    {
+        if(false !== $user = $this->session->getUser()){
+            if($user->getRole() != $role) {
+                $this->response->redirectToRoute(302,'app_index');
+            }
+        } else {
+            $this->response->redirectToRoute(302,'app_index');
+        }
+    }
+
+    public function denyAccessUnlessHasPermission(string $condition, string $redirectToRoute = 'app_index')
+    {
+        if(false !== $user = $this->session->getUser()){
+            $permissionFound = true;
+            foreach($user->getPermissions() as $permission)
+            {
+                if($condition == $permission->getLabel())
+                {
+                    $permissionFound = false;
+
+                }
+            }
+
+            if($permissionFound)
+            {
+                $this->response->redirectToRoute(302,$redirectToRoute);
+            }
+        } else {
+            $this->response->redirectToRoute(302,$redirectToRoute);
+        }
+    }
+
     /**
      * @param string $key
      * @param $value

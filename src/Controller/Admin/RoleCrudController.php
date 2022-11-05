@@ -31,7 +31,7 @@ class RoleCrudController extends AbstractController
         parent::__construct();
         $this->repository = new UserRoleRepository();
         $mainMenu = new MenuBuilder();
-        $this->adminMenu = new AdminMenu();
+        $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
         $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
         $this->getView()->addData([
@@ -39,6 +39,8 @@ class RoleCrudController extends AbstractController
             'mainMenu' => $mainMenu->render(),
             'repository' => $this->repository
         ]);
+
+        $this->denyAccessUnlessHasPermission('show_role');
     }
 
     public function index(): string
@@ -46,7 +48,7 @@ class RoleCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(UserRole::class)
-            ->setData($this->getRepositoryManager()->findAll(UserRole::class))
+            ->setData($this->getRepositoryManager()->findAll(UserRole::class,[],100))
             ->setCaption('Rollenübersicht')
             ->addIdentifier('label','admin_role_show','id')
             ->add('description')
@@ -75,7 +77,7 @@ class RoleCrudController extends AbstractController
 
         return $this->render('admin/role/index.html',[
             'adminMenu' => $this->adminMenu->render(),
-            'objects' => $this->getRepositoryManager()->findAll(UserRole::class),
+            'objects' => $this->getRepositoryManager()->findAll(UserRole::class,[],100),
             'userData' => $userData,
             'table' => $table->render()
         ]);
@@ -101,7 +103,7 @@ class RoleCrudController extends AbstractController
         $this->adminMenu->createMenu();
         $userData = [];
 
-        $permissions = $this->repository->findAll(RolePermission::class);
+        $permissions = $this->repository->findAll(RolePermission::class,[],100);
 
         $table = new TableType($this->getView());
         $table

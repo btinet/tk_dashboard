@@ -11,47 +11,79 @@ use Core\Component\MenuComponent\AbstractMenu;
 class AdminMenu extends AbstractMenu
 {
 
+    public function __construct($user = false)
+    {
+        parent::__construct($user);
+    }
+
     public function createMenu( array $collection = []): AbstractMenu
     {
 
-        $this
-            ->add('dashboard',NavigationType::class,[
+        $this->add('dashboard',NavigationType::class,[
                 'label' => 'dashboard',
                 'route' => 'admin_index',
                 'attrib' => [
                     'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
-            ])
-            ->add('exams',NavigationType::class,[
-                'label' => 'exams',
-                'route' => 'admin_exam_index',
+            ]);
+
+        if($this->HideUnlessHasPermission('show_profile'))
+        {
+            $this->add('profile',NavigationType::class,[
+                'label' => 'profile',
+                'route' => 'user_profile_index',
                 'attrib' => [
                     'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
-            ],[0]
-            )
-            ->add('roles',NavigationType::class,[
+            ]);
+        }
+
+       if($this->HideUnlessHasPermission('show_exam'))
+       {
+           $this->add('exams',NavigationType::class,[
+               'label' => 'exams',
+               'route' => 'admin_exam_index',
+               'attrib' => [
+                   'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+               ],
+           ],[0]
+           );
+       }
+
+        if($this->HideUnlessHasPermission('show_role'))
+        {
+            $this->add('roles',NavigationType::class,[
                 'label' => 'roles',
                 'route' => 'admin_role_index',
                 'attrib' => [
                     'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
-            ])
-            ->add('group',NavigationType::class,[
+            ]);
+        }
+
+        if($this->HideUnlessHasPermission('show_group'))
+        {
+            $this->add('group',NavigationType::class,[
                 'label' => 'groups',
                 'route' => 'admin_group_index',
                 'attrib' => [
                     'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
-            ])
-            ->add('permission',NavigationType::class,[
+            ]);
+        }
+
+        if($this->HideUnlessHasPermission('show_permission'))
+        {
+            $this->add('permission',NavigationType::class,[
                 'label' => 'permissions',
                 'route' => 'admin_permission_index',
                 'attrib' => [
                     'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
             ])
-        ;
+            ;
+        }
+
 
         return $this;
     }

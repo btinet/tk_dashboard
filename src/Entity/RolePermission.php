@@ -23,7 +23,7 @@ final class RolePermission
 
     /**
      * @param string $label
-     * @return UserGroup
+     * @return RolePermission
      */
     public function setLabel(string $label): RolePermission
     {

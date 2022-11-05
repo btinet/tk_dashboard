@@ -23,6 +23,11 @@ final class UserGroup
         $this->repository = new AbstractRepositoryFactory();
     }
 
+    public function __toString()
+    {
+        return $this->label;
+    }
+
     /**
      * @return string
      */

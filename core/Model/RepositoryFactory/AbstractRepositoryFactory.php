@@ -50,7 +50,7 @@ class AbstractRepositoryFactory extends EntityManagerComponent
             $tableName = self::generateSnakeTailString($entityClass->getShortName());
             $columns = self::setColumns($entityClass);
             $result = self::select("SELECT {$columns} FROM {$tableName} WHERE {$preparedStatement}", ['id' => $id]);
-            return $result->fetchObject($entity);
+            return ($result->rowCount() !== 0 ) ? $result->fetchObject($entity):false;
         } catch (PDOException $exception) {
             return $exception->getMessage();
         } catch (ReflectionException $e) {

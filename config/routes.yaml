@@ -112,3 +112,9 @@ admin_permission_new:
   controller: 'App\Controller\Admin\RolePermissionCrudController'
   method: 'new'
   request: 'post'
+
+user_profile_index:
+  expression: '/profile'
+  controller: 'App\Controller\Profile\ProfileController'
+  method: 'index'
+  request: 'get'

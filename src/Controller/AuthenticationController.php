@@ -108,9 +108,11 @@ class AuthenticationController extends AbstractController
                 $user->setIsActive(1);
                 $user->setUserLocale($userInputData['language']);
 
+
                $rm = new EntityManager();
                if(false !== $result = $rm->persist($user))
                {
+                   $user->setUserRoleId();
                    $this->response->redirectToRoute(302,'authentication_login');
                }
                 $validationLastError = 500;

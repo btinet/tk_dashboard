@@ -58,25 +58,31 @@ $this->layout('base.html',
                                         <i class="fa fa-fw fa-user" style="font-size: 1.2em"></i>
                                     </button>
                                     <ul class="dropdown-menu">
+                                        <?php if($session->UserHasPermission('show_profile')): ?>
                                         <li>
-                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="#">
+                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('user_profile_index')?>">
                                                 <i class="fa fa-fw fa-user me-1"></i>
                                                 Profil
                                             </a>
                                         </li>
+                                        <?php endif; ?>
+                                        <?php if($session->UserHasPermission('show_user_exam')): ?>
                                         <li>
                                             <a class="dropdown-item d-flex justify-content-start align-items-center" href="#">
                                                 <i class="fa fa-fw fa-file-text me-1"></i>
                                                 Meine Themen
                                             </a>
                                         </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('admin_index')?>">
-                                                <i class="fa fa-fw fa-dashboard me-1"></i>
-                                                Administration
-                                            </a>
-                                        </li>
+                                        <?php endif; ?>
+                                        <?php if($session->UserHasPermission('show_dashboard')): ?>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('admin_index')?>">
+                                                    <i class="fa fa-fw fa-dashboard me-1"></i>
+                                                    Administration
+                                                </a>
+                                            </li>
+                                        <?php endif;?>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
                                             <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('authentication_logout')?>">
@@ -106,6 +112,23 @@ $this->layout('base.html',
     </header>
 
     <main id="main" class="container-fluid pb-3">
+
+        <div class="row mt-1 mb-3 g-3 row-cols-1">
+
+            <div class="d-flex justify-content-start align-items-center">
+                <?php if($user = $session->getUser()): ?>
+                    <div class="btn-group btn-group-sm me-2">
+                        <a href="#" class="btn btn-primary btn-sm"><?=substr($user->getFirstName(),0,1)?>. <?=$user->getLastName()?></a>
+                        <a href="#" class="btn btn-light btn-sm"><?=$user->getRole() ?: 'ohne Rolle'?></a>
+                    </div>
+
+                    <div class="btn-group btn-group-sm">
+                        <a href="#" class="btn btn-light btn-sm"><?=$user->getGroup() ?: 'ohne Gruppe'?></a>
+                    </div>
+                <?php endif;?>
+            </div>
+        </div>
+
         <?php if ($this->section('main')): ?>
             <?=$this->section('main')?>
         <?php else: ?>

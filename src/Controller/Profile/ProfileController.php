@@ -1,15 +1,21 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Profile;
 
+use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
+use App\Entity\UserRole;
+use App\Entity\UserRoleHasRolePermission;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Repository\UserRoleRepository;
+use App\Type\TableType;
+use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
-class AdminController extends AbstractController
+class ProfileController extends AbstractController
 {
 
     protected AbstractRepositoryFactory $repository;
@@ -23,27 +29,23 @@ class AdminController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new UserRoleRepository();
         $mainMenu = new MenuBuilder();
-        $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
         $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
+            'repository' => $this->repository
         ]);
 
-        $this->denyAccessUnlessHasPermission('show_dashboard');
-
+        $this->denyAccessUnlessHasPermission('show_profile');
     }
 
     public function index(): string
     {
-        $this->adminMenu->createMenu();
+        return $this->render('profile/index.html',[
 
-        return $this->render('admin/index.html',[
-            'adminMenu' => $this->adminMenu->render()
         ]);
     }
-
 }

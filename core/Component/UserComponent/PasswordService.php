@@ -65,7 +65,7 @@ class PasswordService
         if (!mb_ereg("\p{Lu}",$password)) return 16052;
         if (!mb_ereg("\p{Ll}",$password)) return 16053;
         // if (!mb_ereg("\p{Lo}",$password)) return 16054;
-        if (!mb_ereg("\p{Nd}",$password)) return 16055;
+        // if (!mb_ereg("\p{Nd}",$password)) return 16055;
         return 0;
     }
 

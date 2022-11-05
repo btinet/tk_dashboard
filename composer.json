@@ -20,7 +20,6 @@
         "symfony/yaml": "5.4.x-dev",
       "ext-json": "*",
         "league/plates": "v3.x-dev",
-      "ext-http": "*",
       "ext-pdo": "*",
       "ext-curl": "*",
       "ext-mbstring": "*"

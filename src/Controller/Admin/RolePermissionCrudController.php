@@ -29,13 +29,15 @@ class RolePermissionCrudController extends AbstractController
         parent::__construct();
         $this->repository = new AbstractRepositoryFactory();
         $mainMenu = new MenuBuilder();
-        $this->adminMenu = new AdminMenu();
+        $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
         $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
         ]);
+
+        $this->denyAccessUnlessHasPermission('show_permission');
     }
 
     public function index(): string
@@ -66,7 +68,7 @@ class RolePermissionCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(RolePermission::class)
-            ->setData($this->getRepositoryManager()->findAll(RolePermission::class))
+            ->setData($this->getRepositoryManager()->findAll(RolePermission::class,[],100))
             ->setCaption('Gruppenübersicht')
             ->addIdentifier('label','admin_permission_index','id')
             ->add('description')

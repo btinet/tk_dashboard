@@ -5,7 +5,6 @@
 
 namespace Core\Component\MenuComponent;
 
-
 use Core\Component\ConfigComponent\RouteConfig;
 use Core\Component\HttpComponent\Response;
 
@@ -14,12 +13,26 @@ abstract class AbstractMenu
 
     protected array $menuCollection;
     protected Response $response;
+    protected $user;
 
 
-    public function __construct()
+    public function __construct($user = false)
     {
         $config = new RouteConfig('config/routes.yaml');
         $this->response = new Response($config);
+        $this->user = $user;
+    }
+
+    public function HideUnlessHasPermission(string $condition): bool
+    {
+        if($this->user) {
+            foreach ($this->user->getPermissions() as $permission) {
+                if ($condition == $permission->getLabel()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

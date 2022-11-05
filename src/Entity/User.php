@@ -2,14 +2,22 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRoleRepository;
+use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\UserComponent\PasswordService;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
+use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
+use ReflectionException;
 
 final class User
 {
     use IdEntityTrait;
     use DateTimeEntityTrait;
+
+    private AbstractRepositoryFactory $repository;
+    private EntityManager $entityManager;
+    private int $userRoleId;
 
     protected ?string $firstName;
     protected ?string $lastName;
@@ -18,6 +26,12 @@ final class User
     protected string $email;
     protected bool $isActive;
     protected ?string $userLocale;
+
+    public function __construct()
+    {
+        $this->repository = new UserRoleRepository();
+        $this->entityManager = new EntityManager();
+    }
 
     public function __toString()
     {
@@ -147,6 +161,43 @@ final class User
     public function setUserLocale(string $userLocale): User
     {
         $this->userLocale = $userLocale;
+        return $this;
+    }
+
+    public function getRole()
+    {
+        return $this->repository->findUserRole($this->id);
+    }
+
+    public function getGroup()
+    {
+        return $this->repository->findUserGroup($this->id);
+    }
+
+    public function getPermissions()
+    {
+        return $this->repository->findUserPermissions($this->id);
+    }
+
+    /**
+     * @param int $userRoleId
+     * @return User
+     */
+    public function setUserRoleId(int $userRoleId = 10): User
+    {
+        $user = $this->repository->findOneBy(User::class,['username' => $this->getUsername()]);
+        if(!$userHasRole = $this->repository->find(UserRoleHasUser::class,$user->getId())){
+            $userRole = new UserRoleHasUser();
+            $userRole
+                ->setUserId($user->getId())
+                ->setUserRoleId($userRoleId)
+            ;
+            try {
+                $this->entityManager->persist($userRole);
+            } catch (ReflectionException $e) {
+            }
+        };
+        $this->userRoleId = $userRoleId;
         return $this;
     }
 

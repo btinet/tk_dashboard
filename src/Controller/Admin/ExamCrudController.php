@@ -32,13 +32,15 @@ class ExamCrudController extends AbstractController
         parent::__construct();
         $this->repository = new AbstractRepositoryFactory();
         $mainMenu = new MenuBuilder();
-        $this->adminMenu = new AdminMenu();
+        $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
         $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
         ]);
+
+        $this->denyAccessUnlessHasPermission('show_exam');
     }
 
     public function index(): string

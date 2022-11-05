@@ -6,6 +6,11 @@
 namespace Core\Component\SessionComponent;
 
 
+use App\Entity\User;
+use App\Repository\UserRoleRepository;
+use Core\Component\DataStorageComponent\EntityManager;
+use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
+
 class Session
 {
 
@@ -54,6 +59,30 @@ class Session
         } else {
             if (isset($_SESSION[$this->appSecret . $key])) {
                 return $_SESSION[$this->appSecret . $key];
+            }
+        }
+        return false;
+    }
+
+    public function getUser()
+    {
+       $userRepository = new AbstractRepositoryFactory();
+
+       $user = false;
+       if(self::get('user') != 0 and self::get('login') === true)
+       {
+           $user = $userRepository->find(User::class,self::get('user'));
+       }
+        return $user;
+    }
+
+    public function UserHasPermission(string $condition): bool
+    {
+        if($user = self::getUser()) {
+            foreach ($user->getPermissions() as $permission) {
+                if ($condition == $permission->getLabel()) {
+                    return true;
+                }
             }
         }
         return false;
