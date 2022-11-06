@@ -16,6 +16,7 @@ final class UserGroup
 
     protected string $label;
     protected string $description;
+    protected ?string $groupKey;
     protected int $roleId;
 
     public function __construct()
@@ -61,6 +62,24 @@ final class UserGroup
     public function setDescription(string $description): UserGroup
     {
         $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGroupKey(): ?string
+    {
+        return $this->groupKey;
+    }
+
+    /**
+     * @param string $groupKey
+     * @return UserGroup
+     */
+    public function setGroupKey(string $groupKey): UserGroup
+    {
+        $this->groupKey = $groupKey;
         return $this;
     }
 

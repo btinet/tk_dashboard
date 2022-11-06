@@ -65,6 +65,7 @@ profile: Profil
 Profile: Profil
 group: Gruppe
 groups: Gruppen
+GroupKey: Gruppenschlüssel
 KeyQuestion: Leitfrage
 permission: Berechtigung
 permissions: Berechtigungen
@@ -80,4 +81,5 @@ Title: Titel
 Topic: Thema
 User: Benutzer
 Year: Jahr
+overview: Übersicht
 

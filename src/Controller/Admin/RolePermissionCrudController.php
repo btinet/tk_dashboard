@@ -28,7 +28,7 @@ class RolePermissionCrudController extends AbstractController
     {
         parent::__construct();
         $this->repository = new AbstractRepositoryFactory();
-        $mainMenu = new MenuBuilder();
+        $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
         $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);

@@ -115,20 +115,20 @@ $this->layout('base.html',
 
         <div class="row mt-1 mb-3 g-3 row-cols-1">
 
-            <div class="d-flex justify-content-start align-items-center">
+            <div class="d-flex flex-wrap justify-content-start align-items-center">
                 <?php if($user = $session->getUser()): ?>
                     <div class="btn-group btn-group-sm me-2">
-                        <a href="#" class="btn btn-primary btn-sm">
+                        <a href="#" class="btn btn-primary btn-sm mb-2 mb-md-0">
                             <i class="fa fa-user-o me-2"></i>
                             <?=substr($user->getFirstName(),0,1)?>. <?=$user->getLastName()?>
                         </a>
-                        <a href="#" class="btn btn-light btn-sm">
+                        <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
                             <?=$user->getRole() ?: 'ohne Rolle'?>
                         </a>
                     </div>
 
                     <div class="btn-group btn-group-sm">
-                        <a href="#" class="btn btn-light btn-sm">
+                        <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
                             <i class="fa fa-graduation-cap me-2"></i>
                             <?=$user->getGroup() ?: 'ohne Gruppe'?>
                         </a>

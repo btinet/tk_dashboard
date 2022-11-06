@@ -66,7 +66,7 @@ $this->layout('_layout.standard.html',
     </div>
 
     <div class="col-12 col-md-9">
-        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('roles')?></div>
+        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('groups')?></div>
 
         <div class="mb-3 d-flex justify-content-start">
             <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Gruppe anlegen</button>

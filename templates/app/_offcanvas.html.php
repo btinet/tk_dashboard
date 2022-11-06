@@ -12,20 +12,27 @@
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title h6 text-uppercase fw-light" id="offcanvasExampleLabel">Hauptmenü</h5>
+        <h5 class="offcanvas-title h6 fw-light" id="offcanvasExampleLabel">eSchool</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body px-0">
-        <div class="list-group list-group-flush border mb-3" style="">
-            <?php foreach ($mainMenu as $item): ?>
-                    <a href="<?= $item->getRoute()?>" class="list-group-item list-group-item-action py-3"
-                    <?php foreach($item->getAttrib() as $attrib => $value): ?><?=$attrib?>="<?=implode(' ',$value)?>"<?php endforeach; ?>
-                    >
-                    <?= $item->getLabel() ?>
-                    </a>
-            <?php endforeach; ?>
-        </div>
-        <h5 class="h6 text-uppercase fw-light px-3" id="offcanvasExampleLabel">Fächer</h5>
+        <a class="btn btn-sm btn-primary w-100 d-block border-0 rounded-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Menü ein-/ausblenden
+        </a>
+
+            <div class="collapse show" id="collapseExample">
+                <div class="list-group list-group-flush border" style="">
+                    <?php foreach ($mainMenu as $item): ?>
+                        <a href="<?= $item->getRoute()?>" class="list-group-item list-group-item-action py-2"
+                        <?php foreach($item->getAttrib() as $attrib => $value): ?><?=$attrib?>="<?=implode(' ',$value)?>"<?php endforeach; ?>
+                        >
+                        <?= $trans->getConfig($item->getLabel()) ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+        <h5 class="h6 text-uppercase fw-light px-3 mt-5">Fächer</h5>
         <div class="list-group list-group-flush border mb-3">
             <?php if($schoolSubjects): ?>
                 <?php foreach($schoolSubjects as $subject): ?>
