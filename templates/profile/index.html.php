@@ -35,17 +35,39 @@ $this->layout('_layout.standard.html',
 
 
 <div class="row g-3 mb-3">
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-body border-1 border-bottom">
+                <h1 class="h5">Persönliches Konto</h1>
+                <div class="d-flex justify-content-center align-items-start flex-column">
+                    <span class="small">Name</span>
+                    <?=$session->getUser()->getFirstname()?> <?=$session->getUser()->getLastName()?>
+                    <span class="small mt-2">E-Mail-Adresse</span>
+                    <span class="text-truncate"><?=$session->getUser()->getEmail()?></span>
+                    <span class="small mt-2">Mitglied seit</span>
+                    <?=$session->getUser()->getCreated()?>
+                </div>
+            </div>
 
-    <div class="col-12 col-md-3">
-        <div class="d-none d-md-block">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3"><?=$trans->getConfig('profile')?></div>
+            <div class="card-body">
+                <h2 class="h5">Kursangaben</h2>
+                <div class="d-flex justify-content-center align-items-start flex-column">
+                    <span class="small">Tutorium</span>
+                    <?=$session->getUser()->getRole()?>
+                    <span class="small mt-2">Gruppe</span>
+                    <span class="text-truncate"><?=$session->getUser()->getGroup()?></span>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-12 col-md-9">
-        Content
+
+    <div class="col-12 col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="h5">Meine Prüfungsthemen</h2>
+            </div>
+        </div>
     </div>
 
 </div>
