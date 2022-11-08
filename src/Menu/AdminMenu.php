@@ -18,15 +18,6 @@ class AdminMenu extends AbstractMenu
 
     public function createMenu( array $collection = []): AbstractMenu
     {
-
-        $this->add('dashboard',NavigationType::class,[
-                'label' => 'dashboard',
-                'route' => 'admin_index',
-                'attrib' => [
-                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
-                ],
-            ]);
-
         if($this->HideUnlessHasPermission('show_profile'))
         {
             $this->add('profile',NavigationType::class,[
@@ -36,6 +27,38 @@ class AdminMenu extends AbstractMenu
                     'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
                 ],
             ]);
+        }
+
+        $this->add('dashboard',NavigationType::class,[
+                'label' => 'dashboard',
+                'route' => 'admin_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ]);
+
+        if($this->HideUnlessHasPermission('show_school_subject'))
+        {
+            $this->add('subjects',NavigationType::class,[
+                'label' => 'subjects',
+                'route' => 'admin_school_subject_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ],[0]
+            );
+        }
+
+        if($this->HideUnlessHasPermission('show_school_subject_type'))
+        {
+            $this->add('SchoolSubjectTypes',NavigationType::class,[
+                'label' => 'SchoolSubjectTypes',
+                'route' => 'admin_school_subject_type_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ],[0]
+            );
         }
 
        if($this->HideUnlessHasPermission('show_exam'))

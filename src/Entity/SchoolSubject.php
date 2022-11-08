@@ -14,9 +14,12 @@ final class SchoolSubject
 
     private AbstractRepositoryFactory $repository;
     private bool $isMainSchoolSubject;
+    private SchoolSubjectType $schoolSubjectType;
+
 
     protected string $label;
     protected string $abbr;
+    protected int $schoolSubjectTypeId;
 
     public function __construct()
     {
@@ -61,6 +64,32 @@ final class SchoolSubject
     public function setAbbr(string $abbr): SchoolSubject
     {
         $this->abbr = $abbr;
+        return $this;
+    }
+
+    /**
+     * @return SchoolSubjectType
+     */
+    public function getSchoolSubjectType(): SchoolSubjectType
+    {
+        return $this->repository->find(SchoolSubjectType::class,$this->schoolSubjectTypeId);
+    }
+
+    /**
+     * @return int
+     */
+    public function getSchoolSubjectTypeId(): int
+    {
+        return $this->schoolSubjectTypeId;
+    }
+
+    /**
+     * @param int $schoolSubjectTypeId
+     * @return SchoolSubject
+     */
+    public function setSchoolSubjectTypeId(int $schoolSubjectTypeId): SchoolSubject
+    {
+        $this->schoolSubjectTypeId = $schoolSubjectTypeId;
         return $this;
     }
 

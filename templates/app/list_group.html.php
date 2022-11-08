@@ -8,7 +8,6 @@
 use Core\Component\ConfigComponent\Config;
 
 ?>
-
 <div class="list-group">
     <?php if($objects): ?>
         <?php foreach ($objects as $object) : ?>

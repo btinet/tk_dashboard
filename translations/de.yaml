@@ -48,9 +48,11 @@ role_not_found: Rolle nicht gefunden.
 
 permission_added: Berechtigung(en) erfolgreich zugeordnet.
 permission_removed: Berechtigung(en) erfolgreich entfernt.
+school_subject_type_deleted: Fachbereich gelöscht.
 
 
-
+Abbr: Abkürzung
+abbr: Abkürzung
 id: ID
 Id: ID
 label: Bezeichnung
@@ -77,6 +79,9 @@ Subject: Fach
 MainSchoolSubject: Referenzfach
 SecondarySchoolSubject: Begleitfach
 Student: Kollegiat:in
+subjects: Fächer
+SchoolSubjectType: Fachbereich
+SchoolSubjectTypes: Fachbereiche
 Title: Titel
 Topic: Thema
 User: Benutzer
