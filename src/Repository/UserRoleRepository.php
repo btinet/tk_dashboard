@@ -100,10 +100,10 @@ class UserRoleRepository extends AbstractRepositoryFactory
                 SELECT p.label
                 FROM {$table} p
                     INNER JOIN user_group_has_user rp
-                        ON (p.id = rp.user_group_id)
+                        ON (p.id = rp.user_group_id) 
                 WHERE rp.user_id = {$userId}
                     ");
-            return $result->fetchObject($entity);
+            return $result->fetchAll(self::FETCH_CLASS,$entity);
         } catch (PDOException|ReflectionException $e) {
             return $e->getMessage();
         }

@@ -54,8 +54,18 @@ $this->layout('_layout.standard.html',
                 <div class="d-flex justify-content-center align-items-start flex-column">
                     <span class="small">Tutorium</span>
                     <?=$session->getUser()->getRole()?>
-                    <span class="small mt-2">Gruppe</span>
-                    <span class="text-truncate"><?=$session->getUser()->getGroup()?></span>
+                    <span class="small my-2">Gruppen</span>
+                    <div class="row g-1">
+                        <?php foreach ($session->getUser()->getGroup() as $group): ?>
+                        <div class="col">
+                            <a href="#" class="btn btn-light btn-sm">
+                                <?=$group->getLabel()?>
+                            </a>
+                        </div>
+
+                        <?php endforeach;?>
+                    </div>
+
                 </div>
             </div>
         </div>

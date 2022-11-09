@@ -128,10 +128,15 @@ $this->layout('base.html',
                     </div>
 
                     <div class="btn-group btn-group-sm">
+                            <span class="btn btn-primary mb-2 mb-md-0">
+                                <i class="fa fa-graduation-cap me-1"></i>
+                                Gruppen
+                            </span>
+                        <?php foreach ($user->getGroup() as $group): ?>
                         <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
-                            <i class="fa fa-graduation-cap me-2"></i>
-                            <?=$user->getGroup() ?: 'ohne Gruppe'?>
+                            <?=$group->getLabel()?>
                         </a>
+                        <?php endforeach;?>
                     </div>
                 <?php endif;?>
             </div>
