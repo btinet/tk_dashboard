@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
+use App\Entity\SchoolSubjectType;
 use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Entity\UserRole;
@@ -62,7 +63,7 @@ class SchoolSubjectCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(SchoolSubject::class)
-            ->setData($this->getRepositoryManager()->findAll(SchoolSubject::class))
+            ->setData($this->getRepositoryManager()->findAll(SchoolSubject::class,[],20))
             ->setCaption('Fächer')
             ->addIdentifier('label','admin_school_subject_index','id')
             ->add('abbr')
@@ -73,7 +74,7 @@ class SchoolSubjectCrudController extends AbstractController
 
         return $this->render('admin/school_subject/index.html',[
             'adminMenu' => $this->adminMenu->render(),
-            'objects' => $this->getRepositoryManager()->findAll(SchoolSubject::class),
+            'objects' => $this->getRepositoryManager()->findAll(SchoolSubjectType::class),
             'userData' => $userData,
             'table' => $table->render()
         ]);
@@ -93,6 +94,7 @@ class SchoolSubjectCrudController extends AbstractController
             {
                 $entity->setLabel($this->request->getFieldAsString('label'));
                 $entity->setAbbr($this->request->getFieldAsString('abbr'));
+                $entity->setSchoolSubjectTypeId($this->request->getFieldAsString('school_subject_type_id'));
                 $em->persist($entity);
 
                 $this->response->redirectToRoute(302,'admin_school_subject_index');

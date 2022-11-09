@@ -40,7 +40,7 @@ $this->layout('_layout.standard.html',
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <?=$this->insert('admin/school_subject/_form.html',['userData'=>$userData,'userRoles'=>$userRoles]) ?>
+                <?=$this->insert('admin/school_subject/_form.html',['userData'=>$userData,'objects'=>$objects]) ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light " data-bs-dismiss="modal">Abbrechen</button>
@@ -53,7 +53,7 @@ $this->layout('_layout.standard.html',
 <div class="row g-3 mb-3">
     <div></div>
     <div class="col-12 col-md-3">
-        <div class="d-none d-md-block">
+        <div class="d-none d-md-block sticky-top sticky-top-md" style="top: 70px;">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">Menü</div>
             </div>
