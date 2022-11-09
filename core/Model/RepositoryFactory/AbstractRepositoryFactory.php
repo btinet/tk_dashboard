@@ -65,7 +65,7 @@ class AbstractRepositoryFactory extends EntityManagerComponent
      * @param int $offset
      * @return array|false|string
      */
-    public function findAll(string $entity, array $sortBy = [], int $limit = 10, int $offset = 0 )
+    public function findAll(string $entity, array $sortBy = [], int $limit = 100, int $offset = 0 )
     {
         if($limit){
             $limit = "LIMIT $limit";
