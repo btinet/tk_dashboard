@@ -137,6 +137,18 @@ admin_school_subject_type_new:
   method: 'new'
   request: 'post'
 
+admin_topic_index:
+  expression: '/admin/topic'
+  controller: 'App\Controller\Admin\TopicCrudController'
+  method: 'index'
+  request: ['get','post']
+
+admin_topic_new:
+  expression: '/admin/topic'
+  controller: 'App\Controller\Admin\TopicCrudController'
+  method: 'new'
+  request: 'post'
+
 user_profile_index:
   expression: '/profile'
   controller: 'App\Controller\Profile\ProfileController'

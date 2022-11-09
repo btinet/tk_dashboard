@@ -63,7 +63,7 @@ class SchoolSubjectCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(SchoolSubject::class)
-            ->setData($this->getRepositoryManager()->findAll(SchoolSubject::class,[],20))
+            ->setData($this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc'],20))
             ->setCaption('Fächer')
             ->addIdentifier('label','admin_school_subject_index','id')
             ->add('abbr')

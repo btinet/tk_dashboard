@@ -61,6 +61,18 @@ class AdminMenu extends AbstractMenu
             );
         }
 
+        if($this->HideUnlessHasPermission('show_topic'))
+        {
+            $this->add('topics',NavigationType::class,[
+                'label' => 'topics',
+                'route' => 'admin_topic_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ],[0]
+            );
+        }
+
        if($this->HideUnlessHasPermission('show_exam'))
        {
            $this->add('exams',NavigationType::class,[

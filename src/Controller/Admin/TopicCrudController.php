@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
 use App\Entity\SchoolSubjectType;
+use App\Entity\Topic;
 use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Entity\UserRole;
@@ -17,7 +18,7 @@ use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
-class SchoolSubjectTypeCrudController extends AbstractController
+class TopicCrudController extends AbstractController
 {
 
     protected AbstractRepositoryFactory $repository;
@@ -41,7 +42,7 @@ class SchoolSubjectTypeCrudController extends AbstractController
             'mainMenu' => $mainMenu->render(),
         ]);
 
-        $this->denyAccessUnlessHasPermission('show_school_subject_type');
+        $this->denyAccessUnlessHasPermission('show_topic');
     }
 
     public function index(): string
@@ -56,7 +57,7 @@ class SchoolSubjectTypeCrudController extends AbstractController
             if($this->request->getFieldAsArray('mark_row')){
                 foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
                 {
-                    $result = $em->remove(SchoolSubjectType::class,$id);
+                    $result = $em->remove(Topic::class,$id);
                     if($result == 1)
                     {
                         $this->setFlash($result);
@@ -65,23 +66,22 @@ class SchoolSubjectTypeCrudController extends AbstractController
                     }
 
                 }
-                $this->response->redirectToRoute(302,'admin_school_subject_type_index');
+                $this->response->redirectToRoute(302,'admin_topic_index');
             }
         }
 
         $table = new TableType($this->getView());
         $table
-            ->configureComponent(SchoolSubjectType::class)
-            ->setData($this->getRepositoryManager()->findAll(SchoolSubjectType::class,['label' => 'asc']))
+            ->configureComponent(Topic::class)
+            ->setData($this->getRepositoryManager()->findAll(Topic::class,['title'=>'asc']))
             ->setCaption('Fachbereiche')
-            ->addIdentifier('label', 'admin_school_subject_type_index', 'id')
+            ->addIdentifier('title', 'admin_topic_index', 'id')
             ->add('description')
             ->add('created')
             ->add('updated');
 
-        return $this->render('admin/school_subject_type/index.html', [
+        return $this->render('admin/topic/index.html', [
             'adminMenu' => $this->adminMenu->render(),
-            'objects' => $this->getRepositoryManager()->findAll(SchoolSubjectType::class),
             'userData' => $userData,
             'table' => $table->render()
         ]);
@@ -94,17 +94,17 @@ class SchoolSubjectTypeCrudController extends AbstractController
 
         if ($this->request->isFormSubmitted() and $this->request->isPostRequest()) {
             $em = new EntityManager();
-            $entity = new SchoolSubjectType();
+            $entity = new Topic();
 
-            if (0 === $em->isUnique(SchoolSubjectType::class, 'label', $this->request->getFieldAsString('label'), $this->getRepositoryManager())) {
-                $entity->setLabel($this->request->getFieldAsString('label'));
+            if (0 === $em->isUnique(Topic::class, 'title', $this->request->getFieldAsString('title'), $this->getRepositoryManager())) {
+                $entity->setTitle($this->request->getFieldAsString('label'));
                 $entity->setDescription($this->request->getFieldAsString('description'));
                 $em->persist($entity);
 
-                $this->response->redirectToRoute(302, 'admin_school_subject_type_index');
+                $this->response->redirectToRoute(302, 'admin_topic_index');
             }
         }
-        $this->response->redirectToRoute(302, 'admin_school_subject_type_index');
+        $this->response->redirectToRoute(302, 'admin_topic_index');
     }
 
 }
