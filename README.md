@@ -1,6 +1,6 @@
 # TK eSchool Manager
 
-TK Dashboard ist ein webbasierter Schulmanager zur Verwaltung von Prüfungsthemen für die 5. Prüfungskomponente.
+TK eSchool Manager ist ein webbasierter Schulmanager zur Verwaltung von Prüfungsthemen für die 5. Prüfungskomponente.
 
 ## ERM-Model und Relation-Model
 
