@@ -89,28 +89,24 @@ class UserRoleRepository extends AbstractRepositoryFactory
     }
 
     /**
-     * @return array|false
+     * @return User|false
      */
-    public function findUsersByRole(int $userId, string $entity = User::class)
+    public function findUserByRole(int $groupId,string $roleLabel, string $entity = User::class)
     {
         try {
             $entityClass = self::setEntityClass($entity);
             $table = self::generateSnakeTailString($entityClass->getShortName());
             $result = self::select
             ("
-                SELECT *
-                FROM {$table} u
-                INNER JOIN user_group_has_user h
-                        ON (u.id = h.user_id)
-                INNER JOIN user_group ug
-                        ON (ug.id = h.user_group_id)
-                INNER JOIN user_role_has_user urhu
-                        ON (u.id = urhu.user_id)
-                INNER JOIN user_role ur
-                        ON (ur.id = urhu.user_role_id)
-                WHERE ur.label = 'Tutor:in'
+                SELECT user.first_name AS firstName, user.last_name AS lastName, user.id AS id, user.username AS username
+                FROM user
+                INNER JOIN user_group_has_user user_group ON (user.id = user_group.user_id)
+                INNER JOIN user_role_has_user user_roles ON (user.id = user_roles.user_id)
+                INNER JOIN user_role role ON (user_roles.user_role_id = role.id)
+                WHERE user_group.user_group_id = {$groupId}
+                AND role.label = '".$roleLabel."'               
                     ");
-            return $result->fetchAll(self::FETCH_CLASS,$entity);
+            return $result->fetchObject($entity);
         } catch (PDOException|ReflectionException $e) {
             return $e->getMessage();
         }
@@ -126,7 +122,7 @@ class UserRoleRepository extends AbstractRepositoryFactory
             $table = self::generateSnakeTailString($entityClass->getShortName());
             $result = self::select
             ("
-                SELECT p.label
+                SELECT p.label, p.id
                 FROM {$table} p
                     INNER JOIN user_group_has_user rp
                         ON (p.id = rp.user_group_id) 

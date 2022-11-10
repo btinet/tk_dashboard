@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRoleRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -21,7 +22,7 @@ final class UserGroup
 
     public function __construct()
     {
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new UserRoleRepository();
     }
 
     public function __toString()
@@ -108,6 +109,11 @@ final class UserGroup
         ]);
         if(!array_filter((array)$role)) return false;
         return $role;
+    }
+
+    public function getTutor($roleLabel = 'Tutor:in')
+    {
+        return $this->repository->findUserByRole($this->getId(),$roleLabel);
     }
 
 }

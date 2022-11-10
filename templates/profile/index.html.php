@@ -55,13 +55,6 @@ $this->layout('_layout.standard.html',
                 <div class="d-flex justify-content-center align-items-start flex-column">
                     <span class="small">Tutorium</span>
                     <div class="row g-1">
-                        <?php foreach ($session->getUser()->getTutors() as $tutor): ?>
-                            <div class="col">
-                                <a href="#" class="btn btn-light btn-sm">
-                                    <?=$tutor?>
-                                </a>
-                            </div>
-                        <?php endforeach;?>
                     </div>
                     <span class="small my-2">Gruppen</span>
                     <div class="row g-1">
@@ -70,6 +63,9 @@ $this->layout('_layout.standard.html',
                             <a href="#" class="btn btn-light btn-sm">
                                 <?=$group->getLabel()?>
                             </a>
+                            <?php if($group->getTutor()): ?>
+                            <span>Tutor:in <b><?=$group->getTutor()->getLastName()?></b></span>
+                            <?php endif;?>
                         </div>
                         <?php endforeach;?>
                     </div>
