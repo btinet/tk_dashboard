@@ -155,11 +155,10 @@ $this->layout('base.html',
         <?php else: ?>
             <div class="container">
                 <div class="py-3 d-flex justify-content-start align-items-center">
-                    <span class="small"><?=$meta->get('footer_text')?></span>
+                    <a class="small me-2" target="_blank" href="https://github.com/btinet/tk_dashboard"><i class="fa fa-github me-1"></i>Github</a><?=$meta->get('footer_text')?>
                 </div>
             </div>
         <?php endif ?>
     </footer>
-
 <?php $this->stop() ?>
 
