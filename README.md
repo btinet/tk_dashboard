@@ -13,3 +13,11 @@ TK Dashboard ist ein webbasierter Schulmanager zur Verwaltung von Prüfungstheme
 #### Benutzerverwaltung
 
 ![ERM_USER](Docs/assets/220908_ERM_5PK_User.png)
+
+#### Genehmigungsprozess (intern)
+
+![Flowchart_permit](Docs/assets/220914_Flussdiagramm_5PK.svg)
+
+#### Import von Rohdaten
+
+![Flowchart_permit](Docs/assets/220914_Flussdiagramm_Rohdaten_speichern.svg)
