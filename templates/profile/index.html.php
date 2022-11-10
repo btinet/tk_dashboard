@@ -45,7 +45,8 @@ $this->layout('_layout.standard.html',
                     <span class="small mt-2">E-Mail-Adresse</span>
                     <span class="text-truncate"><?=$session->getUser()->getEmail()?></span>
                     <span class="small mt-2">Mitglied seit</span>
-                    <?=$session->getUser()->getCreated()?>
+                    <?php $date = DateTime::createFromFormat('Y-m-d H:i:s',$session->getUser()->getCreated())?>
+                    <?=$date->format('d.m.Y')?>
                 </div>
             </div>
 
@@ -53,7 +54,15 @@ $this->layout('_layout.standard.html',
                 <h2 class="h5">Kursangaben</h2>
                 <div class="d-flex justify-content-center align-items-start flex-column">
                     <span class="small">Tutorium</span>
-                    <?=$session->getUser()->getRole()?>
+                    <div class="row g-1">
+                        <?php foreach ($session->getUser()->getTutors() as $tutor): ?>
+                            <div class="col">
+                                <a href="#" class="btn btn-light btn-sm">
+                                    <?=$tutor?>
+                                </a>
+                            </div>
+                        <?php endforeach;?>
+                    </div>
                     <span class="small my-2">Gruppen</span>
                     <div class="row g-1">
                         <?php foreach ($session->getUser()->getGroup() as $group): ?>
@@ -62,10 +71,8 @@ $this->layout('_layout.standard.html',
                                 <?=$group->getLabel()?>
                             </a>
                         </div>
-
                         <?php endforeach;?>
                     </div>
-
                 </div>
             </div>
         </div>

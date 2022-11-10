@@ -174,6 +174,11 @@ final class User
         return $this->repository->findUserGroup($this->id);
     }
 
+    public function getTutors()
+    {
+        return $this->repository->findUsersByRole($this->id);
+    }
+
     public function getPermissions()
     {
         return $this->repository->findUserPermissions($this->id);

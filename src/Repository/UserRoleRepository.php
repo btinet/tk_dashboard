@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\RolePermission;
+use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Entity\UserRole;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -82,6 +83,34 @@ class UserRoleRepository extends AbstractRepositoryFactory
                 WHERE rp.user_id = {$userId}
                     ");
             return $result->fetchObject($entity);
+        } catch (PDOException|ReflectionException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @return array|false
+     */
+    public function findUsersByRole(int $userId, string $entity = User::class)
+    {
+        try {
+            $entityClass = self::setEntityClass($entity);
+            $table = self::generateSnakeTailString($entityClass->getShortName());
+            $result = self::select
+            ("
+                SELECT *
+                FROM {$table} u
+                INNER JOIN user_group_has_user h
+                        ON (u.id = h.user_id)
+                INNER JOIN user_group ug
+                        ON (ug.id = h.user_group_id)
+                INNER JOIN user_role_has_user urhu
+                        ON (u.id = urhu.user_id)
+                INNER JOIN user_role ur
+                        ON (ur.id = urhu.user_role_id)
+                WHERE ur.label = 'Tutor:in'
+                    ");
+            return $result->fetchAll(self::FETCH_CLASS,$entity);
         } catch (PDOException|ReflectionException $e) {
             return $e->getMessage();
         }
