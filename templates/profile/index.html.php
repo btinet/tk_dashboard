@@ -64,7 +64,7 @@ $this->layout('_layout.standard.html',
                                 <?=$group->getLabel()?>
                             </a>
                             <?php if($group->getTutor()): ?>
-                            <span>Tutor:in <b><?=$group->getTutor()->getLastName()?></b></span>
+                                <span>Tutor:in <b><?=$group->getTutor()->getLastName()?></b></span>
                             <?php endif;?>
                         </div>
                         <?php endforeach;?>
