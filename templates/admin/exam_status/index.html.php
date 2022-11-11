@@ -35,11 +35,11 @@ $this->layout('_layout.standard.html',
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Themengruppe anlegen</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Status anlegen</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <?=$this->insert('admin/topic/_form.html',['userData'=>$userData]) ?>
+                <?=$this->insert('admin/exam_status/_form.html',['userData'=>$userData]) ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light " data-bs-dismiss="modal">Abbrechen</button>
@@ -65,17 +65,17 @@ $this->layout('_layout.standard.html',
     </div>
 
     <div class="col-12 col-md-9">
-        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('topics')?></div>
+        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('exam_status')?></div>
 
         <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Themengruppe anlegen</button>
+            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Status anlegen</button>
             <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 
         <?= $table ?>
 
         <div class="mb-3 d-flex justify-content-start">
-            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Themengruppe anlegen</button>
+            <button  class="btn btn-light  me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Status anlegen</button>
             <?=$this->insert('/app/_batch_delete_form.html')?>
         </div>
 

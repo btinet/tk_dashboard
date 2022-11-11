@@ -85,6 +85,18 @@ class AdminMenu extends AbstractMenu
            );
        }
 
+        if($this->HideUnlessHasPermission('show_exam_status'))
+        {
+            $this->add('exam_status',NavigationType::class,[
+                'label' => 'exam_status',
+                'route' => 'admin_exam_status_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ],[0]
+            );
+        }
+
         if($this->HideUnlessHasPermission('show_role'))
         {
             $this->add('roles',NavigationType::class,[

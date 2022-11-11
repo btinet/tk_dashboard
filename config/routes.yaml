@@ -108,7 +108,7 @@ admin_permission_index:
   request: ['get','post']
 
 admin_permission_new:
-  expression: '/admin/permission/new'
+  expression: '/admin/permission/new/new'
   controller: 'App\Controller\Admin\RolePermissionCrudController'
   method: 'new'
   request: 'post'
@@ -120,7 +120,7 @@ admin_school_subject_index:
   request: ['get','post']
 
 admin_school_subject_new:
-  expression: '/admin/school_subject'
+  expression: '/admin/school_subject/new'
   controller: 'App\Controller\Admin\SchoolSubjectCrudController'
   method: 'new'
   request: 'post'
@@ -132,7 +132,7 @@ admin_school_subject_type_index:
   request: ['get','post']
 
 admin_school_subject_type_new:
-  expression: '/admin/school_subject_type'
+  expression: '/admin/school_subject_type/new'
   controller: 'App\Controller\Admin\SchoolSubjectTypeCrudController'
   method: 'new'
   request: 'post'
@@ -144,8 +144,20 @@ admin_topic_index:
   request: ['get','post']
 
 admin_topic_new:
-  expression: '/admin/topic'
+  expression: '/admin/topic/new'
   controller: 'App\Controller\Admin\TopicCrudController'
+  method: 'new'
+  request: 'post'
+
+admin_exam_status_index:
+  expression: '/admin/exam_status'
+  controller: 'App\Controller\Admin\ExamStatusCrudController'
+  method: 'index'
+  request: ['get','post']
+
+admin_exam_status_new:
+  expression: '/admin/exam_status/new'
+  controller: 'App\Controller\Admin\ExamStatusCrudController'
   method: 'new'
   request: 'post'
 

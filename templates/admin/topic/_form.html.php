@@ -30,7 +30,7 @@ use Core\Component\SessionComponent\Session;
     </div>
     <div class="col-12">
         <div class="form-floating">
-            <input type="text" class="form-control" id="description" name="abbr" value="<?=$userData?$userData['description']:false?>" placeholder="<?=$trans->getConfig('description')?>" required>
+            <input type="text" class="form-control" id="description" name="description" value="<?=$userData?$userData['description']:false?>" placeholder="<?=$trans->getConfig('description')?>" required>
             <label for="description"><?=$trans->getConfig('description')?></label>
             <div class="invalid-feedback">
                 Bitte gib eine Beschreibung ein.

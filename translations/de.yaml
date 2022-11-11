@@ -74,6 +74,7 @@ permissions: Berechtigungen
 exam: Leitfrage
 Exam: Leitfrage
 exams: Leitfragen
+exam_status: Workflow Status
 Exams: Leitfragen
 Subject: Fach
 MainSchoolSubject: Referenzfach

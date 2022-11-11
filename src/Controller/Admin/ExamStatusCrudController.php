@@ -3,13 +3,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\RolePermission;
+use App\Entity\ExamStatus;
 use App\Entity\SchoolSubject;
-use App\Entity\SchoolSubjectType;
-use App\Entity\Topic;
-use App\Entity\User;
-use App\Entity\UserGroup;
-use App\Entity\UserRole;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
 use App\Type\TableType;
@@ -18,7 +13,7 @@ use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
-class TopicCrudController extends AbstractController
+class ExamStatusCrudController extends AbstractController
 {
 
     protected AbstractRepositoryFactory $repository;
@@ -42,7 +37,7 @@ class TopicCrudController extends AbstractController
             'mainMenu' => $mainMenu->render(),
         ]);
 
-        $this->denyAccessUnlessHasPermission('show_topic');
+        $this->denyAccessUnlessHasPermission('show_exam_status');
     }
 
     public function index(): string
@@ -57,7 +52,7 @@ class TopicCrudController extends AbstractController
             if($this->request->getFieldAsArray('mark_row')){
                 foreach($this->request->getFieldAsArray('mark_row') as $key => $id)
                 {
-                    $result = $em->remove(Topic::class,$id);
+                    $result = $em->remove(ExamStatus::class,$id);
                     if($result == 1)
                     {
                         $this->setFlash($result);
@@ -66,21 +61,20 @@ class TopicCrudController extends AbstractController
                     }
 
                 }
-                $this->response->redirectToRoute(302,'admin_topic_index');
+                $this->response->redirectToRoute(302,'admin_exam_status_index');
             }
         }
 
         $table = new TableType($this->getView());
         $table
-            ->configureComponent(Topic::class)
-            ->setData($this->getRepositoryManager()->findAll(Topic::class,['title'=>'asc']))
-            ->setCaption('Fachbereiche')
-            ->addIdentifier('title', 'admin_topic_index', 'id')
-            ->add('description')
+            ->configureComponent(ExamStatus::class)
+            ->setData($this->getRepositoryManager()->findAll(ExamStatus::class,['label'=>'asc']))
+            ->setCaption('Prüfungsstatus')
+            ->addIdentifier('label', 'admin_exam_status_index', 'id')
             ->add('created')
             ->add('updated');
 
-        return $this->render('admin/topic/index.html', [
+        return $this->render('admin/exam_status/index.html', [
             'adminMenu' => $this->adminMenu->render(),
             'userData' => $userData,
             'table' => $table->render()
@@ -94,17 +88,16 @@ class TopicCrudController extends AbstractController
 
         if ($this->request->isFormSubmitted() and $this->request->isPostRequest()) {
             $em = new EntityManager();
-            $entity = new Topic();
+            $entity = new ExamStatus();
 
-            if (0 === $em->isUnique(Topic::class, 'title', $this->request->getFieldAsString('title'), $this->getRepositoryManager())) {
-                $entity->setTitle($this->request->getFieldAsString('title'));
-                $entity->setDescription($this->request->getFieldAsString('description'));
+            if (0 === $em->isUnique(ExamStatus::class, 'label', $this->request->getFieldAsString('label'), $this->getRepositoryManager())) {
+                $entity->setLabel($this->request->getFieldAsString('label'));
                 $em->persist($entity);
 
-                $this->response->redirectToRoute(302, 'admin_topic_index');
+                $this->response->redirectToRoute(302, 'admin_exam_status_index');
             }
         }
-        $this->response->redirectToRoute(302, 'admin_topic_index');
+        $this->response->redirectToRoute(302, 'admin_exam_status_index');
     }
 
 }
