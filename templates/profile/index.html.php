@@ -37,7 +37,7 @@ $this->layout('_layout.standard.html',
 <div class="row g-3 mb-3">
     <div class="col-12 col-md-4">
         <div class="card">
-            <div class="card-body border-1 border-bottom">
+            <div class="card-body border-1">
                 <h1 class="h5">Persönliches Konto</h1>
                 <div class="d-flex justify-content-center align-items-start flex-column">
                     <span class="small">Name</span>
@@ -49,28 +49,22 @@ $this->layout('_layout.standard.html',
                     <?=$date->format('d.m.Y')?>
                 </div>
             </div>
-
-            <div class="card-body">
-                <h2 class="h5">Kursangaben</h2>
-                <div class="d-flex justify-content-center align-items-start flex-column">
-                    <span class="small">Tutorium</span>
-                    <div class="row g-1">
-                    </div>
-                    <span class="small my-2">Gruppen</span>
-                    <div class="row g-1">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <b>Kurs</b>
+                            <b>Tutor:in</b>
+                        </div>
                         <?php foreach ($session->getUser()->getGroup() as $group): ?>
-                        <div class="col">
-                            <a href="#" class="btn btn-light btn-sm">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="#" class="btn btn-sm btn-light">
                                 <?=$group->getLabel()?>
                             </a>
                             <?php if($group->getTutor()): ?>
-                                <span>Tutor:in <b><?=$group->getTutor()->getLastName()?></b></span>
+                            <a href="#"><?=$group->getTutor()->getLastName()?></a>
                             <?php endif;?>
                         </div>
                         <?php endforeach;?>
                     </div>
-                </div>
-            </div>
         </div>
     </div>
 

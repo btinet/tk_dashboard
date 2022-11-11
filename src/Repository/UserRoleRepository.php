@@ -48,7 +48,6 @@ class UserRoleRepository extends AbstractRepositoryFactory
             $entityClass = self::setEntityClass($entity);
             $table = self::generateSnakeTailString($entityClass->getShortName());
 
-
             $orderData = self::createOrderData($sortBy);
             $result = self::select
             ("
@@ -65,6 +64,7 @@ class UserRoleRepository extends AbstractRepositoryFactory
             return $e->getMessage();
         }
     }
+
 
     /**
      * @return array|false
