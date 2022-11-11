@@ -19,7 +19,7 @@ final class Exam
      * Properties (private) sind nur für interne Zwecke
      */
     private ExamRepository $repository;
-    private ?UserHasExam $topic;
+    private ?Topic $topic;
 
     /**
      * Properties (protected) in CamelCase entsprechen den MySQL-Feldern in snake_case
@@ -97,7 +97,7 @@ final class Exam
      */
     public function getTopic()
     {
-        return $this->repository->findOneBy(UserHasExam::class, [
+        return $this->repository->findOneBy(Topic::class, [
             'id' => $this->getTopicId()
         ]);
     }
