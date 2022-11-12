@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Exam;
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
+use App\Entity\Topic;
 use App\Entity\UserHasExam;
 use App\Entity\UserGroup;
 use App\Entity\UserRole;
@@ -108,7 +109,7 @@ class ExamCrudController extends AbstractController
 
         $table = new TableType($this->getView());
         $table
-            ->configureComponent(UserHasExam::class)
+            ->configureComponent(Topic::class)
             ->setData($object->getTopic())
             ->setCaption('Thema')
             ->add('title')
