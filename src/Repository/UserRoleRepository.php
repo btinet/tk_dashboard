@@ -134,6 +134,25 @@ class UserRoleRepository extends AbstractRepositoryFactory
         }
     }
 
+    public function findUserCurrentGroup(int $userId, string $entity = UserGroup::class)
+    {
+        try {
+            $entityClass = self::setEntityClass($entity);
+            $table = self::generateSnakeTailString($entityClass->getShortName());
+            $result = self::select
+            ("
+                SELECT p.label, p.id, max(p.id) as max_id, p.role_id AS roleId
+                FROM {$table} p
+                    INNER JOIN user_group_has_user rp
+                        ON (p.id = rp.user_group_id) 
+                WHERE rp.user_id = {$userId}
+                    ");
+            return $result->fetchObject($entity);
+        } catch (PDOException|ReflectionException $e) {
+            return $e->getMessage();
+        }
+    }
+
     /**
      * @return array|false
      */

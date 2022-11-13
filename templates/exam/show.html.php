@@ -26,7 +26,6 @@ $this->layout('_layout.standard.html',
 
 <?php $this->start('main') ?>
     <div class="row g-3 mb-3">
-        <div></div>
         <div class="col-12 col-md-4">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">zugeordnet</div>
@@ -91,13 +90,13 @@ $this->layout('_layout.standard.html',
                     <?php if ($session->getUser()->hasGroupPermission('create_key_question')): ?>
 
                             <?php if(date('Y') >= ($exam->getYear()+3) and !$exam->getUser() and $session->getUser()):?>
-                                <a href="#" class="btn btn-primary d-block d-md-inline-block">Thema übernehmen</a>
+                                <a href="<?=$response->generateUrlFromRoute('kq_claim_start',[$exam->getId()])?>" class="btn btn-primary d-block d-md-inline-block">Thema übernehmen</a>
                             <?php else: ?>
                                 <a href="#" class="btn btn-light border d-block d-md-inline-block disabled">Thema übernehmen</a>
                             <?php endif; ?>
 
                     <?php else: ?>
-                        <p class="lead">Du kannst keine Leitfrage erstellen oder übernehmen?</p>
+                        <p class="lead">Kannst du keine Leitfrage erstellen oder übernehmen?</p>
                     <p>Du bist offensichtlich in keinem Kurs der Qualifikationsphase. Wende dich für Unterstützung an deine:n Tutor:in.</p>
                     <?php endif; ?>
                 <?php endif; ?>

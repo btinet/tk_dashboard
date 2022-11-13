@@ -166,3 +166,9 @@ user_profile_index:
   controller: 'App\Controller\Profile\ProfileController'
   method: 'index'
   request: 'get'
+
+kq_claim_start:
+  expression: '/key-question/claim/([0-9]*)/start'
+  controller: 'App\Controller\Profile\KeyQuestionWorkflowController'
+  method: 'claimKeyQuestion'
+  request: 'get'

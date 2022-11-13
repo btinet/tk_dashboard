@@ -174,6 +174,11 @@ final class User
         return $this->repository->findUserGroup($this->id);
     }
 
+    public function getCurrentGroup(): UserGroup
+    {
+        return $this->repository->findUserCurrentGroup($this->id);
+    }
+
     public function hasGroupPermission(string $condition): bool
     {
         $response = false;
