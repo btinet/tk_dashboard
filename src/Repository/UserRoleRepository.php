@@ -122,7 +122,7 @@ class UserRoleRepository extends AbstractRepositoryFactory
             $table = self::generateSnakeTailString($entityClass->getShortName());
             $result = self::select
             ("
-                SELECT p.label, p.id
+                SELECT p.label, p.id, p.role_id AS roleId
                 FROM {$table} p
                     INNER JOIN user_group_has_user rp
                         ON (p.id = rp.user_group_id) 
@@ -156,6 +156,30 @@ class UserRoleRepository extends AbstractRepositoryFactory
                         ON (urhu.user_id = u.id)
                 
                 WHERE urhu.user_id = {$userId}
+                    ");
+            return $result->fetchAll(self::FETCH_CLASS,$entity);
+        } catch (PDOException|ReflectionException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @return array|false
+     */
+    public function findRolePermissions(int $roleId, string $entity = RolePermission::class)
+    {
+        try {
+            $entityClass = self::setEntityClass($entity);
+            $table = self::generateSnakeTailString($entityClass->getShortName());
+            $result = self::select
+            ("
+                SELECT p.label
+                FROM {$table} p
+                    INNER JOIN user_role_has_role_permission rp
+                        ON (p.id = rp.role_permission_id)
+                    INNER JOIN user_role ur
+                        ON (rp.user_role_id = ur.id)                
+                WHERE ur.user_role_id = {$roleId}
                     ");
             return $result->fetchAll(self::FETCH_CLASS,$entity);
         } catch (PDOException|ReflectionException $e) {

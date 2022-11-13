@@ -174,6 +174,24 @@ final class User
         return $this->repository->findUserGroup($this->id);
     }
 
+    public function hasGroupPermission(string $condition): bool
+    {
+        $response = false;
+        foreach ($this->getGroup() as $group)
+        {
+            if($group->getRole()->getPermissions())
+            {
+                foreach ($group->getRole()->getPermissions() as $permission){
+                    if($permission->getLabel() == $condition)
+                    {
+                        $response = true;
+                    }
+                }
+            }
+        }
+        return $response;
+    }
+
     public function getPermissions()
     {
         return $this->repository->findUserPermissions($this->id);

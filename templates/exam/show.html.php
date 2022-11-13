@@ -8,6 +8,7 @@
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var int $current_school_subject_id Id des aktuellen Schulfachs
  * @var object $exam enthält die MySQL-Tabelle "exam"
+ * @var Session $session Session-Objekt
  */
 
 use Core\Component\SessionComponent\Session;
@@ -86,11 +87,20 @@ $this->layout('_layout.standard.html',
                     </div>
                 </div>
                 <div class="col-12">
-                    <?php if(date('Y') >= ($exam->getYear()+3) and !$exam->getUser()):?>
-                        <a href="#" class="btn btn-primary d-block d-md-inline-block">Thema übernehmen</a>
+                <?php if ($session->getUser()): ?>
+                    <?php if ($session->getUser()->hasGroupPermission('create_key_question')): ?>
+
+                            <?php if(date('Y') >= ($exam->getYear()+3) and !$exam->getUser() and $session->getUser()):?>
+                                <a href="#" class="btn btn-primary d-block d-md-inline-block">Thema übernehmen</a>
+                            <?php else: ?>
+                                <a href="#" class="btn btn-light border d-block d-md-inline-block disabled">Thema übernehmen</a>
+                            <?php endif; ?>
+
                     <?php else: ?>
-                        <a href="#" class="btn btn-light border d-block d-md-inline-block disabled">Thema übernehmen</a>
+                        <p class="lead">Du kannst keine Leitfrage erstellen oder übernehmen?</p>
+                    <p>Du bist offensichtlich in keinem Kurs der Qualifikationsphase. Wende dich für Unterstützung an deine:n Tutor:in.</p>
                     <?php endif; ?>
+                <?php endif; ?>
                 </div>
             </div>
         </div>
