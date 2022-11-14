@@ -90,7 +90,7 @@ $this->layout('_layout.standard.html',
                         <?php if ($session->getUser()): ?>
                             <?php if ($session->getUser()->hasGroupPermission('create_key_question') and $session->userHasPermission('create_key_question')): ?>
 
-                                <?php if(date('Y') >= ($exam->getYear()+3) and !$exam->getUser() and $session->getUser()):?>
+                                <?php if(date('Y') >= ($exam->getYear()+3) and !$exam->getUser()):?>
                                     <div class="col-12 col-md-6">
                                         <a href="<?=$response->generateUrlFromRoute('kq_claim_start',[$exam->getId()])?>" class="btn btn-primary d-block">Thema übernehmen</a>
                                     </div>
@@ -99,16 +99,9 @@ $this->layout('_layout.standard.html',
                                             <a href="#" class="btn btn-light border d-block disabled">Thema übernehmen</a>
                                         </div>
                                 <?php endif; ?>
-                                <?php if($session->getUser()):?>
                                     <div class="col-12 col-md-6">
                                         <a href="#" class="btn btn-light d-block">ähnliche Leitfrage erstellen</a>
                                     </div>
-                                    <?php else: ?>
-                                        <div class="col-12 col-md-6">
-                                            <a href="#" class="btn btn-light border d-block disabled">ähnliche Leitfrage erstellen</a>
-                                        </div>
-                                <?php endif; ?>
-
                             <?php else: ?>
                                 <p class="lead">Du kannst keine Leitfrage erstellen oder übernehmen?</p>
                                 <p>Du bist offensichtlich in keinem Kurs der Qualifikationsphase. Wende dich für Unterstützung an deine:n Tutor:in.</p>
