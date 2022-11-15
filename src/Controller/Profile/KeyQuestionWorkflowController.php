@@ -4,8 +4,10 @@ namespace App\Controller\Profile;
 
 use App\Entity\Exam;
 use App\Entity\SchoolSubject;
+use App\Entity\UserHasExam;
 use App\Menu\MenuBuilder;
 use App\Repository\UserRoleRepository;
+use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -59,6 +61,16 @@ class KeyQuestionWorkflowController extends AbstractController
             }
         $this->setFlash('key_question_locked','danger');
         $this->response->redirectToRoute(302,$this->generateUrlFromRoute('exam_show',[$exam->getId()]),true);
+    }
+
+    public function transferKeyQuestion()
+    {
+        if($this->request->isFormSubmitted() and $this->request->isPostRequest())
+        {
+            $userHasExam = new UserHasExam();
+            $entityManager = new EntityManager();
+            $userHasExam->setUserId($this->request->getFieldAsString($this->session->getUser()->getId()));
+        }
     }
 
 }

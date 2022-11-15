@@ -93,7 +93,7 @@ $this->layout('_layout.standard.html',
                     </div>
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Daten zur Leitfrage</div>
                     <div class="card">
-                        <form class="list-group list-group-flush">
+                        <form id="claim_form" method="get" name="claim_form" class="list-group list-group-flush">
                             <div class="list-group-item">
                                 <label for="topic" class="form-label fw-bolder">Themengruppe</label>
                                 <input class="form-control-plaintext" id="topic" name="topic" readonly type="text" value="<?=$exam->getTopic()->getTitle()?>">
@@ -102,14 +102,17 @@ $this->layout('_layout.standard.html',
                                 <label for="key_question" class="form-label fw-bolder">Leitfrage</label>
                                 <textarea rows="4" class="form-control-plaintext" id="key_question" name="key_question" readonly><?=$exam->getKeyQuestion()?></textarea>
                             </div>
+                            <?php $i = 1;?>
                             <?php foreach($exam->getSchoolSubjects() as $subject): ?>
                                 <div class="list-group-item">
-                                    <label for="school_subject_<?=$subject->getId()?>" class="form-label fw-bolder">
+                                    <label for="school_subject_<?=$i?>" class="form-label fw-bolder">
                                         <?=$subject->isMainSchoolSubject() ? 'Referenzfach' :'Begleitfach' ?>
                                     </label>
-                                    <input class="form-control-plaintext" id="school_subject_<?=$subject->getId()?>" name="school_subject_<?=$subject->getId()?>" readonly type="text" value="<?=$subject->getLabel()?>">
+                                    <input class="form-control-plaintext" id="school_subject_<?=$i?>" name="school_subject_<?=$i?>" readonly type="text" value="<?=$subject->getId()?>">
                                 </div>
+                            <?php $i++ ?>
                             <?php endforeach; ?>
+                            <input type="hidden" name="csrf_token" value="<?=$session->get('csrf_token')?>">
                         </form>
                     </div>
                 </div>
@@ -117,22 +120,29 @@ $this->layout('_layout.standard.html',
                 <div class="col-12">
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Persönliche Angaben</div>
                     <div class="card">
-                        <form class="list-group list-group-flush">
+                        <div class="list-group list-group-flush">
                             <div class="list-group-item">
                                 <label for="username" class="form-label fw-bolder">Name</label>
-                                <input class="form-control-plaintext" id="username" name="username" readonly type="text" value="<?=$session->getUser()->getFirstname().' '.$session->getUser()->getLastName()?>">
+                                <input form="claim_form" class="form-control-plaintext" id="username" name="username" readonly type="text" value="<?=$session->getUser()->getFirstname().' '.$session->getUser()->getLastName()?>">
                             </div>
                             <div class="list-group-item">
                                 <label for="group" class="form-label fw-bolder">Kurs</label>
-                                <input class="form-control-plaintext" id="group" name="group" readonly type="text" value="<?=$session->getUser()->getCurrentGroup()->getLabel()?>">
+                                <input form="claim_form" class="form-control-plaintext" id="group" name="group" readonly type="text" value="<?=$session->getUser()->getCurrentGroup()->getLabel()?>">
                             </div>
                             <div class="list-group-item">
                                 <label for="tutor" class="form-label fw-bolder">Tutor:in</label>
-                                <input class="form-control-plaintext" id="tutor" name="tutor" readonly type="text" value="<?=$session->getUser()->getCurrentGroup()->getTutor()->getLastName()?>">
+                                <input form="claim_form" class="form-control-plaintext" id="tutor" name="tutor" readonly type="text" value="<?=$session->getUser()->getCurrentGroup()->getTutor()->getLastName()?>">
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-6">
+                    <button type="submit" form="claim_form" class="btn btn-primary w-100 d-block">Leitfrage einreichen</button>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="btn btn-light d-block">abbrechen</a>
+                </div>
+
             </div>
         </div>
     </div>

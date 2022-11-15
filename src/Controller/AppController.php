@@ -29,6 +29,7 @@ class AppController extends AbstractController
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
         ]);
+        if(!$this->session->getUser()){$this->response->redirectToRoute(302,'authentication_login');}
     }
 
     public function index ()
