@@ -172,3 +172,9 @@ kq_claim_start:
   controller: 'App\Controller\Profile\KeyQuestionWorkflowController'
   method: 'claimKeyQuestion'
   request: 'get'
+
+kq_claim_transfer:
+  expression: '/key-question/claim/transfer'
+  controller: 'App\Controller\Profile\KeyQuestionWorkflowController'
+  method: 'transferKeyQuestion'
+  request: 'post'

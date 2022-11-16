@@ -14,11 +14,12 @@ class EntityManager extends EntityManagerComponent
 {
 
 
-
     /**
-     * @throws ReflectionException
+     * @param $entity
+     * @param int|null $id
+     * @return false|int|string
      */
-    public function persist($entity, $id = false){
+    public function persist($entity, int $id = null){
         $data = [];
         try {
             $entity_class = self::generateReflectionClass($entity);

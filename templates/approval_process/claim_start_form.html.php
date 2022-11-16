@@ -93,7 +93,7 @@ $this->layout('_layout.standard.html',
                     </div>
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Daten zur Leitfrage</div>
                     <div class="card">
-                        <form id="claim_form" method="get" name="claim_form" class="list-group list-group-flush">
+                        <form id="claim_form" method="post" action="<?=$response->generateUrlFromRoute('kq_claim_transfer')?>" name="claim_form" class="list-group list-group-flush">
                             <div class="list-group-item">
                                 <label for="topic" class="form-label fw-bolder">Themengruppe</label>
                                 <input class="form-control-plaintext" id="topic" name="topic" readonly type="text" value="<?=$exam->getTopic()->getTitle()?>">
@@ -108,11 +108,12 @@ $this->layout('_layout.standard.html',
                                     <label for="school_subject_<?=$i?>" class="form-label fw-bolder">
                                         <?=$subject->isMainSchoolSubject() ? 'Referenzfach' :'Begleitfach' ?>
                                     </label>
-                                    <input class="form-control-plaintext" id="school_subject_<?=$i?>" name="school_subject_<?=$i?>" readonly type="text" value="<?=$subject->getId()?>">
+                                    <input class="form-control-plaintext" id="school_subject_<?=$i?>" name="school_subject_<?=$i?>" readonly type="text" value="<?=$subject->getLabel()?>">
                                 </div>
                             <?php $i++ ?>
                             <?php endforeach; ?>
                             <input type="hidden" name="csrf_token" value="<?=$session->get('csrf_token')?>">
+                            <input type="hidden" name="exam_id" value="<?=$exam->getId()?>">
                         </form>
                     </div>
                 </div>
@@ -123,7 +124,7 @@ $this->layout('_layout.standard.html',
                         <div class="list-group list-group-flush">
                             <div class="list-group-item">
                                 <label for="username" class="form-label fw-bolder">Name</label>
-                                <input form="claim_form" class="form-control-plaintext" id="username" name="username" readonly type="text" value="<?=$session->getUser()->getFirstname().' '.$session->getUser()->getLastName()?>">
+                                <input form="claim_form" class="form-control-plaintext" id="username" name="username" readonly type="text" value="<?=$session->getUser()->getUsername()?>">
                             </div>
                             <div class="list-group-item">
                                 <label for="group" class="form-label fw-bolder">Kurs</label>

@@ -6,7 +6,7 @@ use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
-class UserHasExam
+final class UserHasExam
 {
     use IdEntityTrait;
     use DateTimeEntityTrait;
@@ -14,8 +14,7 @@ class UserHasExam
     private AbstractRepositoryFactory $repository;
 
     protected int $userId;
-    protected int $statusId;
-    protected int $keyQuestionId;
+    protected string $keyQuestion;
     protected int $topicId;
     protected int $mainSubjectId;
     protected int $secondarySubjectId;
@@ -35,8 +34,6 @@ class UserHasExam
      */
 
     public function getUser(){return $this->repository->find(User::class,$this->userId);}
-    public function getExamStatus(){return $this->repository->find(ExamStatus::class,$this->statusId);}
-    public function getKeyQuestion(){return $this->repository->find(Exam::class,$this->keyQuestionId);}
     public function getTopic(){return $this->repository->find(Exam::class,$this->topicId);}
     public function getMainSchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->mainSubjectId);}
     public function getSecondarySchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->secondarySubjectId);}
@@ -64,38 +61,20 @@ class UserHasExam
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getStatusId(): int
+    public function getKeyQuestion(): string
     {
-        return $this->statusId;
+        return $this->keyQuestion;
     }
 
     /**
-     * @param int $statusId
+     * @param string $keyQuestion
      * @return UserHasExam
      */
-    public function setStatusId(int $statusId): UserHasExam
+    public function setKeyQuestion(string $keyQuestion): UserHasExam
     {
-        $this->statusId = $statusId;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getKeyQuestionId(): int
-    {
-        return $this->keyQuestionId;
-    }
-
-    /**
-     * @param int $keyQuestionId
-     * @return UserHasExam
-     */
-    public function setKeyQuestionId(int $keyQuestionId): UserHasExam
-    {
-        $this->keyQuestionId = $keyQuestionId;
+        $this->keyQuestion = $keyQuestion;
         return $this;
     }
 
