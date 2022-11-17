@@ -9,7 +9,7 @@
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var Object $adminMenu Set of menu objects
  * @var Object $trans Translation object
- * @var Object $objects Translation object
+ * @var Object $userExam Translation object
  * @var Session $session Session-Objekt
  * @var array|false $userData Formulardaten des Benutzers
  * @var array $table Tabledata for current entitx
@@ -73,6 +73,24 @@ $this->layout('_layout.standard.html',
         <div class="card">
             <div class="card-body">
                 <h2 class="h5">Meine Prüfungsthemen</h2>
+            </div>
+            <div class="list-group list-group-flush">
+                <?php foreach ($userExam as $exam):?>
+                    <?php $date = DateTime::createFromFormat('Y-m-d H:i:s',$exam->getCreated())?>
+                    <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
+                        <div>
+
+                            <div><?=$exam->getTopic()?></div>
+                            <div class="my-2">
+                                <span class="badge text-bg-primary"><?=$exam->getMainSchoolSubject()->getLabel()?></span>
+                                <span class="badge text-bg-light"><?=$exam->getSecondarySchoolSubject()->getLabel()?></span>
+                            </div>
+                            <a href="#" class="fw-bolder"><?=$exam->getKeyQuestion()?></a>
+                            <div class="small my-2 text-muted">am <?=$date->format('d.m.Y')?> erstellt</div>
+                            <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getStatus())?></span>
+                        </div>
+                    </div>
+                <?php endforeach;?>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserExamRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -21,7 +22,7 @@ final class UserHasExam
 
     public function __construct()
     {
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new UserExamRepository();
     }
 
     public function __toString()
@@ -34,9 +35,10 @@ final class UserHasExam
      */
 
     public function getUser(){return $this->repository->find(User::class,$this->userId);}
-    public function getTopic(){return $this->repository->find(Exam::class,$this->topicId);}
+    public function getTopic(){return $this->repository->find(Topic::class,$this->topicId);}
     public function getMainSchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->mainSubjectId);}
     public function getSecondarySchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->secondarySubjectId);}
+    public function getStatus(){return $this->repository->joinStatusByUserExamId($this->id);}
 
     /**
      * Entity-Getter

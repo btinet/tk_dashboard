@@ -283,6 +283,11 @@ bootstrap-icons@^1.9.1:
   resolved "https://registry.yarnpkg.com/bootstrap-icons/-/bootstrap-icons-1.9.1.tgz#cf22d91a25447645e45c49ebde4e56eafdfe761b"
   integrity sha512-d4ZkO30MIkAhQ2nNRJqKXJVEQorALGbLWTuRxyCTJF96lRIV6imcgMehWGJUiJMJhglN0o2tqLIeDnMdiQEE9g==
 
+bootstrap-steps@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/bootstrap-steps/-/bootstrap-steps-1.0.3.tgz#741230ee4fe41535038a7f4b6f0f4a5a19b035f1"
+  integrity sha512-0sfDK566XBjzbA+vpEbo8ywmLPs8qytS75PuNE5ZW5SaJX6APbvM4CsbOpAGUXurIbAksmTe4MTr4grqIEv+gg==
+
 bootstrap@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.2.1.tgz#45f97ff05cbe828bad807b014d8425f3aeb8ec3a"

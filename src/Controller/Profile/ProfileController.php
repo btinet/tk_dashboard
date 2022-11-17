@@ -4,6 +4,7 @@ namespace App\Controller\Profile;
 
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
+use App\Entity\UserHasExam;
 use App\Entity\UserRole;
 use App\Entity\UserRoleHasRolePermission;
 use App\Menu\AdminMenu;
@@ -44,8 +45,9 @@ class ProfileController extends AbstractController
 
     public function index(): string
     {
+        $userExam = $this->repository->findBy(UserHasExam::class,['user_id'=> $this->session->getUser()->getId()]);
         return $this->render('profile/index.html',[
-
+            'userExam' => $userExam
         ]);
     }
 }
