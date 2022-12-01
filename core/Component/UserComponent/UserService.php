@@ -44,9 +44,12 @@ class UserService
     public static function isMatch($repository,$array, $errorCode = 210112): int
     {
 
-        $user = ($repository->findOneBy(self::$entity,[
+
+
+        $user = $repository->findOneBy(self::$entity,[
             'username' => $array['username'],
-        ]));
+        ]);
+        
         if( method_exists($user,'getPassword') ){
             $password = is_array($array['password']) ? array_pop($array['password']): $array['password'];
             return !PasswordService::verify($password,$user->getPassword()) ? $errorCode : 0;

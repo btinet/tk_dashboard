@@ -253,6 +253,6 @@ abstract class AbstractModel extends PDO implements ModelInterface
     protected function generateSnakeTailString(string $value): string
     {
         $valueAsArray = preg_split('/(?=[A-Z])/', $value);
-        return ltrim($propertyNameAsSnakeTail = implode('_', $valueAsArray),'_');
+        return strtolower(ltrim($propertyNameAsSnakeTail = implode('_', $valueAsArray),'_'));
     }
 }

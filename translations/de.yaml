@@ -50,8 +50,8 @@ permission_added: Berechtigung(en) erfolgreich zugeordnet.
 permission_removed: Berechtigung(en) erfolgreich entfernt.
 school_subject_type_deleted: Fachbereich gelöscht.
 key_question_locked: Leitfrage ist gesperrt. Sie kann nicht beansprucht werden.
-exam_status_is:
-  clearance: Leitfrage wurde zur Überprüfung eingereicht.
+
+key_question_send_to_clearance: Leitfrage wurde zur Überprüfung eingereicht.
 
 clearance: Warten auf Prüfung durch Tutorium
 

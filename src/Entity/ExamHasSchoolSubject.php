@@ -14,7 +14,7 @@ class ExamHasSchoolSubject
     protected int $examId;
     protected ?int $userId;
     protected int $schoolSubjectId;
-    protected bool $isMainSchoolSubject;
+    protected int $isMainSchoolSubject;
 
     /**
      * @return int
@@ -71,9 +71,9 @@ class ExamHasSchoolSubject
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function getIsMainSchoolSubject(): bool
+    public function getIsMainSchoolSubject(): int
     {
         return $this->isMainSchoolSubject;
     }

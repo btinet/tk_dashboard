@@ -19,6 +19,7 @@ class UserExamRepository extends AbstractRepositoryFactory
                 FROM exam_status e 
                     INNER JOIN exam_has_exam_status es ON (es.exam_status_id = e.id)
                 WHERE es.user_exam_id = {$userExamId}
+                    GROUP BY e.id
                 {$orderData}
                     ");
             return $result->fetchObject($entity);

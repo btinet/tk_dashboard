@@ -131,7 +131,7 @@ class AbstractRepositoryFactory extends EntityManagerComponent
             $columns = self::setColumns($entityClass);
             $preparedStatement = self::setPreparedStatement($data);
             $data = self::setBindValues($data);
-            $result = self::select("SELECT {$columns} FROM {$tableName} WHERE ({$preparedStatement}) LIMIT 0,1", $data);
+            $result = self::select("SELECT {$columns} FROM {$tableName} WHERE ({$preparedStatement}) LIMIT 1", $data);
             if (false === $object = $result->fetchObject($entity)) return new stdClass();
             return $object;
         } catch (PDOException $exception) {
