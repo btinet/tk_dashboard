@@ -35,7 +35,8 @@ $this->layout('base.html',
         'current_school_subject_id' => $current_school_subject_id
     ]);
 ?>
-    <header id="header" class="py-2 mb-3 border-bottom sticky-top shadow-sm">
+
+    <header id="header" class="py-2 mb-0 border-bottom sticky-top shadow-sm">
         <?php if ($this->section('header')): ?>
             <?=$this->section('header')?>
         <?php else: ?>
@@ -110,11 +111,13 @@ $this->layout('base.html',
             </div>
         <?php endif ?>
     </header>
-
     <main id="main" class="container-fluid pb-3">
-
-        <div class="row mt-1 mb-3 g-3 row-cols-1">
-
+        <?php if ($this->section('main')): ?>
+            <?=$this->section('main')?>
+        <?php else: ?>
+            <div class="row">default main content</div>
+        <?php endif ?>
+        <div class="row mb-3 g-3 row-cols-1">
             <div class="d-flex flex-wrap justify-content-start align-items-center">
                 <?php if($user = $session->getUser()): ?>
                     <div class="btn-group btn-group-sm me-2">
@@ -122,31 +125,26 @@ $this->layout('base.html',
                             <i class="fa fa-user-o me-2"></i>
                             <?=substr($user->getFirstName(),0,1)?>. <?=$user->getLastName()?>
                         </a>
-                        <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
-                            <?=$user->getRole() ?: 'ohne Rolle'?>
-                        </a>
+                        <?php foreach ($user->getRoles() as $role):?>
+                            <a href="#<?=$role->getId()?>" class="btn btn-light btn-sm mb-2 mb-md-0">
+                                <?=$role->getLabel()?>
+                            </a>
+                        <?php endforeach;?>
                     </div>
-
                     <div class="btn-group btn-group-sm">
                             <span class="btn btn-primary mb-2 mb-md-0">
                                 <i class="fa fa-graduation-cap me-1"></i>
-                                Gruppen
+                                Kurse
                             </span>
                         <?php foreach ($user->getGroup() as $group): ?>
-                        <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
-                            <?=$group->getLabel()?>
-                        </a>
+                            <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
+                                <?=$group->getLabel()?>
+                            </a>
                         <?php endforeach;?>
                     </div>
                 <?php endif;?>
             </div>
         </div>
-
-        <?php if ($this->section('main')): ?>
-            <?=$this->section('main')?>
-        <?php else: ?>
-            <div class="row">default main content</div>
-        <?php endif ?>
     </main>
 
     <footer id="footer" class="mt-auto text-bg-lighter">

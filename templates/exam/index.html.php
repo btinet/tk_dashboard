@@ -24,8 +24,6 @@ $this->layout('_layout.standard.html',
 
 <?php $this->start('main') ?>
     <div class="row g-3 mb-3">
-        <div></div>
-
         <div class="col-12 col-md-4">
             <div class="d-none d-md-block">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -54,8 +52,9 @@ $this->layout('_layout.standard.html',
             </div>
         </div>
 
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-8 bg-lighter border-start align-content-stretch py-3">
             <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Prüfungsthemen</div>
+
             <div class="list-group list-group-flush rounded-3 border">
                 <?php foreach($exams as $exam): ?>
                     <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">

@@ -169,6 +169,11 @@ final class User
         return $this->repository->findUserRole($this->id);
     }
 
+    public function getRoles()
+    {
+        return $this->repository->findUserRoles($this->id);
+    }
+
     public function getGroup()
     {
         return $this->repository->findUserGroup($this->id);

@@ -89,6 +89,28 @@ class UserRoleRepository extends AbstractRepositoryFactory
     }
 
     /**
+     * @return array|false
+     */
+    public function findUserRoles(int $userId, string $entity = UserRole::class)
+    {
+        try {
+            $entityClass = self::setEntityClass($entity);
+            $table = self::generateSnakeTailString($entityClass->getShortName());
+            $result = self::select
+            ("
+                SELECT p.id, p.label
+                FROM {$table} p
+                    INNER JOIN user_role_has_user rp
+                        ON (p.id = rp.user_role_id)
+                WHERE rp.user_id = {$userId}
+                    ");
+            return $result->fetchAll(self::FETCH_CLASS,$entity);
+        } catch (PDOException|ReflectionException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
      * @return User|false
      */
     public function findUserByRole(int $groupId,string $roleLabel, string $entity = User::class)
