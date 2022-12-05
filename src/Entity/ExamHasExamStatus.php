@@ -26,6 +26,7 @@ final class ExamHasExamStatus
      * Entity-Attributes
      */
 
+    protected string $info;
     protected int $userExamId;
     protected int $examStatusId;
     protected int $supervisorId;
@@ -33,6 +34,24 @@ final class ExamHasExamStatus
     public function __construct()
     {
         $this->repository = new AbstractRepositoryFactory();
+    }
+
+    /**
+     * @return string
+     */
+    public function getInfo(): string
+    {
+        return $this->info;
+    }
+
+    /**
+     * @param string $info
+     * @return ExamHasExamStatus
+     */
+    public function setInfo(string $info): ExamHasExamStatus
+    {
+        $this->info = $info;
+        return $this;
     }
 
     /**

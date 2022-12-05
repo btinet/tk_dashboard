@@ -88,6 +88,7 @@ $this->layout('_layout.standard.html',
                             <a href="#" class="fw-bolder"><?=$exam->getKeyQuestion()?></a>
                             <div class="small my-2 text-muted">am <?=$date->format('d.m.Y')?> erstellt</div>
                             <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getStatus())?></span>
+                            <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getInfo())?></span>
                         </div>
                     </div>
                 <?php endforeach;?>

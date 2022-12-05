@@ -96,6 +96,7 @@ class KeyQuestionWorkflowController extends AbstractController
 
             $examStatus = new ExamHasExamStatus();
 
+            $examStatus->setInfo("Antrag angelegt");
             $examStatus->setUserExamId($userExamId);
             $examStatus->setSupervisorId($user->getId());
             $examStatus->setExamStatusId($status->getId());
