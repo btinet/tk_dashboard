@@ -6,13 +6,9 @@ TK eSchool Manager ist ein webbasierter Schulmanager zur Verwaltung von Prüfung
 
 ### ERM
 
-#### Prüfungsthemen und Leitfragen
+#### Komplettes ERM
 
-![ERM Schema](./Docs/assets/220908_ERM_5PK_Exam.png)
-
-#### Benutzerverwaltung
-
-![ERM_USER](Docs/assets/220908_ERM_5PK_User.png)
+![ERM_USER](Docs/assets/220908_ERM_5PK_Examb.svg)
 
 #### Genehmigungsprozess (intern)
 
