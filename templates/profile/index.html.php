@@ -35,7 +35,8 @@ $this->layout('_layout.standard.html',
 
 
 <div class="row g-3 mb-3">
-    <div class="col-12 col-md-4">
+
+    <div class="col-12 col-md-5">
         <div class="card shadow-sm">
             <div class="card-body border-1">
                 <h1 class="h5">Persönliches Konto</h1>
@@ -69,36 +70,69 @@ $this->layout('_layout.standard.html',
     </div>
 
 
-    <div class="col-12 col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h2 class="h5 mb-0">Meine Prüfungsthemen</h2>
-            </div>
-            <div class="list-group list-group-flush">
-                <?php if($userExam):?>
-                <?php foreach ($userExam as $exam):?>
-                    <?php $date = DateTime::createFromFormat('Y-m-d H:i:s',$exam->getCreated())?>
-                    <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
-                        <div>
-
-                            <div><?=$exam->getTopic()?></div>
-                            <div class="my-2">
-                                <span class="badge text-bg-primary"><?=$exam->getMainSchoolSubject()->getLabel()?></span>
-                                <span class="badge text-bg-light"><?=$exam->getSecondarySchoolSubject()->getLabel()?></span>
-                            </div>
-                            <a href="#" class="fw-bolder"><?=$exam->getKeyQuestion()?></a>
-                            <div class="small my-2 text-muted">am <?=$date->format('d.m.Y')?> erstellt</div>
-                            <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getStatus())?></span>
-                            <span class="text-bg-warning badge"><?=$exam->getStatus()->getInfo()?></span>
-                        </div>
+    <div class="col-12 col-md-7">
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h5 mb-0">Meine Prüfungsthemen</h2>
                     </div>
-                <?php endforeach;?>
-                <?php else:?>
-                <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
-                    <span>Noch kein Prüfungsthema beantragt.</span>
+                    <div class="list-group list-group-flush">
+                        <?php if($userExam):?>
+                            <?php foreach ($userExam as $exam):?>
+                                <?php $date = DateTime::createFromFormat('Y-m-d H:i:s',$exam->getCreated())?>
+                                <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
+                                    <div>
+
+                                        <div><?=$exam->getTopic()?></div>
+                                        <div class="my-2">
+                                            <span class="badge text-bg-primary"><?=$exam->getMainSchoolSubject()->getLabel()?></span>
+                                            <span class="badge text-bg-light"><?=$exam->getSecondarySchoolSubject()->getLabel()?></span>
+                                        </div>
+                                        <a href="#" class="fw-bolder"><?=$exam->getKeyQuestion()?></a>
+                                        <div class="small my-2 text-muted">am <?=$date->format('d.m.Y')?> erstellt</div>
+                                        <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getStatus())?></span>
+                                        <span class="text-bg-warning badge"><?=$exam->getStatus()->getInfo()?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach;?>
+                        <?php else:?>
+                            <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
+                                <span>Noch kein Prüfungsthema beantragt.</span>
+                            </div>
+                        <?php endif;?>
+                    </div>
                 </div>
-                <?php endif;?>
             </div>
+            <?php if($session->UserHasPermission('show_my_group')): ?>
+                <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h5 mb-0">Meine Kurse</h2>
+                    </div>
+                    <div class="list-group list-group-flush">
+                    <?php foreach ($session->getUser()->getGroup() as $group): ?>
+
+                            <?php if($group->getUsers()):?>
+                                <div class="list-group-item d-flex bg-light fw-bolder justify-content-between align-items-center">
+                                    <span><?= $group->getLabel()?></span>
+                                </div>
+                                <?php foreach ($group->getUsers() as $user):?>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><?= "{$user->getFirstname()} {$user->getLastname()}"?></span>
+                                    </div>
+                                <?php endforeach;?>
+                            <?php else:?>
+                                <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
+                                    <span>Noch keine Mitglieder vorhanden.</span>
+                                </div>
+                            <?php endif;?>
+
+                    <?php endforeach;?>
+                    </div>
+                </div>
+            </div>
+            <?php endif;?>
         </div>
     </div>
 

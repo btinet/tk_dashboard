@@ -116,4 +116,9 @@ final class UserGroup
         return $this->repository->findUserByRole($this->getId(),$roleLabel);
     }
 
+    public function getUsers()
+    {
+        return $this->repository->findUsersJoinGroup($this->getId());
+    }
+
 }

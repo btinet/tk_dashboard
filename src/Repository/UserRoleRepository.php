@@ -16,6 +16,32 @@ class UserRoleRepository extends AbstractRepositoryFactory
     /**
      * @return array|false
      */
+    public function findUsersJoinGroup(int $id, array $sortBy = ['u.last_name' => 'asc'], string $entity = User::class)
+    {
+        try {
+            $entityClass = self::setEntityClass($entity);
+            $table = self::generateSnakeTailString($entityClass->getShortName());
+
+
+            $orderData = self::createOrderData($sortBy);
+            $result = self::select
+            ("
+                SELECT u.id, u.username, u.first_name as firstName , u.last_name as lastName
+                FROM {$table} u
+                    INNER JOIN user_group_has_user ughu 
+                        ON (u.id = ughu.user_id)
+                WHERE ughu.user_group_id = {$id}
+                {$orderData}
+                    ");
+            return $result->fetchAll(self::FETCH_CLASS, $entity);
+        } catch (PDOException|ReflectionException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @return array|false
+     */
     public function findByIdJoinPermissions(int $id, array $sortBy = [], string $entity = RolePermission::class)
     {
         try {
