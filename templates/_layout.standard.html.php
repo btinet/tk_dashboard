@@ -111,52 +111,88 @@ $this->layout('base.html',
             </div>
         <?php endif ?>
     </header>
-    <main id="main" class="container-fluid pb-3">
+    <main id="main" class="container-fluid">
         <?php if ($this->section('main')): ?>
-            <?=$this->section('main')?>
-        <?php else: ?>
-            <div class="row">default main content</div>
-        <?php endif ?>
-        <div class="row mb-3 g-3 row-cols-1">
-            <div class="d-flex flex-wrap justify-content-start align-items-center">
-                <?php if($user = $session->getUser()): ?>
-                    <div class="btn-group btn-group-sm me-2">
-                        <a href="#" class="btn btn-primary btn-sm mb-2 mb-md-0">
-                            <i class="fa fa-user-o me-2"></i>
-                            <?=substr($user->getFirstName(),0,1)?>. <?=$user->getLastName()?>
-                        </a>
-                        <?php foreach ($user->getRoles() as $role):?>
-                            <a href="#<?=$role->getId()?>" class="btn btn-light btn-sm mb-2 mb-md-0">
-                                <?=$role->getLabel()?>
-                            </a>
-                        <?php endforeach;?>
-                    </div>
-                    <div class="btn-group btn-group-sm">
+        <div class="row">
+            <div class="col-12 col-md-3 py-3">
+                <div class=" sticky-top mb-3" style="top:60px;z-index: 5;">
+                    <div class="row mb-3 g-3 row-cols-1">
+                        <div class="d-flex flex-wrap justify-content-start align-items-center">
+                            <?php if($user = $session->getUser()): ?>
+                                <div class="btn-group btn-group-sm me-2">
+                                    <a href="#" class="btn btn-primary btn-sm mb-2 mb-md-0">
+                                        <i class="fa fa-user-o me-2"></i>
+                                        <?=substr($user->getFirstName(),0,1)?>. <?=$user->getLastName()?>
+                                    </a>
+                                    <?php foreach ($user->getRoles() as $role):?>
+                                        <a href="#<?=$role->getId()?>" class="btn btn-light btn-sm mb-2 mb-md-0">
+                                            <?=$role->getLabel()?>
+                                        </a>
+                                    <?php endforeach;?>
+                                </div>
+                                <div class="btn-group btn-group-sm">
                             <span class="btn btn-primary mb-2 mb-md-0">
                                 <i class="fa fa-graduation-cap me-1"></i>
                                 Kurse
                             </span>
-                        <?php foreach ($user->getGroup() as $group): ?>
-                            <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
-                                <?=$group->getLabel()?>
-                            </a>
-                        <?php endforeach;?>
+                                    <?php foreach ($user->getGroup() as $group): ?>
+                                        <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
+                                            <?=$group->getLabel()?>
+                                        </a>
+                                    <?php endforeach;?>
+                                </div>
+                            <?php endif;?>
+                        </div>
                     </div>
-                <?php endif;?>
+                    <div class="col-12">
+                        <div class="d-none d-md-block">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">Fächer</div>
+                                <a class="btn btn-sm btn-light border d-inline-block d-md-none" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Fächer ein-/ausblenden
+                                </a>
+                            </div>
+
+                            <div class="collapse show" id="collapseExample">
+                                <div class="list-group list-group-flush rounded-3 border">
+                                    <?php foreach($schoolSubjects as $subject): ?>
+                                        <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active' : '';?>
+                                        <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$subject->getAbbr() ?></span>
+                                                <strong><?=$subject->getLabel() ?></strong>
+                                            </div>
+                                            <span class="badge text-bg-light text-muted"><?=$subject->countExams()?></span>
+                                        </a>
+                                    <?php endforeach; ?>
+                                    <?php if(!$schoolSubjects): ?>
+                                        <li class="list-group-item">Keine Prüfungen gefunden.</li>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-9 bg-lighter border-start align-content-stretch py-3">
+                <?=$this->section('main')?>
             </div>
         </div>
-    </main>
-
-    <footer id="footer" class="mt-auto text-bg-lighter">
-        <?php if ($this->section('footer')): ?>
-            <?=$this->section('footer')?>
         <?php else: ?>
-            <div class="container">
-                <div class="py-3 d-flex justify-content-start align-items-center">
-                    <a class="small me-2" target="_blank" href="https://github.com/btinet/tk_dashboard"><i class="fa fa-github me-1"></i>Github</a><?=$meta->get('footer_text')?>
-                </div>
-            </div>
+            <div class="row">default main content</div>
         <?php endif ?>
-    </footer>
+    </main>
+<footer id="footer" class="mt-auto border-top text-bg-lighter">
+    <?php if ($this->section('footer')): ?>
+        <?=$this->section('footer')?>
+    <?php else: ?>
+        <div class="container">
+            <div class="py-3 d-flex justify-content-start align-items-center">
+                <a class="small me-2" target="_blank" href="https://github.com/btinet/tk_dashboard"><i class="fa fa-github me-1"></i>Github</a><?=$meta->get('footer_text')?>
+            </div>
+        </div>
+    <?php endif ?>
+</footer>
 <?php $this->stop() ?>
 

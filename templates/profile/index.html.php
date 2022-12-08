@@ -75,6 +75,7 @@ $this->layout('_layout.standard.html',
                 <h2 class="h5">Meine Prüfungsthemen</h2>
             </div>
             <div class="list-group list-group-flush">
+                <?php if($userExam):?>
                 <?php foreach ($userExam as $exam):?>
                     <?php $date = DateTime::createFromFormat('Y-m-d H:i:s',$exam->getCreated())?>
                     <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
@@ -88,10 +89,15 @@ $this->layout('_layout.standard.html',
                             <a href="#" class="fw-bolder"><?=$exam->getKeyQuestion()?></a>
                             <div class="small my-2 text-muted">am <?=$date->format('d.m.Y')?> erstellt</div>
                             <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getStatus())?></span>
-                            <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getInfo())?></span>
+                            <span class="text-bg-primary badge"><?=$exam->getStatus()->getInfo()?></span>
                         </div>
                     </div>
                 <?php endforeach;?>
+                <?php else:?>
+                <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
+                    <span>Noch kein Prüfungsthema beantragt.</span>
+                </div>
+                <?php endif;?>
             </div>
         </div>
     </div>

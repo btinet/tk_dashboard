@@ -55,14 +55,14 @@ $this->layout('_layout.standard.html',
 </div>
 
 <div class="row g-3 mb-3 my-3">
-    <div class="col-12 col-md-6 offset-md-3">
+    <div class="col-12">
         <div class="mb-3 d-flex justify-content-start">
             <a href="<?=$response->generateUrlFromRoute('admin_exam_index',[0])?>"  class="btn btn-primary me-2 d-block d-md-inline-block">Zur Übersicht</a>
         </div>
 
         <h1><?=$trans->getConfig('Exam')?> anzeigen</h1>
     </div>
-    <div class="col-12 col-md-6 offset-md-3">
+    <div class="col-12">
 
 
 

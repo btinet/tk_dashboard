@@ -9,13 +9,13 @@ use PDOException;
 class UserExamRepository extends AbstractRepositoryFactory
 {
 
-    public function joinStatusByUserExamId(int $userExamId, array $sortBy = [],string $entity = ExamStatus::class)
+    public function joinStatusByUserExamId(int $userExamId, array $sortBy = ['es.created'=>'desc'],string $entity = ExamStatus::class)
     {
         try {
             $orderData = self::createOrderData($sortBy);
             $result = self::select
             ("
-                SELECT e.id, e.label, MAX(e.created), e.updated
+                SELECT e.id, e.label, MAX(e.created), e.updated, es.info
                 FROM exam_status e 
                     INNER JOIN exam_has_exam_status es ON (es.exam_status_id = e.id)
                 WHERE es.user_exam_id = {$userExamId}

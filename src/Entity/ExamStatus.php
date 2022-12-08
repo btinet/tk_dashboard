@@ -10,11 +10,18 @@ final class ExamStatus
     use IdEntityTrait;
     use DateTimeEntityTrait;
 
+    private string $info;
+
     protected string $label;
 
     public function __toString()
     {
         return $this->label;
+    }
+
+    public function getInfo(): string
+    {
+        return $this->info;
     }
 
     /**
