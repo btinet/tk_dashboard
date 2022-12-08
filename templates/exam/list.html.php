@@ -31,7 +31,7 @@ $this->layout('_layout.standard.html',
         <div class="col-12">
             <div class="d-block d-md-none">
                 <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Aktuelles Fach</div>
-                <div class="border rounded-3 bg-white lh-sm p-3 d-flex justify-content-between align-items-center">
+                <div class="border rounded-3 bg-white lh-sm p-3 d-flex justify-content-between align-items-center shadow-sm">
                     <div>
                         <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$currentSchoolSubject->getAbbr() ?></span>
                         <strong><?=$currentSchoolSubject->getLabel();?></strong>
@@ -47,7 +47,7 @@ $this->layout('_layout.standard.html',
             <div class="row g-3">
                 <div class="col-12">
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Referenzfach Prüfungsthemen</div>
-                    <div class="list-group list-group-flush rounded-3 border">
+                    <div class="list-group list-group-flush rounded-3 border shadow-sm">
                         <?php foreach($examsByMainSchoolSubject as $exam): ?>
                             <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
                                 <div class="d-flex flex-column justify-content-between align-items-start">
@@ -83,7 +83,7 @@ $this->layout('_layout.standard.html',
 
                 <div class="col-12">
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Begleitfach Prüfungsthemen</div>
-                    <div class="list-group list-group-flush rounded-3 border">
+                    <div class="list-group list-group-flush rounded-3 border shadow-sm">
                         <?php foreach($examsBySecondarySchoolSubject as $exam): ?>
                             <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
                                 <div class="d-flex flex-column justify-content-between align-items-start">

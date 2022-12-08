@@ -42,7 +42,7 @@ $this->layout('base.html',
         <?php else: ?>
             <div class="container-fluid">
                 <div class="row g-3">
-                    <div class="col-5 col-md-4">
+                    <div class="col-5 col-md-3">
                         <div class="d-flex justify-content-start align-items-center h-100">
                             <a class="btn btn-light  me-1 d-block d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                                 <i class="fa fa-fw fa-navicon" style="font-size: 1.2em"></i>
@@ -96,7 +96,7 @@ $this->layout('base.html',
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="col-7 col-md-8">
+                    <div class="col-7 col-md-9">
                         <div class="d-flex align-items-center">
                             <form class="w-100" role="search" method="post" action="<?=$response->generateUrlFromRoute('app_search')?>">
                                 <div class="input-group">
@@ -114,7 +114,7 @@ $this->layout('base.html',
     <main id="main" class="container-fluid">
         <?php if ($this->section('main')): ?>
         <div class="row">
-            <div class="col-12 col-md-3 py-3">
+            <div class="col-12 col-md-3 border-end py-3">
                 <div class=" sticky-top mb-3" style="top:60px;z-index: 5;">
                     <div class="row mb-3 g-3 row-cols-1">
                         <div class="d-flex flex-wrap justify-content-start align-items-center">
@@ -124,17 +124,6 @@ $this->layout('base.html',
                                         <i class="fa fa-user-o me-2"></i>
                                         <?=substr($user->getFirstName(),0,1)?>. <?=$user->getLastName()?>
                                     </a>
-                                    <?php foreach ($user->getRoles() as $role):?>
-                                        <a href="#<?=$role->getId()?>" class="btn btn-light btn-sm mb-2 mb-md-0">
-                                            <?=$role->getLabel()?>
-                                        </a>
-                                    <?php endforeach;?>
-                                </div>
-                                <div class="btn-group btn-group-sm">
-                            <span class="btn btn-primary mb-2 mb-md-0">
-                                <i class="fa fa-graduation-cap me-1"></i>
-                                Kurse
-                            </span>
                                     <?php foreach ($user->getGroup() as $group): ?>
                                         <a href="#" class="btn btn-light btn-sm mb-2 mb-md-0">
                                             <?=$group->getLabel()?>
@@ -175,7 +164,7 @@ $this->layout('base.html',
                 </div>
 
             </div>
-            <div class="col-12 col-md-9 bg-lighter border-start align-content-stretch py-3">
+            <div class="col-12 col-md-9 bg-lighter align-content-stretch py-3">
                 <?=$this->section('main')?>
             </div>
         </div>

@@ -31,17 +31,17 @@ $this->layout('_layout.standard.html',
 
 <?php $this->start('main') ?>
     <div class="row g-3 mb-3">
-        <div class="col-12 col-md-4">
+        <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="border rounded-3 bg-white p-3 w-100">
+                <div class="border rounded-3 bg-white p-3 w-100 shadow-sm">
                         <p class="text-muted"><?=count($results)?> Ergebnis<?php if(1!==count($results)){echo 'se';}?> für die Suche nach</p>
                         <h2 class="fst-italic"><?=$queryString?></h2>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8">
+        <div class="col-12">
             <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Suchergebnisse</div>
-            <div class="list-group list-group-flush rounded-3 border">
+            <div class="list-group list-group-flush rounded-3 border shadow-sm">
                 <?php foreach($results as $exam): ?>
                     <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
                         <div class="d-flex flex-column justify-content-between align-items-start">

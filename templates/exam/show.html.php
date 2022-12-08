@@ -18,7 +18,7 @@ use Core\Component\SessionComponent\Session;
  */
 $this->layout('_layout.standard.html',
     [
-        'current_school_subject_id' => $current_school_subject_id
+        'current_school_subject_id' => $exam->getSchoolSubjects()[0]->getId()
     ]
 );
 
@@ -26,7 +26,7 @@ $this->layout('_layout.standard.html',
 
 <?php $this->start('main') ?>
     <div class="row g-3 mb-3">
-        <div class="col-12 col-md-4">
+        <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">zugeordnet</div>
                 <a class="btn btn-sm btn-light border d-inline-block d-md-none" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -36,7 +36,7 @@ $this->layout('_layout.standard.html',
 
 
             <div class="collapse show" id="collapseExample">
-                <div class="list-group list-group-flush rounded-3 border">
+                <div class="list-group list-group-flush rounded-3 border shadow-sm">
                         <?php foreach($exam->getSchoolSubjects() as $subject): ?>
                             <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
                                 <div>
@@ -53,11 +53,11 @@ $this->layout('_layout.standard.html',
             </div>
 
         </div>
-        <div class="col-12 col-md-8">
+        <div class="col-12">
             <div class="row g-3">
                 <div class="col-12">
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Details</div>
-                    <div class="list-group list-group-flush rounded-3 border">
+                    <div class="list-group list-group-flush rounded-3 border shadow-sm">
                         <div class="list-group-item lh-sm py-3 d-flex justify-content-between align-items-start">
                             <div class="d-flex flex-column justify-content-between align-items-start">
                                 <strong><?=$exam->getTopic()->getTitle() ?></strong>

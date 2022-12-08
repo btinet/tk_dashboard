@@ -29,7 +29,7 @@ $this->layout('_layout.standard.html',
         <div class="col-12">
             <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Prüfungsthemen</div>
 
-            <div class="list-group list-group-flush rounded-3 border">
+            <div class="list-group list-group-flush rounded-3 border shadow-sm">
                 <?php foreach($exams as $exam): ?>
                     <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
                         <div class="d-flex flex-column justify-content-between align-items-start">

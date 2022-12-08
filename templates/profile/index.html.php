@@ -36,7 +36,7 @@ $this->layout('_layout.standard.html',
 
 <div class="row g-3 mb-3">
     <div class="col-12 col-md-4">
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-body border-1">
                 <h1 class="h5">Persönliches Konto</h1>
                 <div class="d-flex justify-content-center align-items-start flex-column">
@@ -70,9 +70,9 @@ $this->layout('_layout.standard.html',
 
 
     <div class="col-12 col-md-8">
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-body">
-                <h2 class="h5">Meine Prüfungsthemen</h2>
+                <h2 class="h5 mb-0">Meine Prüfungsthemen</h2>
             </div>
             <div class="list-group list-group-flush">
                 <?php if($userExam):?>
@@ -89,7 +89,7 @@ $this->layout('_layout.standard.html',
                             <a href="#" class="fw-bolder"><?=$exam->getKeyQuestion()?></a>
                             <div class="small my-2 text-muted">am <?=$date->format('d.m.Y')?> erstellt</div>
                             <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getStatus())?></span>
-                            <span class="text-bg-primary badge"><?=$exam->getStatus()->getInfo()?></span>
+                            <span class="text-bg-warning badge"><?=$exam->getStatus()->getInfo()?></span>
                         </div>
                     </div>
                 <?php endforeach;?>
