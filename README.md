@@ -8,7 +8,7 @@ TK eSchool Manager ist ein webbasierter Schulmanager zur Verwaltung von Prüfung
 2. Workflow-Postfächer für Genehmigungsstellen implementieren
 3. Detailansichten für Vita der Leitfragen implementieren
 4. Algorithmus für Ähnlichkeitsvergleich mit bestehenden Leitfragen implementieren
-
+5. Feedback-Formular für Testphase implementieren
 ## Verwendete Modelle
 
 1. ERM (Entity-Relational-Model)
