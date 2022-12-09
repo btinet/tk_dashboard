@@ -2,8 +2,10 @@ $blue: #255372;
 
 $enable-caret: true;
 $fa-font-path: "../../node_modules/font-awesome/fonts";
-$font-size-base: 0.9rem;
+$font-size-base: .9rem;
 $font-weight-normal: 300;
+
+@import url("https://use.typekit.net/elf7icg.css");
 
 $enable-shadows: true;
 $enable-gradients: true;
@@ -100,8 +102,10 @@ $border-radius-sm:                  .2rem;
 $font-prefix: "../../node_modules/@ibm/plex";;
 @import '../../node_modules/@ibm/plex/scss/ibm-plex.scss';
 
+//$font-family-sans-serif:  mr-eaves-xl-modern, sans-serif;
 $font-family-sans-serif: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
 $font-family-monospace: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
+
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";

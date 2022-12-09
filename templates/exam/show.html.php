@@ -39,8 +39,8 @@ $this->layout('_layout.standard.html',
                 <div class="list-group list-group-flush rounded-3 border shadow-sm">
                         <?php foreach($exam->getSchoolSubjects() as $subject): ?>
                             <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$subject->getAbbr() ?></span>
+                                <div class=" d-flex justify-content-between align-items-center">
+                                    <span class="badge border bg-light text-primary text-capitalize me-2" style="width: 40px"><?=$subject->getAbbr() ?></span>
                                     <strong><?=$subject->getLabel() ?></strong>
                                 </div>
                                 <span class="badge text-bg-light text-muted"><?=$subject->countExams()?></span>
@@ -75,12 +75,14 @@ $this->layout('_layout.standard.html',
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
-                                <p class="card-text small"><?=$exam->getKeyQuestion()?></p>
+                                <p class="card-text"><?=$exam->getKeyQuestion()?></p>
 
                             </div>
                             <div class="d-flex align-items-end flex-column">
-                                <span class="small text-nowrap">frei ab</span>
+                                <span class="small badge text-bg-light fw-light bg-gradient border text-nowrap">
+                                frei ab
                                 <?= $exam->getYear()+3 ?>
+                            </span>
                             </div>
                         </div>
                     </div>

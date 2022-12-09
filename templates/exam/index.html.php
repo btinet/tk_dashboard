@@ -48,11 +48,13 @@ $this->layout('_layout.standard.html',
                                     <?php endif; ?>
                                 <?php endif; ?>
                             </div>
-                            <p class="card-text small"><?=$exam->getKeyQuestion()?></p>
+                            <p class="card-text"><?=$exam->getKeyQuestion()?></p>
                         </div>
                         <div class="d-flex align-items-end flex-column">
-                            <span class="small text-nowrap">frei ab</span>
-                            <?= $exam->getYear()+3 ?>
+                            <span class="small badge text-bg-light fw-light bg-gradient border text-nowrap">
+                                frei ab
+                                <?= $exam->getYear()+3 ?>
+                            </span>
                         </div>
                     </a>
                 <?php endforeach; ?>
