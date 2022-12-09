@@ -6,7 +6,7 @@
   background-color: rgba(245, 245, 249, 0.8);
 }
 
-#header, .offcanvas, .modal-header, .modal-footer {
+#header, .offcanvas, .modal-header, .modal-footer, .toast {
   background-color: rgba(242, 242, 247, 0.8);
   -webkit-user-select: none;
   -moz-user-select: none;

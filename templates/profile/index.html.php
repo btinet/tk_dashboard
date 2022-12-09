@@ -99,16 +99,17 @@ $this->layout('_layout.standard.html',
                     <?php foreach ($session->getUser()->getGroup() as $group): ?>
 
                             <?php if($group->getUsers()):?>
-                                <div class="list-group-item d-flex bg-light fw-bolder justify-content-between align-items-center">
+                                <div class="list-group-item d-flex bg-light bg-gradient text-bg-secondary fw-bolder justify-content-between align-items-center">
                                     <span><?= $group->getLabel()?></span>
-                                    <span>
+                                    <span class="d-flex align-items-baseline">
                                         <?php if($group->getTutor()): ?>
-                                            <a href="#"><?=$group->getTutor()->getLastName()?></a>
+                                            <i class="fa fa-graduation-cap fa-fw me-1"></i>
+                                            <a href="#" class="link-dark"><?=$group->getTutor()->getLastName()?></a>
                                         <?php endif;?>
                                     </span>
                                 </div>
                                 <?php foreach ($group->getUsers() as $user):?>
-                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                         <span>
                                             <?php if($group->getTutor()): ?>
                                                 <?php if($group->getTutor()->getId() == $user->getId()): ?>
@@ -121,7 +122,7 @@ $this->layout('_layout.standard.html',
                                             <?php endif;?>
                                             <?= "{$user->getFirstname()} {$user->getLastname()}"?>
                                         </span>
-                                    </div>
+                                    </a>
 
                                 <?php endforeach;?>
                             <?php else:?>

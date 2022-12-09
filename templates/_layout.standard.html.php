@@ -129,10 +129,10 @@ $this->layout('base.html',
                             <div class="collapse show" id="collapseExample">
                                 <div class="list-group list-group-flush border-top border-bottom">
                                     <?php foreach($schoolSubjects as $subject): ?>
-                                        <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active' : '';?>
+                                        <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active bg-gradient' : '';?>
                                         <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
                                             <div>
-                                                <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$subject->getAbbr() ?></span>
+                                                <span class="badge border bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$subject->getAbbr() ?></span>
                                                 <strong><?=$subject->getLabel() ?></strong>
                                             </div>
                                             <span class="badge text-bg-light text-muted"><?=$subject->countExams()?></span>
@@ -142,6 +142,7 @@ $this->layout('base.html',
                                         <li class="list-group-item">Keine Fächer gefunden.</li>
                                     <?php endif; ?>
                                 </div>
+
                             </div>
                         </div>
                     </div>

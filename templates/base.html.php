@@ -44,6 +44,7 @@
     </svg>
 
     <?php echo $flash;?>
+    <?php $this->insert('app/_feedback.html') ?>
         <?=$this->section('body')?>
     </body>
 </html>

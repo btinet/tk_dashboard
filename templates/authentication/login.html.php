@@ -40,7 +40,10 @@ $this->layout('_layout.minimal.html',
     <div class="col-12 col-md-4">
 
         <div class="mt-2 mb-5 my-md-5">
-            <h1>Anmelden</h1>
+            <h1 class="d-flex justify-content-start align-items-center">
+                <img class="me-2" src="<?=$response->generateUrlFromString('/assets/images/tk_logo_neu.svg')?>" height="36px" width="36px" alt="tk logo neu">
+                eSchool Manager
+            </h1>
             <p class="lead">
                 Melde dich an und verwalte dein Präsentationsthema bequem und digital.
             </p>
