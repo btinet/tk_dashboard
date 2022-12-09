@@ -18,13 +18,17 @@ use Core\Component\SessionComponent\Session;
 /**
  * Übergeordnetes Template
  */
-$this->layout('_layout.standard.html',
+$this->layout('_layout.minimal.html',
     [
         'current_school_subject_id' => 0
     ]
 );
 
 ?>
+
+<?php $this->start('header') ?>
+<p></p>
+<?php $this->stop() ?>
 
 <?php $this->start('main') ?>
 

@@ -36,7 +36,7 @@ $this->layout('_layout.standard.html',
 
 <div class="row g-3 mb-3">
 
-    <div class="col-12 col-md-5">
+    <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-body border-1">
                 <h1 class="h5">Persönliches Konto</h1>
@@ -50,27 +50,12 @@ $this->layout('_layout.standard.html',
                     <?=$date->format('d.m.Y')?>
                 </div>
             </div>
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                            <b>Kurs</b>
-                            <b>Tutor:in</b>
-                        </div>
-                        <?php foreach ($session->getUser()->getGroup() as $group): ?>
-                        <div class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="#" class="btn btn-sm btn-light">
-                                <?=$group->getLabel()?>
-                            </a>
-                            <?php if($group->getTutor()): ?>
-                            <a href="#"><?=$group->getTutor()->getLastName()?></a>
-                            <?php endif;?>
-                        </div>
-                        <?php endforeach;?>
-                    </div>
+
         </div>
     </div>
 
 
-    <div class="col-12 col-md-7">
+    <div class="col-12">
         <div class="row g-3">
             <div class="col-12">
                 <div class="card shadow-sm">
@@ -116,11 +101,28 @@ $this->layout('_layout.standard.html',
                             <?php if($group->getUsers()):?>
                                 <div class="list-group-item d-flex bg-light fw-bolder justify-content-between align-items-center">
                                     <span><?= $group->getLabel()?></span>
+                                    <span>
+                                        <?php if($group->getTutor()): ?>
+                                            <a href="#"><?=$group->getTutor()->getLastName()?></a>
+                                        <?php endif;?>
+                                    </span>
                                 </div>
                                 <?php foreach ($group->getUsers() as $user):?>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span><?= "{$user->getFirstname()} {$user->getLastname()}"?></span>
+                                        <span>
+                                            <?php if($group->getTutor()): ?>
+                                                <?php if($group->getTutor()->getId() == $user->getId()): ?>
+                                                    <i class="fa fa-graduation-cap fa-fw me-2"></i>
+                                                    <?php else:?>
+                                                        <i class="fa fa-user fa-fw me-2"></i>
+                                                <?php endif;?>
+                                                <?php else:?>
+                                                    <i class="fa fa-user fa-fw me-2"></i>
+                                            <?php endif;?>
+                                            <?= "{$user->getFirstname()} {$user->getLastname()}"?>
+                                        </span>
                                     </div>
+
                                 <?php endforeach;?>
                             <?php else:?>
                                 <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">

@@ -114,41 +114,8 @@ $this->layout('base.html',
     <main id="main" class="flex-grow-1">
         <div class="container-fluid">
         <?php if ($this->section('main')): ?>
-        <div class="row h-100">
-            <div class="col-12 col-md-3 border-end py-3 px-0">
-                <?php if($user = $session->getUser()): ?>
-                    <div class=" sticky-top mb-3" style="top:60px;z-index: 5;">
-                    <div class="col-12">
-                        <div class="d-none d-md-block">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">Fächer</div>
-                                <a class="btn btn-sm btn-light border d-inline-block d-md-none" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    Fächer ein-/ausblenden
-                                </a>
-                            </div>
-                            <div class="collapse show" id="collapseExample">
-                                <div class="list-group list-group-flush border-top border-bottom">
-                                    <?php foreach($schoolSubjects as $subject): ?>
-                                        <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active' : '';?>
-                                        <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <span class="badge bg-light text-primary text-capitalize me-1" style="width: 40px"><?=$subject->getAbbr() ?></span>
-                                                <strong><?=$subject->getLabel() ?></strong>
-                                            </div>
-                                            <span class="badge text-bg-light text-muted"><?=$subject->countExams()?></span>
-                                        </a>
-                                    <?php endforeach; ?>
-                                    <?php if(!$schoolSubjects): ?>
-                                        <li class="list-group-item">Keine Fächer gefunden.</li>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php endif;?>
-            </div>
-            <div class="col-12 col-md-9 bg-lighter align-content-stretch py-3">
+        <div class="row">
+            <div class="col-12 py-3">
                 <?=$this->section('main')?>
             </div>
         </div>
