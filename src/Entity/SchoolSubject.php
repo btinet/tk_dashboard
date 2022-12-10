@@ -20,6 +20,7 @@ final class SchoolSubject
     protected string $label;
     protected string $abbr;
     protected int $schoolSubjectTypeId;
+    protected string $color;
 
     public function __construct()
     {
@@ -106,6 +107,24 @@ final class SchoolSubject
     public function isMainSchoolSubject(): bool
     {
         return $this->isMainSchoolSubject;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor(): string
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     * @return SchoolSubject
+     */
+    public function setColor(string $color): SchoolSubject
+    {
+        $this->color = $color;
+        return $this;
     }
 
     public function countExams()

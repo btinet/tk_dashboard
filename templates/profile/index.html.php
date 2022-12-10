@@ -41,11 +41,13 @@ foreach ($session->getUser()->getGroup() as $group) {
 
 $subjects = [];
 $examCount = [];
+$subjectColors = [];
 
 
 foreach ($schoolSubjects as $subject) {
     $subjects[]=$subject->getAbbr();
     $examCount[]=$subject->countExams();
+    $subjectColors[]=$subject->getColor();
 }
 $examCountMax = max($examCount);
 $examSum= array_sum($examCount);
@@ -103,7 +105,7 @@ $examSum= array_sum($examCount);
         <div class="card text-bg-info align-self-stretch h-100 shadow-sm">
             <div class="card-body">
                 <h1>Leitfragen gesamt</h1>
-                <p class="display-4"><?=$examSum?></p>
+                <p class="display-4"><i class="fa fa-hashtag"></i><?=$examSum?></p>
             </div>
         </div>
     </div>
@@ -206,7 +208,7 @@ $examSum= array_sum($examCount);
         datasets: [{
             label: 'Mitglieder',
             data:<?=json_encode($groupCount)?>,
-            borderWidth: 0
+            borderWidth: 0,
         }]
     };
 
@@ -240,6 +242,9 @@ $examSum= array_sum($examCount);
                 title: {
                     display: true,
                     text: 'Kursstärken'
+                },
+                legend: {
+                    display: false
                 }
             }
         }
@@ -254,7 +259,8 @@ $examSum= array_sum($examCount);
             datasets: [{
                 label: 'Anzahl',
                 data: <?=json_encode($examCount)?>,
-                borderWidth: 1
+                borderWidth: 1,
+                backgroundColor: <?=json_encode($subjectColors)?>
             }]
         },
         options: {
@@ -279,6 +285,9 @@ $examSum= array_sum($examCount);
                 title: {
                     display: true,
                     text: 'Anzahl der Leitfragen je Fach'
+                },
+                legend: {
+                    display: false
                 }
             }
         }
