@@ -131,6 +131,20 @@ class AdminMenu extends AbstractMenu
             ;
         }
 
+        if($this->HideUnlessHasPermission('upload_data'))
+        {
+            $this->add('data_import',NavigationType::class,[
+                'label' => 'data_import',
+                'route' => 'admin_data_upload_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ])
+            ;
+        }
+
+
+
 
         return $this;
     }

@@ -24,10 +24,8 @@ use Core\Component\HttpComponent\Response;
         <?php endif; ?>
         <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="list-group-item <?=$examState?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-start">
             <div class="d-flex flex-column justify-content-between align-items-start">
-                <strong><?=$exam->getTopic()->getTitle() ?></strong>
-                <small class="text-truncate text-wrap"><?=$exam->getTopic()->getDescription() ?></small>
 
-                <div class="d-flex my-2 small fw-light justify-content-start align-items-center">
+                <div class="d-flex mb-2 small fw-light justify-content-start align-items-center">
                     <?php foreach($exam->getSchoolSubjects() as $subject): ?>
                         <span class="badge me-1 text-capitalize <?=$subject->isMainSchoolSubject() ? 'bg-primary' :'bg-secondary' ?>"><?=$subject->getAbbr()?></span>
                     <?php endforeach; ?>

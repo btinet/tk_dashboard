@@ -161,6 +161,12 @@ admin_exam_status_new:
   method: 'new'
   request: 'post'
 
+admin_data_upload_index:
+  expression: '/admin/data-upload'
+  controller: 'App\Controller\Admin\DataImportController'
+  method: 'index'
+  request: ['get','post']
+
 user_profile_index:
   expression: '/profile'
   controller: 'App\Controller\Profile\ProfileController'

@@ -12,7 +12,7 @@ class ExamHasSchoolSubject
     use DateTimeEntityTrait;
 
     protected int $examId;
-    protected ?int $userId;
+    protected null|int $userId;
     protected int $schoolSubjectId;
     protected int $isMainSchoolSubject;
 
@@ -43,10 +43,10 @@ class ExamHasSchoolSubject
     }
 
     /**
-     * @param int $userId
+     * @param int|null $userId
      * @return ExamHasSchoolSubject
      */
-    public function setUserId(int $userId): ExamHasSchoolSubject
+    public function setUserId(int|null $userId): ExamHasSchoolSubject
     {
         $this->userId = $userId;
         return $this;

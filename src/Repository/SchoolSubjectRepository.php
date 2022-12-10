@@ -31,22 +31,18 @@ class SchoolSubjectRepository extends AbstractRepositoryFactory
         }
     }
 
-    /**
-     * @return array|false
-     */
+
     public function countExams(int $id,string $entity)
     {
         try {
             $result = self::select
             ("
-                SELECT *
-                FROM school_subject s 
-                    INNER JOIN exam_has_school_subject e  ON (e.school_subject_id = s.id)
-                    INNER JOIN exam ex ON (e.exam_id = ex.id)
-                WHERE s.id = {$id}
-                GROUP BY ex.key_question
+                SELECT count(e.school_subject_id) AS count
+                FROM exam_has_school_subject e 
+                WHERE e.school_subject_id = {$id}
+                GROUP BY e.school_subject_id
                     ");
-            return count($result->fetchAll(8, $entity));
+            return $result->fetchObject();
         } catch (PDOException $exception) {
             return $exception->getMessage();
         }

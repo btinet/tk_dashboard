@@ -60,6 +60,11 @@ class Request
         return $query = (isset($_POST[$FormFieldName]))?$_POST[$FormFieldName]:false;
     }
 
+    public function getFieldAsFile(string $FormFieldName)
+    {
+        return $query = (isset($_FILES[$FormFieldName]))?$_FILES[$FormFieldName]:false;
+    }
+
     /**
      * @param string $key
      * @return string|false
