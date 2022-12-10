@@ -52,7 +52,7 @@ $this->layout('base.html',
                                 <i class="fa fa-fw fa-home" style="font-size: 1.2em"></i>
                             </a>
                             <?php if(!$session->get('login')): ?>
-                                <a class="btn btn-light " data-bs-toggle="tooltip" data-bs-title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
+                                <a class="btn btn-light" data-coreui-toggle="tooltip" data-coreui-placement="bottom" title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
                             <?php else: ?>
                                 <div class="dropdown">
                                     <button class="btn btn-light  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -93,6 +93,7 @@ $this->layout('base.html',
                                         </li>
                                     </ul>
                                 </div>
+
                             <?php endif; ?>
                         </div>
                     </div>

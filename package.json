@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@coreui/coreui": "^4.2.4",
     "@ibm/plex": "^6.1.1",
     "@popperjs/core": "^2.11.6",
     "autoprefixer": "^10.4.11",

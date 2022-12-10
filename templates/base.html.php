@@ -33,6 +33,7 @@
         <?php endif ?>
 
         <script type="text/javascript" src="<?= $response->generateUrlFromString('/dist/bundle.js')?>"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <title><?= $meta->get('title') ?></title>
     </head>
     <body class="h-100 d-flex flex-column justify-content-between">
