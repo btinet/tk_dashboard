@@ -31,6 +31,27 @@ $this->layout('_layout.standard.html',
 
 ?>
 
+<?php
+$groups = [];
+$groupCount = [];
+foreach ($session->getUser()->getGroup() as $group) {
+    $groups[]=$group->getLabel();
+    $groupCount[]=count($group->getUsers());
+}
+
+$subjects = [];
+$examCount = [];
+
+
+foreach ($schoolSubjects as $subject) {
+    $subjects[]=$subject->getAbbr();
+    $examCount[]=$subject->countExams();
+}
+$examCountMax = max($examCount);
+$examSum= array_sum($examCount);
+
+?>
+
 <?php $this->start('main') ?>
 
 
@@ -54,6 +75,9 @@ $this->layout('_layout.standard.html',
         </div>
     </div>
 
+</div>
+<div class="row g-3 mb-3">
+
     <div class="col-12 col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
@@ -64,21 +88,27 @@ $this->layout('_layout.standard.html',
         </div>
     </div>
 
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 d-none d-md-block">
         <div class="card shadow-sm">
             <div class="card-body">
-                B
+                <div>
+                    <canvas id="myChart2"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
+
     <div class="col-12 col-md-4">
-        <div class="card shadow-sm">
+        <div class="card text-bg-info align-self-stretch h-100 shadow-sm">
             <div class="card-body">
-                C
+                <h1>Leitfragen gesamt</h1>
+                <p class="display-4"><?=$examSum?></p>
             </div>
         </div>
     </div>
+</div>
+<div class="row g-3">
 
     <div class="col-12">
         <div class="row g-3">
@@ -101,8 +131,8 @@ $this->layout('_layout.standard.html',
                                         </div>
                                         <a href="#" class="fw-bolder"><?=$exam->getKeyQuestion()?></a>
                                         <div class="small my-2 text-muted">am <?=$date->format('d.m.Y')?> erstellt</div>
-                                        <span class="text-bg-primary badge"><?=$trans->getConfig($exam->getStatus())?></span>
-                                        <span class="text-bg-warning badge"><?=$exam->getStatus()->getInfo()?></span>
+                                        <span class="text-bg-info badge"><?=$trans->getConfig($exam->getStatus())?></span>
+                                        <span class="text-bg-light border badge"><?=$exam->getStatus()->getInfo()?></span>
                                     </div>
                                 </div>
                             <?php endforeach;?>
@@ -166,34 +196,17 @@ $this->layout('_layout.standard.html',
 
 </div>
 
+
 <script>
     const ctx = document.getElementById('myChart');
 
-    const labels = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni','Juli'];
+    const labels = <?=json_encode($groups)?>;
     const data = {
         labels: labels,
         datasets: [{
-            label: 'My First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
+            label: 'Mitglieder',
+            data:<?=json_encode($groupCount)?>,
+            borderWidth: 0
         }]
     };
 
@@ -201,13 +214,76 @@ $this->layout('_layout.standard.html',
         type: 'bar',
         data: data,
         options: {
+            responsive: true,
+            legend: {
+                position: 'bottom',
+            },
+            hover: {
+                mode: 'label'
+            },
             scales: {
                 y: {
-                    beginAtZero: true
+                    suggestedMin: 0,
+                    suggestedMax: 10,
+                    ticks: {
+                        // Include a dollar sign in the ticks
+                        callback: function(value, index, ticks) {
+                            return value;
+                        }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Kursstärken'
                 }
             }
         }
     });
+
+    const ctx2 = document.getElementById('myChart2');
+
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: <?=json_encode($subjects)?>,
+            datasets: [{
+                label: 'Anzahl',
+                data: <?=json_encode($examCount)?>,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    suggestedMin: 0,
+                    suggestedMax: <?=$examCountMax?>,
+                    ticks: {
+                        // Include a dollar sign in the ticks
+                        callback: function(value, index, ticks) {
+                            return value;
+                        },
+                        stepSize: 1
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Anzahl der Leitfragen je Fach'
+                }
+            }
+        }
+    });
+
 </script>
 
 <?php $this->stop() ?>
