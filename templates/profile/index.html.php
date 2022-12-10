@@ -54,7 +54,7 @@ $this->layout('_layout.standard.html',
         </div>
     </div>
 
-    <div class="col-12">
+    <div class="col-12 col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
                 <div>
@@ -64,6 +64,21 @@ $this->layout('_layout.standard.html',
         </div>
     </div>
 
+    <div class="col-12 col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                B
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                C
+            </div>
+        </div>
+    </div>
 
     <div class="col-12">
         <div class="row g-3">
