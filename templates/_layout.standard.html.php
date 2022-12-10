@@ -131,7 +131,7 @@ $this->layout('base.html',
                                 <div class="list-group list-group-flush border-top border-bottom">
                                     <?php foreach($schoolSubjects as $subject): ?>
                                         <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active bg-gradient' : '';?>
-                                        <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">
+                                        <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center" style="border-left-style: inset;border-left-width: 8px!important;border-left-color: <?=$subject->getColor()?>">
                                             <div class=" d-flex justify-content-between align-items-center">
                                                 <span class="badge border bg-light text-primary text-capitalize me-2" style="width: 40px"><?=$subject->getAbbr() ?></span>
                                                 <strong><?=$subject->getLabel() ?></strong>
