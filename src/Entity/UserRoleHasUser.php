@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
+use stdClass;
 
 class UserRoleHasUser
 {
@@ -12,8 +13,8 @@ class UserRoleHasUser
     use DateTimeEntityTrait;
 
     protected int $userId;
-
     protected int $userRoleId;
+    protected string $attribs;
 
     /**
      * @return int
@@ -48,6 +49,22 @@ class UserRoleHasUser
     public function setUserRoleId(int $userRoleId): UserRoleHasUser
     {
         $this->userRoleId = $userRoleId;
+        return $this;
+    }
+
+
+    public function getAttribs(): ?stdClass
+    {
+        return json_decode($this->attribs);
+    }
+
+    /**
+     * @param array $attribs
+     * @return UserRoleHasUser
+     */
+    public function setAttribs(array $attribs): UserRoleHasUser
+    {
+        $this->attribs = json_encode($attribs,JSON_FORCE_OBJECT);
         return $this;
     }
 

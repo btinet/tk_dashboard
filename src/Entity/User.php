@@ -9,6 +9,7 @@ use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 use ReflectionException;
+use stdClass;
 
 final class User
 {
@@ -227,6 +228,16 @@ final class User
         };
         $this->userRoleId = $userRoleId;
         return $this;
+    }
+
+    /**
+     * @param int $roleId
+     * @return null|mixed
+     */
+    public function getRoleAtrribs(int $roleId = 18)
+    {
+        $result = $this->repository->findOneBy(UserRoleHasUser::class,['user_id'=>$this->id,'user_role_id'=>$roleId]);
+        return ($result)? $result->getAttribs():null;
     }
 
 }

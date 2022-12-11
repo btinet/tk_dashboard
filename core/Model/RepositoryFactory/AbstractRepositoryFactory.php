@@ -141,7 +141,7 @@ class AbstractRepositoryFactory extends EntityManagerComponent
     /**
      * @param string $entity
      * @param array $data
-     * @return false|object|stdClass|string|array
+     * @return false|object|string|array
      */
     public function findOneBy(string $entity, array $data)
     {
@@ -152,8 +152,7 @@ class AbstractRepositoryFactory extends EntityManagerComponent
             $preparedStatement = self::setPreparedStatement($data);
             $data = self::setBindValues($data);
             $result = self::select("SELECT {$columns} FROM {$tableName} WHERE ({$preparedStatement}) LIMIT 1", $data);
-            if (false === $object = $result->fetchObject($entity)) return new stdClass();
-            return $object;
+            return ($result->rowCount() !== 0 ) ? $result->fetchObject($entity):false;
         } catch (PDOException $exception) {
             return $exception->getMessage();
         } catch (ReflectionException $e) {

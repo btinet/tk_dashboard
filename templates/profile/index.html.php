@@ -159,9 +159,14 @@ $examCountMax = max($examCounts);
                                 <div class="list-group-item d-flex bg-light bg-gradient text-bg-secondary fw-bolder justify-content-between align-items-center">
                                     <span><?= $group->getLabel()?></span>
                                     <span class="d-flex align-items-baseline">
-                                        <?php if($group->getTutor()): ?>
+                                        <?php if($tutor = $group->getTutor()): ?>
                                             <i class="fa fa-graduation-cap fa-fw me-1"></i>
                                             <a href="#" class="link-dark"><?=$group->getTutor()->getLastName()?></a>
+                                            <?php if($result = $tutor->getRoleAtrribs(18)): ?>
+                                                <?php foreach ($result as $attrib => $value):?>
+                                                    <span class="ms-2"><b><?=$attrib?></b> = <?=$value?></span>
+                                                <?php endforeach;?>
+                                            <?php endif;?>
                                         <?php endif;?>
                                     </span>
                                 </div>
