@@ -44,47 +44,54 @@ $this->layout('base.html',
                 <div class="row g-3">
                     <div class="col-5 col-md-3">
                         <div class="d-flex justify-content-start align-items-center h-100">
-                            <a class="btn btn-light  me-1 d-block d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                                <i class="fa-solid fa-fw fa-navicon"></i>
-                            </a>
 
-                            <a class="btn btn-light  me-1 d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
-                                <i class="fa-solid fa-fw fa-house"></i>
-                            </a>
-                            <?php if(!$session->get('login')): ?>
-                                <a class="btn btn-light" data-coreui-toggle="tooltip" data-coreui-placement="bottom" title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in" style="font-size: 1.2em"></i></a>
-                            <?php else: ?>
-                                <div class="dropdown">
-                                    <button class="btn btn-light  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-fw fa-user"></i>
+                                <a class="btn btn-light d-block me-1 d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <i class="fa-solid fa-fw fa-navicon"></i>
+                                </a>
+                            <div class="btn-group">
+                                <a class="btn btn-light d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
+                                    <i class="fa-solid fa-fw fa-house"></i>
+                                </a>
+                                <a class="btn btn-light d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
+                                    <i class="fa-solid fa-fw fa-plus"></i>
+                                </a>
+                                <?php if(!$session->get('login')): ?>
+                                    <a class="btn btn-light" data-coreui-toggle="tooltip" data-coreui-placement="bottom" title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in"></i></a>
+                                <?php else: ?>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-fw fa-user"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <?php if($session->UserHasPermission('show_profile')): ?>
-                                        <li>
-                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('user_profile_index')?>">
-                                                <i class="fa fa-fw fa-user me-1"></i>
-                                                Profil
-                                            </a>
-                                        </li>
-                                        <?php endif; ?>
-                                        <?php if($session->UserHasPermission('show_user_exam')): ?>
-                                        <li>
-                                            <a class="dropdown-item d-flex justify-content-start align-items-center" href="#">
-                                                <i class="fa fa-fw fa-file-text me-1"></i>
-                                                Meine Themen
-                                            </a>
-                                        </li>
-                                        <?php endif; ?>
-                                        <?php if($session->UserHasPermission('show_dashboard')): ?>
-                                            <li><hr class="dropdown-divider"></li>
+                                    <?php if($session->UserHasPermission('show_profile')): ?>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('user_profile_index')?>">
+                                            <i class="fa fa-fw fa-user me-1"></i>
+                                            Profil
+                                        </a>
+                                    </li>
+
+                                            <?php endif; ?>
+                                            <?php if($session->UserHasPermission('show_user_exam')): ?>
+                                            <li>
+                                                <a class="dropdown-item d-flex justify-content-start align-items-center" href="#">
+                                                    <i class="fa fa-fw fa-file-text me-1"></i>
+                                                    Meine Themen
+                                                </a>
+                                            </li>
+
+                                            <?php endif; ?>
+                                            <?php if($session->UserHasPermission('show_dashboard')): ?>
+                                                <li class="dropdown-divider"></li>
                                             <li>
                                                 <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('admin_index')?>">
                                                     <i class="fa fa-fw fa-dashboard me-1"></i>
                                                     Administration
                                                 </a>
                                             </li>
-                                        <?php endif;?>
-                                        <li><hr class="dropdown-divider"></li>
+
+                                            <?php endif;?>
+                                        <li class="dropdown-divider"></li>
                                         <li>
                                             <a class="dropdown-item d-flex justify-content-start align-items-center" href="<?=$response->generateUrlFromRoute('authentication_logout')?>">
                                                 <i class="fa fa-fw fa-sign-out text-danger me-1"></i>
@@ -93,8 +100,8 @@ $this->layout('base.html',
                                         </li>
                                     </ul>
                                 </div>
-
-                            <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                     <div class="col-7 col-md-9">
