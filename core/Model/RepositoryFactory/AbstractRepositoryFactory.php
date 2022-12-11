@@ -17,7 +17,7 @@ class AbstractRepositoryFactory extends EntityManagerComponent
 
     /**
      * @param string $entity
-     * @return false|mixed|string|null
+     * @return int|string|null
      */
     public function count(string $entity)
     {
@@ -25,16 +25,36 @@ class AbstractRepositoryFactory extends EntityManagerComponent
             $entityClass = self::setEntityClass($entity);
             $entityShortName = self::generateSnakeTailString($entityClass->getShortname());
 
-            $result = self::select("SELECT COUNT(*) FROM {$entityShortName}");
-            $count = $result->fetch(PDO::FETCH_NUM);
-            return array_pop($count);
+            $result = self::select("SELECT * FROM {$entityShortName}");
+            return $result->rowCount();
         } catch (PDOException $exception) {
             return $exception->getMessage();
         } catch (ReflectionException $e) {
             echo $e->getMessage();
-            return false;
-        }
 
+        }
+        return null;
+    }
+
+    /**
+     * @param string $entity
+     * @return int|string|null
+     */
+    public function countDistinctBy(string $entity, string $column)
+    {
+        try {
+            $entityClass = self::setEntityClass($entity);
+            $tableName = self::generateSnakeTailString($entityClass->getShortName());
+            $column = self::setColumns($entityClass);
+            $result = self::select("SELECT DISTINCT {$column} FROM {$tableName}");
+            return $result->rowCount();
+        } catch (PDOException $exception) {
+            return $exception->getMessage();
+        } catch (ReflectionException $e) {
+            echo $e->getMessage();
+
+        }
+        return null;
     }
 
     /**

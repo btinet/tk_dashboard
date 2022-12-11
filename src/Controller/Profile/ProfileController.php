@@ -2,6 +2,7 @@
 
 namespace App\Controller\Profile;
 
+use App\Entity\Exam;
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
 use App\Entity\UserHasExam;
@@ -45,9 +46,11 @@ class ProfileController extends AbstractController
 
     public function index(): string
     {
+        $examCount = $this->repository->countDistinctBy(Exam::class,'key_question');
         $userExam = $this->repository->findBy(UserHasExam::class,['user_id'=> $this->session->getUser()->getId()]);
         return $this->render('profile/index.html',[
-            'userExam' => $userExam
+            'userExam' => $userExam,
+            'examCount' => $examCount
         ]);
     }
 }

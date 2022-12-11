@@ -10,6 +10,7 @@
  * @var Object $adminMenu Set of menu objects
  * @var Object $trans Translation object
  * @var Object $userExam Translation object
+ * @var int $examCount Number of distinct Exams listet
  * @var Session $session Session-Objekt
  * @var array|false $userData Formulardaten des Benutzers
  * @var array $table Tabledata for current entitx
@@ -40,17 +41,16 @@ foreach ($session->getUser()->getGroup() as $group) {
 }
 
 $subjects = [];
-$examCount = [];
+$examCounts = [];
 $subjectColors = [];
 
 
 foreach ($schoolSubjects as $subject) {
     $subjects[]=$subject->getAbbr();
-    $examCount[]=$subject->countExams();
+    $examCounts[]=$subject->countExams();
     $subjectColors[]=$subject->getColor();
 }
-$examCountMax = max($examCount);
-$examSum= array_sum($examCount);
+$examCountMax = max($examCounts);
 
 ?>
 
@@ -105,7 +105,7 @@ $examSum= array_sum($examCount);
         <div class="card text-bg-info text-white align-self-stretch h-100 shadow-sm">
             <div class="card-body">
                 <h1>Leitfragen gesamt</h1>
-                <p class="display-4"><i class="fa fa-hashtag"></i><?=$examSum?></p>
+                <p class="display-4"><i class="fa fa-hashtag"></i><?=$examCount?></p>
             </div>
         </div>
     </div>
@@ -258,7 +258,7 @@ $examSum= array_sum($examCount);
             labels: <?=json_encode($subjects)?>,
             datasets: [{
                 label: 'Anzahl',
-                data: <?=json_encode($examCount)?>,
+                data: <?=json_encode($examCounts)?>,
                 borderWidth: 1,
                 backgroundColor: <?=json_encode($subjectColors)?>
             }]

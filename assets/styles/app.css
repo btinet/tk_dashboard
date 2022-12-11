@@ -29370,13 +29370,13 @@ td {
 
 .key-question {
   border-left-width: 4px !important;
-  border-left-style: inset;
+  border-left-style: solid;
 }
 .key-question-restricted {
-  border-left-color: rgb(255, 59, 48);
+  border-left-color: #ff3e33;
 }
 .key-question-blocked {
-  border-left-color: rgb(90, 200, 250);
+  border-left-color: #5dc9fa;
 }
 
 /*# sourceMappingURL=app.css.map */

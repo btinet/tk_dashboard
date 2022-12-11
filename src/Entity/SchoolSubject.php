@@ -129,7 +129,7 @@ final class SchoolSubject
 
     public function countExams(): int
     {
-        return ($this->repository->countExams($this->id, SchoolSubject::class))?$this->repository->countExams($this->id, SchoolSubject::class)->count:0;
+        return $this->repository->countExams($this->id, SchoolSubject::class);
     }
 
 }

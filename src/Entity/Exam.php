@@ -129,4 +129,9 @@ final class Exam
         return $this->repository;
     }
 
+    public function countExams(): int
+    {
+        return $this->repository->countDistinctBy(Exam::class,'key_question');
+    }
+
 }

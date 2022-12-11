@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
+use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
 final class SchoolSubjectType
 {
@@ -12,6 +13,13 @@ final class SchoolSubjectType
 
     protected string $label;
     protected ?string $description;
+
+    private AbstractRepositoryFactory $repository;
+
+    public function __construct()
+    {
+        $this->repository = new AbstractRepositoryFactory();
+    }
 
     public function __toString()
     {
@@ -52,6 +60,11 @@ final class SchoolSubjectType
     {
         $this->description = $description;
         return $this;
+    }
+
+    public function getSchoolSubjects()
+    {
+        return $this->repository->findBy(SchoolSubject::class,['school_subject_type_id'=>$this->id],['label'=>'asc']);
     }
 
 }

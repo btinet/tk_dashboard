@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Exam;
 use App\Entity\SchoolSubject;
+use App\Entity\SchoolSubjectType;
 use App\Menu\MenuBuilder;
 use App\Repository\ExamRepository;
 use Core\Controller\AbstractController;
@@ -34,7 +35,8 @@ class ExamController extends AbstractController
     public function index(): string
     {
         $schoolSubjects = $this->schoolSubjects;
-        $exams = $this->repository->findExamsGroupByKeyQuestion( Exam::class, ['year' => 'desc']);
+        $exams = []; //$this->repository->findExamsGroupByKeyQuestion( Exam::class, ['year' => 'desc']);
+        $examTypes = $this->repository->findAll(SchoolSubjectType::class);
 
         /**
          * Meta-Daten müssen nicht manuell der render-Methode übergeben werden.
@@ -42,6 +44,7 @@ class ExamController extends AbstractController
          */
         return $this->render('exam/index.html', [
             'exams' => $exams,
+            'subjectTypes' => $examTypes
         ]);
     }
 

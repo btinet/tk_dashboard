@@ -37,12 +37,13 @@ class SchoolSubjectRepository extends AbstractRepositoryFactory
         try {
             $result = self::select
             ("
-                SELECT count(e.school_subject_id) AS count
-                FROM exam_has_school_subject e 
+                SELECT ex.id
+                FROM exam ex                 
+                INNER JOIN exam_has_school_subject e  ON e.exam_id = ex.id
                 WHERE e.school_subject_id = {$id}
-                GROUP BY e.school_subject_id
+                GROUP BY ex.key_question
                     ");
-            return $result->fetchObject();
+            return $result->rowCount();
         } catch (PDOException $exception) {
             return $exception->getMessage();
         }
