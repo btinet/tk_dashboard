@@ -42,7 +42,7 @@ $this->layout('_layout.minimal.html',
         <div class="mt-2 mb-5 my-md-5">
             <h1 class="d-flex justify-content-start align-items-center">
                 <img class="me-2" src="<?=$response->generateUrlFromString('/assets/images/tk_logo_neu.svg')?>" height="36px" width="36px" alt="tk logo neu">
-                eSchool Manager
+                eSchool<small class="text-muted ms-2">(&alpha; 0.1.0)</small>
             </h1>
             <p class="lead">
                 Melde dich an und verwalte dein Präsentationsthema bequem und digital.
