@@ -16,6 +16,7 @@
  * @var array $table Tabledata for current entitx
  * @var int $rows row count of current entity
  * @var int $currentPage current offset
+ * @var array $attribs user_role attributes and data
  */
 
 
@@ -62,7 +63,7 @@ $examCountMax = max($examCounts);
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-body border-1">
-                <h1 class="h5">Persönliches Konto</h1>
+                <h2 class="h5">Persönliches Konto</h2>
                 <div class="d-flex justify-content-center align-items-start flex-column">
                     <span class="small">Name</span>
                     <?=$session->getUser()->getFirstname()?> <?=$session->getUser()->getLastName()?>
@@ -73,7 +74,31 @@ $examCountMax = max($examCounts);
                     <?=$date->format('d.m.Y')?>
                 </div>
             </div>
-
+            <?php if($session->UserHasPermission('has_supervisor')): ?>
+            <div class="card-body">
+                <h2 class="h5">Betreuung</h2>
+                <p>Konfigurieren Sie hier Ihren Betreuungsstatus. Bedenken Sie, dass die Schulleitung die maximale Betreuungskapazität überschreiben kann.</p>
+                <form method="post" action="<?=$response->generateUrlFromRoute('user_profile_save_settings')?>" class="row row-cols-lg-auto g-3 align-items-center form-inline">
+                    <div class="col-12">
+                        <label class="visually-hidden" for="inlineFormInputGroupUsername">Anzahl Kollegiat:innen</label>
+                        <div class="input-group">
+                            <div class="input-group-text"><i class="fa-solid fa-users"></i></div>
+                            <input type="number" name="pupil_amount" min="0" max="10" value="<?=$attribs['supervise']['pupil_amount']?:''?>" class="form-control" id="inlineFormInputGroupUsername" placeholder="Anzahl Kollegiat:innen">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="enable" type="checkbox" <?=$attribs['supervise']['enable']?'checked':''?> role="switch" id="flexSwitchCheckDefault">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Betreuung aktivieren?</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" name="submit" class="btn btn-primary">Speichern</button>
+                    </div>
+                    <input type="hidden" id="csrf_token" name="csrf_token" value="<?=$session->get('csrf_token')?>">
+                </form>
+            </div>
+            <?php endif;?>
         </div>
     </div>
 
@@ -162,11 +187,6 @@ $examCountMax = max($examCounts);
                                         <?php if($tutor = $group->getTutor()): ?>
                                             <i class="fa fa-graduation-cap fa-fw me-1"></i>
                                             <a href="#" class="link-dark"><?=$group->getTutor()->getLastName()?></a>
-                                            <?php if($result = $tutor->getRoleAtrribs(18)): ?>
-                                                <?php foreach ($result as $attrib => $value):?>
-                                                    <span class="ms-2"><b><?=$attrib?></b> = <?=$value?></span>
-                                                <?php endforeach;?>
-                                            <?php endif;?>
                                         <?php endif;?>
                                     </span>
                                 </div>

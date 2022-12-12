@@ -237,7 +237,7 @@ final class User
     public function getRoleAtrribs(int $roleId = 18)
     {
         $result = $this->repository->findOneBy(UserRoleHasUser::class,['user_id'=>$this->id,'user_role_id'=>$roleId]);
-        return ($result)? $result->getAttribs():null;
+        return ($result)? $result->getAttribsAsArray():null;
     }
 
 }

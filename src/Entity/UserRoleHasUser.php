@@ -53,9 +53,14 @@ class UserRoleHasUser
     }
 
 
-    public function getAttribs(): ?stdClass
+    public function getAttribs(): string
     {
-        return json_decode($this->attribs);
+        return $this->attribs;
+    }
+
+    public function getAttribsAsArray(): ?Array
+    {
+        return json_decode($this->attribs,JSON_OBJECT_AS_ARRAY);
     }
 
     /**

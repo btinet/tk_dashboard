@@ -173,6 +173,12 @@ user_profile_index:
   method: 'index'
   request: 'get'
 
+user_profile_save_settings:
+  expression: '/profile/settings/save'
+  controller: 'App\Controller\Profile\ProfileController'
+  method: 'saveSettings'
+  request: 'post'
+
 kq_claim_start:
   expression: '/key-question/claim/([0-9]*)/start'
   controller: 'App\Controller\Profile\KeyQuestionWorkflowController'

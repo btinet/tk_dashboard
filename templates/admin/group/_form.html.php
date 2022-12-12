@@ -37,6 +37,7 @@ use Core\Component\SessionComponent\Session;
             <?php endif;?>
         </select>
     </div>
+    <input type="hidden" name="csrf_token" value="<?=$session->get('csrf_token')?>">
     <div class="col-12">
         <label class="form-label d-none" for="description"><?=$trans->getConfig('description')?></label>
         <textarea class="form-control" id="description" rows="4" name="description" placeholder="<?=$trans->getConfig('description')?>"><?=$userData?$userData['description']:false?></textarea>
@@ -44,5 +45,4 @@ use Core\Component\SessionComponent\Session;
             Bitte gib eine Beschreibung ein.
         </div>
     </div>
-    <input type="hidden" id="csrf_token" name="csrf_token" value="<?=$session->get('csrf_token')?>">
 </form>
