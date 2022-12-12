@@ -47,6 +47,7 @@ class ProfileController extends AbstractController
 
     public function index(): string
     {
+        $foreignExams = false;
         $user = $this->session->getUser();
         $attribs = [];
 
@@ -55,14 +56,31 @@ class ProfileController extends AbstractController
             if (null === $attribs = $user->getRoleAtrribs() or !array_key_exists('supervise',$attribs))
             {
                 $attribs['supervise']['pupil_amount']=null;
-                $attribs['supervise']['enable']=false;
+                $attribs['supervise']['supervise_enable']=false;
             }
+
+            $examRepository = $this->repository->findBy(UserHasExam::class,['supervisor_id'=> $user->getId()]);
+
+            foreach ($examRepository as $exam)
+            {
+                switch($exam->getStatus())
+                {
+                    case 'clearance':
+                            $foreignExams[] = $exam;
+                            break;
+                    default:
+                        break;
+                }
+            }
+
         }
 
         $examCount = $this->repository->countDistinctBy(Exam::class,'key_question');
         $userExam = $this->repository->findBy(UserHasExam::class,['user_id'=> $user->getId()]);
+
         return $this->render('profile/index.html',[
             'userExam' => $userExam,
+            'foreignExams' => $foreignExams,
             'examCount' => $examCount,
             'attribs' => $attribs
         ]);
@@ -82,7 +100,7 @@ class ProfileController extends AbstractController
             {
                 $attrib = $userRoleHasUser->getAttribsAsArray();
                 $attrib['supervise']['pupil_amount'] = $this->request->getFieldAsString('pupil_amount');
-                $attrib['supervise']['enable'] = $this->request->getFieldAsString('enable');
+                $attrib['supervise']['supervise_enable'] = $this->request->getFieldAsString('enable');
 
                 $userRoleHasUser->setAttribs($attrib);
 

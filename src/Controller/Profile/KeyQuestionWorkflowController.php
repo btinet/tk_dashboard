@@ -11,6 +11,7 @@ use App\Entity\Topic;
 use App\Entity\User;
 use App\Entity\UserHasExam;
 use App\Menu\MenuBuilder;
+use App\Repository\UserExamRepository;
 use App\Repository\UserRoleRepository;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
@@ -61,8 +62,22 @@ class KeyQuestionWorkflowController extends AbstractController
         $exam = $this->repository->find(Exam::class,$examId);
         if(date('Y') >= ($exam->getYear()+3) and !$exam->getUser() and $this->session->getUser())
             {
+                $userExamRepository = new UserExamRepository();
+
+                $supervisorList = [];
+
+                if($supervisors = $this->repository->findSupervisorsByLoad())
+                {
+                    foreach ($supervisors as $supervisor)
+                    {
+                        $attribs = $supervisor->getRoleAtrribs();
+                        $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
+                    }
+                }
+
                 return $this->render('approval_process/claim_start_form.html',[
                     'exam' => $exam,
+                    'supervisors' => $supervisorList
                 ]);
             }
         $this->setFlash('key_question_locked','danger');
@@ -75,7 +90,7 @@ class KeyQuestionWorkflowController extends AbstractController
 
         if($this->request->isFormSubmitted() and $this->request->isPostRequest() and !$exam->getUser())
         {
-            $user = $this->repository->findOneBy(User::class,['username' => $this->request->getFieldAsString('username')]);
+            $user = $this->session->getUser();
             $topic = $this->repository->findOneBy(Topic::class,['title' => $this->request->getFieldAsString('topic')]);
             $mainSubject = $this->repository->findOneBy(SchoolSubject::class,['label' => $this->request->getFieldAsString('school_subject_1')]);
             $secondarySubject = $this->repository->findOneBy(SchoolSubject::class,['label' => $this->request->getFieldAsString('school_subject_2')]);
@@ -88,6 +103,8 @@ class KeyQuestionWorkflowController extends AbstractController
             $userHasExam->setTopicId($topic->getId());
             $userHasExam->setMainSubjectId($mainSubject->getId());
             $userHasExam->setSecondarySubjectId($secondarySubject->getId());
+            $userHasExam->setSupervisorId($this->request->getFieldAsString('supervisor'));
+
 
 
             $userExamId = $entityManager->persist($userHasExam);

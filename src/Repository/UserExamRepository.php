@@ -28,4 +28,19 @@ class UserExamRepository extends AbstractRepositoryFactory
         }
     }
 
+    public function countSupervisorLoad(int $id)
+    {
+        try {
+            $result = self::select
+            ("
+                SELECT ue.supervisor_id
+                FROM user_has_exam ue
+                WHERE ue.supervisor_id = {$id}
+                    ");
+            return $result->rowCount();
+        } catch (PDOException $exception) {
+            return $exception->getMessage();
+        }
+    }
+
 }

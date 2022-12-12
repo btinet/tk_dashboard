@@ -19,6 +19,7 @@ final class UserHasExam
     protected int $topicId;
     protected int $mainSubjectId;
     protected int $secondarySubjectId;
+    protected int $supervisorId;
 
     public function __construct()
     {
@@ -39,6 +40,7 @@ final class UserHasExam
     public function getMainSchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->mainSubjectId);}
     public function getSecondarySchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->secondarySubjectId);}
     public function getStatus(){return $this->repository->joinStatusByUserExamId($this->id);}
+    public function getSupervisor(){return $this->repository->find(User::class,$this->supervisorId);}
 
     /**
      * Entity-Getter
@@ -131,6 +133,24 @@ final class UserHasExam
     public function setSecondarySubjectId(int $secondarySubjectId): UserHasExam
     {
         $this->secondarySubjectId = $secondarySubjectId;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSupervisorId(): int
+    {
+        return $this->supervisorId;
+    }
+
+    /**
+     * @param int $supervisorId
+     * @return UserHasExam
+     */
+    public function setSupervisorId(int $supervisorId): UserHasExam
+    {
+        $this->supervisorId = $supervisorId;
         return $this;
     }
 
