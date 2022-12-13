@@ -57,6 +57,38 @@ class KeyQuestionWorkflowController extends AbstractController
      * @param int $examId
      * @return string|void
      */
+    public function copyKeyQuestion(int $examId)
+    {
+        $exam = $this->repository->find(Exam::class,$examId);
+        if($this->session->getUser())
+        {
+            $userExamRepository = new UserExamRepository();
+
+            $supervisorList = [];
+
+            if($supervisors = $this->repository->findSupervisorsByLoad())
+            {
+                foreach ($supervisors as $supervisor)
+                {
+                    $attribs = $supervisor->getRoleAtrribs();
+                    $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
+                }
+            }
+
+            return $this->render('approval_process/claim_start_form.html',[
+                'exam' => $exam,
+                'supervisors' => $supervisorList,
+                'isNew' => true
+            ]);
+        }
+        $this->setFlash('key_question_locked','danger');
+        $this->response->redirectToRoute(302,$this->generateUrlFromRoute('exam_show',[$exam->getId()]),true);
+    }
+
+    /**
+     * @param int $examId
+     * @return string|void
+     */
     public function claimKeyQuestion(int $examId)
     {
         $exam = $this->repository->find(Exam::class,$examId);
@@ -77,7 +109,8 @@ class KeyQuestionWorkflowController extends AbstractController
 
                 return $this->render('approval_process/claim_start_form.html',[
                     'exam' => $exam,
-                    'supervisors' => $supervisorList
+                    'supervisors' => $supervisorList,
+                    'isNew' => false
                 ]);
             }
         $this->setFlash('key_question_locked','danger');
@@ -90,6 +123,11 @@ class KeyQuestionWorkflowController extends AbstractController
 
         if($this->request->isFormSubmitted() and $this->request->isPostRequest() and !$exam->getUser())
         {
+            if(!is_numeric($this->request->getFieldAsString('supervisor')))
+            {
+                $this->setFlash('no_supervisor_available');
+                $this->response->redirectToRoute(302,$this->generateUrlFromRoute('exam_show',[$exam->getId()]),true);
+            }
             $user = $this->session->getUser();
             $topic = $this->repository->findOneBy(Topic::class,['title' => $this->request->getFieldAsString('topic')]);
             $mainSubject = $this->repository->findOneBy(SchoolSubject::class,['label' => $this->request->getFieldAsString('school_subject_1')]);

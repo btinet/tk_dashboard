@@ -74,7 +74,7 @@ $this->layout('_layout.standard.html',
                                         </div>
                                 <?php endif; ?>
                                     <div class="col-12 col-md-6">
-                                        <a href="#" class="btn btn-light d-block">ähnliche Leitfrage erstellen</a>
+                                        <a href="<?=$response->generateUrlFromRoute('kq_copy_start',[$exam->getId()])?>" class="btn btn-light d-block">ähnliche Leitfrage erstellen</a>
                                     </div>
                             <?php else: ?>
                                 <p class="lead">Du kannst keine Leitfrage erstellen oder übernehmen?</p>

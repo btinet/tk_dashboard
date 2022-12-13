@@ -10,8 +10,10 @@
  * @var object $exam enthält die MySQL-Tabelle "exam"
  * @var Session $session Session-Objekt
  * @var array $supervisors List of supervisors
+ * @var bool $isNew Leitfrage neu?
  */
 
+use App\Entity\User;
 use Core\Component\SessionComponent\Session;
 
 /**
@@ -65,9 +67,8 @@ $this->layout('_layout.standard.html',
                         <i class="fa fa-warning me-2 text-warning"></i>
                         Bitte prüfe alle Formulardaten, bevor du fortfährst. Mit Absenden des Formulars beginnt der Genehmigungsprozess!
                     </div>
-                        <form id="claim_form" method="post" action="<?=$response->generateUrlFromRoute('kq_claim_transfer')?>" name="claim_form" class="list-group list-group-flush">
+                        <form id="claim_form" method="post" action="<?=$response->generateUrlFromRoute('kq_claim_transfer')?>" name="claim_form" class="list-group list-group-flush needs-validation" novalidate>
                             <input id="topic" name="topic" readonly type="hidden" value="<?=$exam->getTopic()->getTitle()?>">
-                            <input id="key_question" name="key_question" type="hidden" value="<?=$exam->getKeyQuestion()?>" readonly>
                             <input type="hidden" name="csrf_token" value="<?=$session->get('csrf_token')?>">
                             <input type="hidden" name="exam_id" value="<?=$exam->getId()?>">
                             <?php $i = 1;?>
@@ -75,25 +76,59 @@ $this->layout('_layout.standard.html',
                                 <input class="form-control-plaintext" id="school_subject_<?=$i?>" name="school_subject_<?=$i?>" readonly type="hidden" value="<?=$subject->getLabel()?>">
                                 <?php $i++ ?>
                             <?php endforeach; ?>
-                            <div class="card shadow-sm">
-                                <div class="card-header bg-gradient">
-                                    <h6 class="mb-0">Betreuende Lehrkraft auswählen</h6>
+
+                            <?php if($isNew):?>
+                                <div class="card shadow-sm mb-3">
+                                    <div class="card-body">
+                                        <h5>Leitfrage verfassen</h5>
+                                        <p>Verfasse deine Leitfrage auf Basis deiner ausgewählten Daten.</p>
+                                    </div>
+                                    <div class="card-body bg-lighter">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-12 col-md-2 d-none">
+                                                <label class="" for="key_question">Leitfrage</label>
+                                            </div>
+                                            <div class="col-12">
+                                                <textarea id="key_question" name="key_question" type="text" class="form-control" placeholder="<?=htmlspecialchars($exam->getKeyQuestion())?>" rows="3" required></textarea>
+                                                <div class="invalid-feedback">
+                                                    Bitte formuliere deine Leitfrage.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <?php else:?>
+                                    <input id="key_question" name="key_question" type="hidden" value="<?=htmlspecialchars($exam->getKeyQuestion())?>">
+                            <?php endif;?>
+
+                            <div class="card shadow-sm">
                                 <div class="card-body">
-                                    <p>Die betreuende Lehrkraft begleitet dich bis zur Prüfung.</p>
-                                    <div class="row g-3 row-cols-md-auto align-items-center">
-                                        <div class="col-12 d-none d-md-block">
+                                    <h5>Betreuende Lehrkraft auswählen</h5>
+                                    <p class="mb-0">Die betreuende Lehrkraft begleitet dich bis zur Prüfung. Sinnvollerweise hast du mit ihr bereits im Vorfeld gesprochen.</p>
+                                    <small class="text-muted">
+                                        Sollte keine Lehrkraft verfügbar sein, wende dich bitte an die <a href="#">Schulleitung</a>.
+                                    </small>
+                                </div>
+                                <div class="card-body bg-lighter">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-12 col-md-2 d-none">
                                             <label class="" for="supervisor">Lehrkraft</label>
                                         </div>
                                         <div class="col-12">
                                             <select id="supervisor" name="supervisor" class="form-select" required>
-                                                <option selected>auswählen</option>
-                                                <?php foreach($supervisors as $supervisor): ?>
-                                                    <option value="<?=$supervisor->getId()?>"><?=$supervisor->getLastName()?></option>
-                                                <?php endforeach; ?>
+                                                <option value="">auswählen</option>
+                                                    <?php foreach($supervisors as $supervisor): ?>
+                                                        <?php if($supervisor instanceof User):?>
+                                                            <option value="<?=$supervisor->getId()?>"><?=$supervisor->getLastName()?></option>
+                                                        <?php endif;?>
+                                                    <?php endforeach; ?>
                                             </select>
+                                            <div class="invalid-feedback">
+                                                Bitte betreuende Lehrkraft auswählen.
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 

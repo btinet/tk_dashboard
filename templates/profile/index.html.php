@@ -76,7 +76,7 @@ $examCountMax = max($examCounts);
                 </div>
             </div>
             <?php if ($session->UserHasPermission('has_supervisor')): ?>
-                <div class="card-body">
+                <div class="card-body bg-lighter">
                     <h2 class="h5">Betreuung</h2>
                     <p>Konfigurieren Sie hier Ihren Betreuungsstatus. Bedenken Sie, dass die Schulleitung die maximale
                         Betreuungskapazität überschreiben kann.</p>
@@ -87,8 +87,8 @@ $examCountMax = max($examCounts);
                                 Kollegiat:innen</label>
                             <div class="input-group">
                                 <div class="input-group-text"><i class="fa-solid fa-users"></i></div>
-                                <input type="number" name="pupil_amount" min="0" max="10"
-                                       value="<?= $attribs['supervise']['pupil_amount'] ?: '' ?>" class="form-control"
+                                <input type="number" name="pupil_amount" min="1" max="10"
+                                       value="<?= $attribs['supervise']['pupil_amount'] ?: 1 ?>" class="form-control"
                                        id="inlineFormInputGroupUsername" placeholder="Anzahl Kollegiat:innen">
                             </div>
                         </div>
@@ -113,53 +113,51 @@ $examCountMax = max($examCounts);
     </div>
 
 </div>
+
 <div class="row g-3 mb-3">
-
-    <div class="col-12 col-md-5">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div>
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-5 d-none d-md-block">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div>
-                    <canvas id="myChart2"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="col-12 col-md-2">
-        <div class="card text-bg-info text-white align-self-stretch h-100 shadow-sm">
-            <div class="card-body">
-                <h1>Leitfragen gesamt</h1>
-                <p class="display-4"><i class="fa fa-hashtag"></i><?= $examCount ?></p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row g-3">
 
     <?php if ($session->UserHasPermission('has_supervisor')): ?>
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h2 class="h5 mb-0">Mir zugewiesen</h2>
+                    <h2 class="h5">Mir zugewiesen</h2>
+                    <p>Folgende Anträge warten auf Ihre Überprüfung.</p>
                 </div>
                 <div class="list-group list-group-flush">
+                    <div href="#" class="list-group-item align-items-start bg-light bg-gradient fw-bolder">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-3 text-truncate">
+                                Kollegiat:in
+                            </div>
+                            <div class="col-12 col-md-7 text-truncate">
+                                Leitfrage
+                            </div>
+                            <div class="col-12 col-md-2 text-start text-md-end">
+                                Datum
+                            </div>
+                        </div>
+                    </div>
                     <?php if ($foreignExams): ?>
                         <?php foreach ($foreignExams as $exam): ?>
                             <?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $exam->getCreated()) ?>
-                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                <div><?= $exam->getKeyQuestion() ?></div>
-                                <div class="small text-muted"><?= $date->format('d.m.Y') ?></div>
+                            <a href="#" class="list-group-item list-group-item-action align-items-center">
+                                <div class="row g-2">
+                                    <div class="col-12 col-md-3 text-truncate">
+                                        <span class="d-flex align-items-baseline">
+                                            <i class="fa fa-user fa-fw me-1"></i>
+                                            <?=$exam->getUser()->getFullname()?>
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-7 text-truncate">
+                                        <span class="d-flex align-items-baseline">
+                                            <i class="fa fa-file fa-fw me-1"></i>
+                                            <?= $exam->getKeyQuestion() ?>
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-2 text-start text-md-end">
+                                        <div class="text-muted"><?= $date->format('d.m.Y') ?></div>
+                                    </div>
+                                </div>
                             </a>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -220,11 +218,11 @@ $examCountMax = max($examCounts);
                             <div class="list-group-item d-flex bg-light bg-gradient text-bg-secondary fw-bolder justify-content-between align-items-center">
                                 <span><?= $group->getLabel() ?></span>
                                 <span class="d-flex align-items-baseline">
-                                        <?php if ($tutor = $group->getTutor()): ?>
-                                            <i class="fa fa-graduation-cap fa-fw me-1"></i>
-                                            <a href="#" class="link-dark"><?= $group->getTutor()->getLastName() ?></a>
-                                        <?php endif; ?>
-                                    </span>
+                                    <?php if ($tutor = $group->getTutor()): ?>
+                                        <i class="fa fa-graduation-cap fa-fw me-1"></i>
+                                        <a href="#" class="link-dark"><?= $group->getTutor()->getLastName() ?></a>
+                                    <?php endif; ?>
+                                </span>
                             </div>
                             <?php foreach ($group->getUsers() as $user): ?>
                                 <a href="#"
@@ -257,6 +255,38 @@ $examCountMax = max($examCounts);
     <?php endif; ?>
 </div>
 
+<div class="row g-3 mb-3">
+
+    <div class="col-12 col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-5 d-none d-md-block">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div>
+                    <canvas id="myChart2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-md-2">
+        <div class="card text-bg-info text-white align-self-stretch h-100 shadow-sm">
+            <div class="card-body">
+                <h1>Leitfragen gesamt</h1>
+                <p class="display-4"><i class="fa fa-hashtag"></i><?= $examCount ?></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     const ctx = document.getElementById('myChart');

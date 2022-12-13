@@ -185,6 +185,12 @@ kq_claim_start:
   method: 'claimKeyQuestion'
   request: 'get'
 
+kq_copy_start:
+  expression: '/key-question/copy/([0-9]*)/start'
+  controller: 'App\Controller\Profile\KeyQuestionWorkflowController'
+  method: 'copyKeyQuestion'
+  request: 'get'
+
 kq_claim_transfer:
   expression: '/key-question/claim/transfer'
   controller: 'App\Controller\Profile\KeyQuestionWorkflowController'

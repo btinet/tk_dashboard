@@ -39,6 +39,11 @@ final class User
         return $this->username;
     }
 
+    public function getFullName(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
     /**
      * @return string|null
      */
