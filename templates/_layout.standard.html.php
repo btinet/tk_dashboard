@@ -45,22 +45,23 @@ $this->layout('base.html',
                     <div class="col-5 col-md-3">
                         <div class="d-flex justify-content-start align-items-center h-100">
 
-                                <a class="btn btn-light d-block me-1 d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                <a class="btn btn-ghost-light text-dark d-block me-1 d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                                     <i class="fa-solid fa-fw fa-navicon"></i>
                                 </a>
                             <div class="btn-group">
-                                <a class="btn btn-light d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
+                                <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
                                     <i class="fa-solid fa-fw fa-house"></i>
                                 </a>
-                                <a class="btn btn-light d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
+                                <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
                                     <i class="fa-solid fa-fw fa-plus"></i>
                                 </a>
                                 <?php if(!$session->get('login')): ?>
                                     <a class="btn btn-light" data-coreui-toggle="tooltip" data-coreui-placement="bottom" title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in"></i></a>
                                 <?php else: ?>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-fw fa-user"></i>
+                                    <a role="button" href="<?=$response->generateUrlFromRoute('user_profile_index')?>" class="btn btn-ghost-light text-dark"><i class="fa-solid fa-fw fa-user"></i></a>
+                                    <button type="button" class="btn btn-ghost-light text-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="visually-hidden">Toggle Dropdown</span>
                                     </button>
                                     <ul class="dropdown-menu">
                                     <?php if($session->UserHasPermission('show_profile')): ?>
@@ -70,7 +71,6 @@ $this->layout('base.html',
                                             Profil
                                         </a>
                                     </li>
-
                                             <?php endif; ?>
                                             <?php if($session->UserHasPermission('show_user_exam')): ?>
                                             <li>

@@ -172,4 +172,49 @@ class KeyQuestionWorkflowController extends AbstractController
         $this->response->redirectToRoute(302,'user_profile_index');
     }
 
+    public function createKeyQuestion()
+    {
+
+        if($this->request->isFormSubmitted() and $this->request->isPostRequest())
+        {
+            if(!is_numeric($this->request->getFieldAsString('supervisor')))
+            {
+                $this->setFlash('no_supervisor_available');
+                $this->response->redirectToRoute(302,'user_profile_index');
+            }
+            $user = $this->session->getUser();
+            $topic = $this->repository->findOneBy(Topic::class,['title' => $this->request->getFieldAsString('topic')]);
+            $mainSubject = $this->repository->findOneBy(SchoolSubject::class,['label' => $this->request->getFieldAsString('school_subject_1')]);
+            $secondarySubject = $this->repository->findOneBy(SchoolSubject::class,['label' => $this->request->getFieldAsString('school_subject_2')]);
+
+            $userHasExam = new UserHasExam();
+            $entityManager = new EntityManager();
+
+            $userHasExam->setUserId($user->getId());
+            $userHasExam->setKeyQuestion($this->request->getFieldAsString('key_question'));
+            $userHasExam->setTopicId($topic->getId());
+            $userHasExam->setMainSubjectId($mainSubject->getId());
+            $userHasExam->setSecondarySubjectId($secondarySubject->getId());
+            $userHasExam->setSupervisorId($this->request->getFieldAsString('supervisor'));
+
+
+
+            $userExamId = $entityManager->persist($userHasExam);
+
+            $status = $this->repository->findOneBy(ExamStatus::class,['label' => 'clearance']);
+
+            $examStatus = new ExamHasExamStatus();
+
+            $examStatus->setInfo("Antrag angelegt");
+            $examStatus->setUserExamId($userExamId);
+            $examStatus->setSupervisorId($user->getId());
+            $examStatus->setExamStatusId($status->getId());
+
+            $entityManager->persist($examStatus);
+
+        }
+        $this->setFlash('key_question_send_to_clearance');
+        $this->response->redirectToRoute(302,'user_profile_index');
+    }
+
 }

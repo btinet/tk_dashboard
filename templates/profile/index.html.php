@@ -126,13 +126,13 @@ $examCountMax = max($examCounts);
                 <div class="list-group list-group-flush">
                     <div href="#" class="list-group-item align-items-start bg-light bg-gradient fw-bolder">
                         <div class="row g-2">
-                            <div class="col-12 col-md-3 text-truncate">
+                            <div class="col-12 col-md-3 text-truncate d-none d-md-block">
                                 Kollegiat:in
                             </div>
                             <div class="col-12 col-md-7 text-truncate">
                                 Leitfrage
                             </div>
-                            <div class="col-12 col-md-2 text-start text-md-end">
+                            <div class="col-12 col-md-2 text-start text-md-end d-none d-md-block">
                                 Datum
                             </div>
                         </div>
@@ -144,13 +144,14 @@ $examCountMax = max($examCounts);
                                 <div class="row g-2">
                                     <div class="col-12 col-md-3 text-truncate">
                                         <span class="d-flex align-items-baseline">
-                                            <i class="fa fa-user fa-fw me-1"></i>
+                                            <i class="fa fa-user me-2"></i>
                                             <?=$exam->getUser()->getFullname()?>
                                         </span>
                                     </div>
+
                                     <div class="col-12 col-md-7 text-truncate">
                                         <span class="d-flex align-items-baseline">
-                                            <i class="fa fa-file fa-fw me-1"></i>
+                                            <i class="fa fa-file me-2"></i>
                                             <?= $exam->getKeyQuestion() ?>
                                         </span>
                                     </div>

@@ -61,17 +61,21 @@ class ProfileController extends AbstractController
 
             $examRepository = $this->repository->findBy(UserHasExam::class,['supervisor_id'=> $user->getId()]);
 
-            foreach ($examRepository as $exam)
+            if($examRepository)
             {
-                switch($exam->getStatus())
+                foreach ($examRepository as $exam)
                 {
-                    case 'clearance':
+                    switch($exam->getStatus())
+                    {
+                        case 'clearance':
                             $foreignExams[] = $exam;
                             break;
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
             }
+
 
         }
 

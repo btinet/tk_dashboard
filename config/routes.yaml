@@ -196,3 +196,9 @@ kq_claim_transfer:
   controller: 'App\Controller\Profile\KeyQuestionWorkflowController'
   method: 'transferKeyQuestion'
   request: 'post'
+
+kq_new_transfer:
+  expression: '/key-question/new/transfer'
+  controller: 'App\Controller\Profile\KeyQuestionWorkflowController'
+  method: 'createKeyQuestion'
+  request: 'post'

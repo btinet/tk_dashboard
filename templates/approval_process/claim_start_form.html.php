@@ -67,7 +67,7 @@ $this->layout('_layout.standard.html',
                         <i class="fa fa-warning me-2 text-warning"></i>
                         Bitte prüfe alle Formulardaten, bevor du fortfährst. Mit Absenden des Formulars beginnt der Genehmigungsprozess!
                     </div>
-                        <form id="claim_form" method="post" action="<?=$response->generateUrlFromRoute('kq_claim_transfer')?>" name="claim_form" class="list-group list-group-flush needs-validation" novalidate>
+                        <form id="claim_form" method="post" action="<?=$response->generateUrlFromRoute('kq_new_transfer')?>" name="claim_form" class="list-group list-group-flush needs-validation" novalidate>
                             <input id="topic" name="topic" readonly type="hidden" value="<?=$exam->getTopic()->getTitle()?>">
                             <input type="hidden" name="csrf_token" value="<?=$session->get('csrf_token')?>">
                             <input type="hidden" name="exam_id" value="<?=$exam->getId()?>">

@@ -77,8 +77,13 @@ $this->layout('_layout.standard.html',
                                         <a href="<?=$response->generateUrlFromRoute('kq_copy_start',[$exam->getId()])?>" class="btn btn-light d-block">ähnliche Leitfrage erstellen</a>
                                     </div>
                             <?php else: ?>
-                                <p class="lead">Du kannst keine Leitfrage erstellen oder übernehmen?</p>
-                                <p>Du bist offensichtlich in keinem Kurs der Qualifikationsphase. Wende dich für Unterstützung an deine:n Tutor:in.</p>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-start flex-row align-items-center card bg-white shadow-sm border-warning border border-2 rounded-3 text-bg-light text-dark mb-3 p-3">
+                                    <i class="fa fa-warning me-2 text-warning"></i>
+                                    Die Kombination deiner Kurs- und Rollenzugehörigkeit erlaubt kein Formulieren einer Leitfrage.
+                                </div>
+                            </div>
+
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>

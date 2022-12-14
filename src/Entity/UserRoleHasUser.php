@@ -15,6 +15,8 @@ class UserRoleHasUser
     protected int $userId;
     protected int $userRoleId;
     protected string $attribs;
+    protected string $fromDate;
+    protected ?string $toDate;
 
     /**
      * @return int
@@ -70,6 +72,42 @@ class UserRoleHasUser
     public function setAttribs(array $attribs): UserRoleHasUser
     {
         $this->attribs = json_encode($attribs,JSON_FORCE_OBJECT);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFromDate(): string
+    {
+        return $this->fromDate;
+    }
+
+    /**
+     * @param string $fromDate
+     * @return UserRoleHasUser
+     */
+    public function setFromDate(string $fromDate): UserRoleHasUser
+    {
+        $this->fromDate = $fromDate;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getToDate(): ?string
+    {
+        return $this->toDate;
+    }
+
+    /**
+     * @param string|null $toDate
+     * @return UserRoleHasUser
+     */
+    public function setToDate(?string $toDate): UserRoleHasUser
+    {
+        $this->toDate = $toDate;
         return $this;
     }
 
