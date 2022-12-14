@@ -54,6 +54,39 @@ class KeyQuestionWorkflowController extends AbstractController
     }
 
     /**
+     * @return string|void
+     */
+    public function newKeyQuestion()
+    {
+
+        if($this->session->getUser())
+        {
+
+            $schoolSubjects = $this->repository->findAll(SchoolSubject::class);
+            $userExamRepository = new UserExamRepository();
+
+            $supervisorList = [];
+
+            if($supervisors = $this->repository->findSupervisorsByLoad())
+            {
+                foreach ($supervisors as $supervisor)
+                {
+                    $attribs = $supervisor->getRoleAtrribs();
+                    $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
+                }
+            }
+
+            return $this->render('approval_process/new_start_form.html',[
+                'subjects' => $schoolSubjects,
+                'supervisors' => $supervisorList,
+                'isNew' => true
+            ]);
+        }
+        $this->setFlash('key_question_locked','danger');
+        $this->response->redirectToRoute(302,'user_profile_index');
+    }
+
+    /**
      * @param int $examId
      * @return string|void
      */

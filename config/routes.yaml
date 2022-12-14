@@ -191,6 +191,12 @@ kq_copy_start:
   method: 'copyKeyQuestion'
   request: 'get'
 
+kq_new_start:
+  expression: '/key-question/new/start'
+  controller: 'App\Controller\Profile\KeyQuestionWorkflowController'
+  method: 'newKeyQuestion'
+  request: 'get'
+
 kq_claim_transfer:
   expression: '/key-question/claim/transfer'
   controller: 'App\Controller\Profile\KeyQuestionWorkflowController'

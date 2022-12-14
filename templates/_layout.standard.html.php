@@ -52,7 +52,7 @@ $this->layout('base.html',
                                 <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
                                     <i class="fa-solid fa-fw fa-house"></i>
                                 </a>
-                                <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
+                                <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('kq_new_start')?>">
                                     <i class="fa-solid fa-fw fa-plus"></i>
                                 </a>
                                 <?php if(!$session->get('login')): ?>
