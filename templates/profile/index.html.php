@@ -145,7 +145,7 @@ $examCountMax = max($examCounts);
                                     <div class="col-12 col-md-3 text-truncate">
                                         <span class="d-flex align-items-baseline">
                                             <i class="fa fa-user me-2"></i>
-                                            <?=$exam->getUser()->getFullname()?>
+                                            <?=$exam->getUser()->getUsername(true)?>
                                         </span>
                                     </div>
 
@@ -219,7 +219,7 @@ $examCountMax = max($examCounts);
                                 <span class="d-flex align-items-baseline">
                                     <?php if ($tutor = $group->getTutor()): ?>
                                         <i class="fa fa-graduation-cap fa-fw me-1"></i>
-                                        <a href="#" class="link-dark"><?= $group->getTutor()->getLastName() ?></a>
+                                        <a href="#" class="link-dark"><?= $group->getTutor()->getUsername(true) ?></a>
                                     <?php endif; ?>
                                 </span>
                             </div>
@@ -236,7 +236,7 @@ $examCountMax = max($examCounts);
                                             <?php else: ?>
                                                 <i class="fa fa-user fa-fw me-2"></i>
                                             <?php endif; ?>
-                                            <?= "{$user->getFirstname()} {$user->getLastname()}" ?>
+                                            <?=$user->getUsername(true)?>
                                         </span>
                                 </a>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 15. Dez 2022 um 10:55
+-- Erstellungszeit: 15. Dez 2022 um 12:50
 -- Server-Version: 10.4.24-MariaDB
 -- PHP-Version: 7.4.29
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `tk_ceberus`
 --
+CREATE DATABASE IF NOT EXISTS `tk_ceberus` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `tk_ceberus`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Tabellenstruktur für Tabelle `exam`
 --
 
+DROP TABLE IF EXISTS `exam`;
 CREATE TABLE `exam` (
   `id` int(11) NOT NULL,
   `topic_id` int(11) DEFAULT NULL,
@@ -170,6 +173,7 @@ INSERT INTO `exam` (`id`, `topic_id`, `key_question`, `year`, `created`, `update
 -- Tabellenstruktur für Tabelle `exam_has_exam_status`
 --
 
+DROP TABLE IF EXISTS `exam_has_exam_status`;
 CREATE TABLE `exam_has_exam_status` (
   `id` int(11) NOT NULL,
   `user_exam_id` int(11) NOT NULL,
@@ -185,7 +189,7 @@ CREATE TABLE `exam_has_exam_status` (
 --
 
 INSERT INTO `exam_has_exam_status` (`id`, `user_exam_id`, `exam_status_id`, `supervisor_id`, `info`, `created`, `updated`) VALUES
-(25, 28, 3, 2, 'Antrag angelegt', '2022-12-14 09:06:08', NULL);
+(1, 1, 3, 13, 'Antrag angelegt', '2022-12-15 12:44:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -193,6 +197,7 @@ INSERT INTO `exam_has_exam_status` (`id`, `user_exam_id`, `exam_status_id`, `sup
 -- Tabellenstruktur für Tabelle `exam_has_school_subject`
 --
 
+DROP TABLE IF EXISTS `exam_has_school_subject`;
 CREATE TABLE `exam_has_school_subject` (
   `id` int(11) NOT NULL,
   `exam_id` int(11) DEFAULT NULL,
@@ -444,14 +449,14 @@ INSERT INTO `exam_has_school_subject` (`id`, `exam_id`, `school_subject_id`, `us
 (234, 117, 19, NULL, 0, '2022-12-10 21:34:09', NULL),
 (235, 118, 17, NULL, 1, '2022-12-10 21:34:09', NULL),
 (236, 118, 10, NULL, 0, '2022-12-10 21:34:09', NULL),
-(237, 121, 1, NULL, 1, '2022-12-12 13:14:36', '2022-12-14 08:56:43'),
-(238, 121, 12, NULL, 0, '2022-12-12 13:14:36', '2022-12-14 08:56:41'),
+(237, 121, 1, NULL, 1, '2022-12-12 13:14:36', '2022-12-15 12:29:00'),
+(238, 121, 12, NULL, 0, '2022-12-12 13:14:36', '2022-12-15 12:29:02'),
 (239, 122, 5, NULL, 1, '2022-12-12 13:14:36', '2022-12-14 08:56:40'),
 (240, 122, 4, NULL, 0, '2022-12-12 13:14:36', '2022-12-14 08:56:38'),
 (241, 123, 12, NULL, 1, '2022-12-13 10:27:00', NULL),
 (242, 123, 11, NULL, 0, '2022-12-13 10:27:00', NULL),
-(243, 124, 1, NULL, 1, '2022-12-13 10:27:00', '2022-12-14 09:07:41'),
-(244, 124, 2, NULL, 0, '2022-12-13 10:27:00', '2022-12-14 09:07:39');
+(243, 124, 1, 13, 1, '2022-12-13 10:27:00', '2022-12-15 12:44:38'),
+(244, 124, 2, 13, 0, '2022-12-13 10:27:00', '2022-12-15 12:44:38');
 
 -- --------------------------------------------------------
 
@@ -459,6 +464,7 @@ INSERT INTO `exam_has_school_subject` (`id`, `exam_id`, `school_subject_id`, `us
 -- Tabellenstruktur für Tabelle `exam_status`
 --
 
+DROP TABLE IF EXISTS `exam_status`;
 CREATE TABLE `exam_status` (
   `id` int(11) NOT NULL,
   `label` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -483,6 +489,7 @@ INSERT INTO `exam_status` (`id`, `label`, `created`, `updated`) VALUES
 -- Tabellenstruktur für Tabelle `role_permission`
 --
 
+DROP TABLE IF EXISTS `role_permission`;
 CREATE TABLE `role_permission` (
   `id` int(11) NOT NULL,
   `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -520,6 +527,7 @@ INSERT INTO `role_permission` (`id`, `label`, `description`, `created`, `updated
 -- Tabellenstruktur für Tabelle `school_subject`
 --
 
+DROP TABLE IF EXISTS `school_subject`;
 CREATE TABLE `school_subject` (
   `id` int(11) NOT NULL,
   `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -561,6 +569,7 @@ INSERT INTO `school_subject` (`id`, `label`, `abbr`, `school_subject_type_id`, `
 -- Tabellenstruktur für Tabelle `school_subject_type`
 --
 
+DROP TABLE IF EXISTS `school_subject_type`;
 CREATE TABLE `school_subject_type` (
   `id` int(11) NOT NULL,
   `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -593,6 +602,7 @@ INSERT INTO `school_subject_type` (`id`, `label`, `description`, `created`, `upd
 -- Tabellenstruktur für Tabelle `topic`
 --
 
+DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic` (
   `id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -655,6 +665,7 @@ INSERT INTO `topic` (`id`, `title`, `description`, `created`, `updated`) VALUES
 -- Tabellenstruktur für Tabelle `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -673,9 +684,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `is_active`, `created`, `updated`, `user_locale`) VALUES
-(2, 'Benjamin', 'Wagner', 'wagnerpictures', '$2y$10$sWj3tTJwLfE5hcKWjTCVneb0MmD5Hvqy1QdmM66Q4dN/iWBUS1JDu', 'service@wagnerpictures.com', 1, '2022-09-17 07:32:23', NULL, 'de'),
-(5, 'Anna', 'Rölke', 'aroelke', '$2y$10$td1xlnbJxsjInL9OkZ8r/./XjqfSI2cWXpL22CSTRs2uJg35m6BXa', 'aroelke@treptow-kolleg.de', 1, '2022-11-05 06:11:38', NULL, 'de'),
-(6, 'Annika', 'Kottwitz', 'akottwitz', '$2y$10$E6NG4drsf1i8TayMIOFmAOHN0ZDsEQ6jgY6hnO64ApvLRU4S0EKx6', 'kottwitz@treptowkolleg.de', 1, '2022-11-10 05:30:35', NULL, 'de');
+(13, 'SC9NUjZNNXB5b0UwbHg2ZFY3VGxmdz09', 'ZDF6eGNOMkhaQTBsOVZFZjFQTUp4dz09', 'bFZ1am8wRHBJTVhKK3ZPUk1iOFljQT09', '$2y$10$zx7yL2W1sHofcyWZFTi8Yem.oZYv2xy7He8UVAnJKs4rtRUc9JJX6', 'YnZkcjhoVmFxbG9EZTNvcDU3MnJuTnBhbzZYMEE3WUEra2dDL3UyY0trbz0=', 1, '2022-12-15 12:31:08', NULL, 'de'),
+(14, 'eWtFUEx6OFhHbEhFd2xvZUhWS0QxUT09', 'STViUG5CWmdhTTNjVSt1akhHeXhhdz09', 'Y21xbkxGMWZhN0x1RHp5Wmt1dlNEUT09', '$2y$10$c0jAMLQOvq.olytZcHGOpeDMYYJlMfvsUV3JBzFad/a7nPhGuOC0O', 'UUZoOWd2TVo5eCs1RjhBYUNLT3ozVk16d3NzZm9lZ2ZXVlZKWlBLbC8zZz0=', 1, '2022-12-15 12:33:10', NULL, 'de'),
+(15, 'cE1RbnJ4L2c3Yk45blgwMUVKaVBrZz09', 'ZGx0ZjJjTTVucTlNS2ljckplcjVGUT09', 'bmFnQmFBTkZoMDNWWldzbW0yYUJwdz09', '$2y$10$TvPhLuKWfD9wB/xH1cgXEeQ4OQ9NMhCNFNSMCk1a3Px4frzRq8.Cu', 'WFh5c3luQk5IOENoejBLdEdIL2xPTUFuNzJqcjVWVFJVbnFWRlAzZXBYST0=', 1, '2022-12-15 12:33:32', NULL, 'de');
 
 -- --------------------------------------------------------
 
@@ -683,6 +694,7 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `em
 -- Tabellenstruktur für Tabelle `user_group`
 --
 
+DROP TABLE IF EXISTS `user_group`;
 CREATE TABLE `user_group` (
   `id` int(11) NOT NULL,
   `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -709,6 +721,7 @@ INSERT INTO `user_group` (`id`, `label`, `description`, `group_key`, `created`, 
 -- Tabellenstruktur für Tabelle `user_group_has_user`
 --
 
+DROP TABLE IF EXISTS `user_group_has_user`;
 CREATE TABLE `user_group_has_user` (
   `id` int(11) NOT NULL,
   `user_group_id` int(11) DEFAULT NULL,
@@ -724,10 +737,10 @@ CREATE TABLE `user_group_has_user` (
 --
 
 INSERT INTO `user_group_has_user` (`id`, `user_group_id`, `user_id`, `from_date`, `to_date`, `created`, `updated`) VALUES
-(1, 8, 2, '2022-12-14 00:00:00', NULL, '2022-11-05 13:55:43', NULL),
-(2, 9, 2, '2022-12-14 00:00:00', NULL, '2022-11-09 19:30:59', NULL),
-(3, 8, 6, '2022-12-14 00:00:00', NULL, '2022-11-10 05:32:06', NULL),
-(5, 8, 5, '2022-12-14 00:00:00', NULL, '2022-12-09 06:41:16', NULL);
+(1, 8, 13, '2022-12-15 12:35:44', NULL, '2022-12-15 12:35:44', NULL),
+(2, 15, 15, '2022-12-15 12:35:44', NULL, '2022-12-15 12:35:44', NULL),
+(3, 15, 14, '2022-12-15 12:41:02', NULL, '2022-12-15 12:41:02', NULL),
+(4, 8, 14, '2022-12-15 12:41:59', NULL, '2022-12-15 12:41:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -735,6 +748,7 @@ INSERT INTO `user_group_has_user` (`id`, `user_group_id`, `user_id`, `from_date`
 -- Tabellenstruktur für Tabelle `user_has_exam`
 --
 
+DROP TABLE IF EXISTS `user_has_exam`;
 CREATE TABLE `user_has_exam` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -752,7 +766,7 @@ CREATE TABLE `user_has_exam` (
 --
 
 INSERT INTO `user_has_exam` (`id`, `user_id`, `created`, `updated`, `key_question`, `topic_id`, `main_subject_id`, `secondary_subject_id`, `supervisor_id`) VALUES
-(28, 2, '2022-12-14 09:06:08', NULL, 'Inwieweit lässt sich Mehl essen?', 1, 1, 2, 6);
+(1, 13, '2022-12-15 12:44:38', NULL, 'Inwieweit lässt sich Wasser trinken?', 1, 1, 2, 15);
 
 -- --------------------------------------------------------
 
@@ -760,6 +774,7 @@ INSERT INTO `user_has_exam` (`id`, `user_id`, `created`, `updated`, `key_questio
 -- Tabellenstruktur für Tabelle `user_is_responsible_for_subject_type`
 --
 
+DROP TABLE IF EXISTS `user_is_responsible_for_subject_type`;
 CREATE TABLE `user_is_responsible_for_subject_type` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -770,19 +785,13 @@ CREATE TABLE `user_is_responsible_for_subject_type` (
   `updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Daten für Tabelle `user_is_responsible_for_subject_type`
---
-
-INSERT INTO `user_is_responsible_for_subject_type` (`id`, `user_id`, `subject_type_id`, `from_date`, `to_date`, `created`, `updated`) VALUES
-(1, 6, 4, '2022-08-08', NULL, '2022-12-05 14:15:38', NULL);
-
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `user_role`
 --
 
+DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
   `id` int(11) NOT NULL,
   `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -812,6 +821,7 @@ INSERT INTO `user_role` (`id`, `label`, `description`, `created`, `updated`) VAL
 -- Tabellenstruktur für Tabelle `user_role_has_role_permission`
 --
 
+DROP TABLE IF EXISTS `user_role_has_role_permission`;
 CREATE TABLE `user_role_has_role_permission` (
   `id` int(11) NOT NULL,
   `user_role_id` int(11) DEFAULT NULL,
@@ -848,7 +858,16 @@ INSERT INTO `user_role_has_role_permission` (`id`, `user_role_id`, `role_permiss
 (37, 9, 23, '2022-12-08 19:02:19', NULL),
 (38, 1, 23, '2022-12-08 19:22:30', NULL),
 (39, 1, 24, '2022-12-10 17:30:09', NULL),
-(41, 18, 25, '2022-12-12 06:34:02', NULL);
+(41, 18, 25, '2022-12-12 06:34:02', NULL),
+(42, 8, 8, '2022-12-15 12:38:29', NULL),
+(43, 8, 9, '2022-12-15 12:38:29', NULL),
+(44, 8, 10, '2022-12-15 12:38:29', NULL),
+(45, 8, 11, '2022-12-15 12:38:29', NULL),
+(46, 8, 14, '2022-12-15 12:38:29', NULL),
+(47, 8, 15, '2022-12-15 12:38:29', NULL),
+(48, 8, 23, '2022-12-15 12:38:29', NULL),
+(49, 8, 24, '2022-12-15 12:38:29', NULL),
+(50, 8, 25, '2022-12-15 12:38:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -856,6 +875,7 @@ INSERT INTO `user_role_has_role_permission` (`id`, `user_role_id`, `role_permiss
 -- Tabellenstruktur für Tabelle `user_role_has_user`
 --
 
+DROP TABLE IF EXISTS `user_role_has_user`;
 CREATE TABLE `user_role_has_user` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -872,12 +892,11 @@ CREATE TABLE `user_role_has_user` (
 --
 
 INSERT INTO `user_role_has_user` (`id`, `user_id`, `user_role_id`, `attribs`, `from_date`, `to_date`, `created`, `updated`) VALUES
-(1, 5, 10, '{}', '2022-12-11 00:00:00', NULL, '2022-11-05 06:11:38', '2022-12-11 21:19:06'),
-(2, 2, 1, '{}', '2022-12-11 00:00:00', NULL, '2022-11-05 13:55:19', '2022-12-11 21:19:03'),
-(4, 6, 9, '{}', '2022-12-11 00:00:00', NULL, '2022-11-10 05:31:11', '2022-12-11 21:18:59'),
-(5, 2, 10, '{}', '2022-12-11 00:00:00', NULL, '2022-12-04 07:21:28', '2022-12-11 21:18:54'),
-(6, 6, 18, '{\"supervise\":{\"pupil_amount\":\"9\",\"supervise_enable\":\"on\"}}', '2022-12-11 00:00:00', NULL, '2022-12-08 17:00:27', '2022-12-14 08:10:49'),
-(7, 5, 11, '{}', '2022-12-11 00:00:00', '2023-08-06 00:00:00', '2022-12-11 21:20:35', NULL);
+(1, 13, 1, '{}', '0000-00-00 00:00:00', NULL, '2022-12-15 12:31:08', '2022-12-15 12:34:02'),
+(2, 14, 18, '{\"supervise\":{\"pupil_amount\":\"6\",\"supervise_enable\":\"on\"}}', '0000-00-00 00:00:00', NULL, '2022-12-15 12:33:10', '2022-12-15 12:36:45'),
+(3, 15, 8, '{}', '0000-00-00 00:00:00', NULL, '2022-12-15 12:33:32', '2022-12-15 12:34:40'),
+(4, 14, 9, '', '2022-12-15 12:35:06', NULL, '2022-12-15 12:35:06', NULL),
+(5, 15, 18, '{\"supervise\":{\"pupil_amount\":\"5\",\"supervise_enable\":\"on\"}}', '2022-12-15 12:35:06', NULL, '2022-12-15 12:35:06', '2022-12-15 12:38:48');
 
 --
 -- Indizes der exportierten Tabellen
@@ -1021,7 +1040,7 @@ ALTER TABLE `exam`
 -- AUTO_INCREMENT für Tabelle `exam_has_exam_status`
 --
 ALTER TABLE `exam_has_exam_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `exam_has_school_subject`
@@ -1063,7 +1082,7 @@ ALTER TABLE `topic`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_group`
@@ -1075,13 +1094,13 @@ ALTER TABLE `user_group`
 -- AUTO_INCREMENT für Tabelle `user_group_has_user`
 --
 ALTER TABLE `user_group_has_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_has_exam`
 --
 ALTER TABLE `user_has_exam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_is_responsible_for_subject_type`
@@ -1099,13 +1118,13 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT für Tabelle `user_role_has_role_permission`
 --
 ALTER TABLE `user_role_has_role_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_role_has_user`
 --
 ALTER TABLE `user_role_has_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints der exportierten Tabellen

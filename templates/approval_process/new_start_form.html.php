@@ -125,7 +125,7 @@ $this->layout('_layout.standard.html',
                                                 <option value="">auswählen</option>
                                                     <?php foreach($supervisors as $supervisor): ?>
                                                         <?php if($supervisor instanceof User):?>
-                                                            <option value="<?=$supervisor->getId()?>"><?=$supervisor->getLastName()?></option>
+                                                            <option value="<?=$supervisor->getId()?>"><?=$supervisor->getLastName(true)?></option>
                                                         <?php endif;?>
                                                     <?php endforeach; ?>
                                             </select>
