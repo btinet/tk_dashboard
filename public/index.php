@@ -11,7 +11,6 @@ require (project_root . '/vendor/autoload.php');
 // Neue Instanz der Kernel-Class.
 $kernel = new Kernel();
 
-print('x');
 try {
     $kernel
         // Routen aus Konfiguration hinzufügen. Entsprechende Methode der Klasse wird ausgeführt.
