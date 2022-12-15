@@ -67,9 +67,9 @@ $examCountMax = max($examCounts);
                 <h2 class="h5">Persönliches Konto</h2>
                 <div class="d-flex justify-content-center align-items-start flex-column">
                     <span class="small">Name</span>
-                    <?= $session->getUser()->getFirstname() ?> <?= $session->getUser()->getLastName() ?>
+                    <?= $session->getUser()->getFirstname(true) ?> <?= $session->getUser()->getLastName(true) ?>
                     <span class="small mt-2">E-Mail-Adresse</span>
-                    <span class="text-truncate"><?= $session->getUser()->getEmail() ?></span>
+                    <span class="text-truncate"><?= $session->getUser()->getEmail(true) ?></span>
                     <span class="small mt-2">Mitglied seit</span>
                     <?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $session->getUser()->getCreated()) ?>
                     <?= $date->format('d.m.Y') ?>

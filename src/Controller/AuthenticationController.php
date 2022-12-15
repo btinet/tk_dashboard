@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\SchoolSubject;
 use App\Entity\User;
 use App\Menu\MenuBuilder;
+use App\Service\EncryptionService;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\UserComponent\UserService;
 use Core\Controller\AbstractController;
@@ -41,8 +42,10 @@ class AuthenticationController extends AbstractController
 
         if($this->request->isFormSubmitted() and $this->request->isPostRequest())
         {
+            $encryptionService = new EncryptionService();
+
             $loginData = [
-                'username' => $this->request->getFieldAsString('username'),
+                'username' => $encryptionService->encryptString($this->request->getFieldAsString('username')),
                 'password' => $this->request->getFieldAsString('password')
             ];
 

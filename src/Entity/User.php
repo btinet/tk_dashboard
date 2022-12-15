@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRoleRepository;
+use App\Service\EncryptionService;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\UserComponent\PasswordService;
 use Core\Model\DateTimeEntityTrait;
@@ -19,6 +20,7 @@ final class User
     private AbstractRepositoryFactory $repository;
     private EntityManager $entityManager;
     private int $userRoleId;
+    private EncryptionService $encryptionService;
 
     protected ?string $firstName;
     protected ?string $lastName;
@@ -32,6 +34,7 @@ final class User
     {
         $this->repository = new UserRoleRepository();
         $this->entityManager = new EntityManager();
+        $this->encryptionService = new EncryptionService();
     }
 
     public function __toString()
@@ -47,9 +50,14 @@ final class User
     /**
      * @return string|null
      */
-    public function getFirstName(): ?string
+    public function getFirstName($decrypt = false): ?string
     {
-        return $this->firstName;
+        $firstName = $this->firstName;
+        if($decrypt)
+        {
+            $firstName = $this->encryptionService->decryptString($firstName);
+        }
+        return $firstName;
     }
 
     /**
@@ -58,16 +66,21 @@ final class User
      */
     public function setFirstName(?string $firstName): User
     {
-        $this->firstName = $firstName;
+        $this->firstName = $this->encryptionService->encryptString($firstName);
         return $this;
     }
 
     /**
      * @return string|null
      */
-    public function getLastName(): ?string
+    public function getLastName($decrypt = false): ?string
     {
-        return $this->lastName;
+        $lastName = $this->lastName;
+        if($decrypt)
+        {
+            $lastName = $this->encryptionService->decryptString($lastName);
+        }
+        return $lastName;
     }
 
     /**
@@ -76,16 +89,21 @@ final class User
      */
     public function setLastName(?string $lastName): User
     {
-        $this->lastName = $lastName;
+        $this->lastName = $this->encryptionService->encryptString($lastName);
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getUsername($decrypt = false): string
     {
-        return $this->username;
+        $username = $this->username;
+        if($decrypt)
+        {
+            $username = $this->encryptionService->decryptString($username);
+        }
+        return $username;
     }
 
     /**
@@ -94,7 +112,7 @@ final class User
      */
     public function setUsername(string $username): User
     {
-        $this->username = $username;
+        $this->username = $this->encryptionService->encryptString($username);
         return $this;
     }
 
@@ -119,9 +137,14 @@ final class User
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail($decrypt = false): string
     {
-        return $this->email;
+        $email = $this->email;
+        if($decrypt)
+        {
+            $email = $this->encryptionService->decryptString($email);
+        }
+        return $email;
     }
 
     /**
@@ -130,7 +153,7 @@ final class User
      */
     public function setEmail(string $email): User
     {
-        $this->email = $email;
+        $this->email = $this->encryptionService->encryptString($email);
         return $this;
     }
 
@@ -225,6 +248,9 @@ final class User
             $userRole
                 ->setUserId($user->getId())
                 ->setUserRoleId($userRoleId)
+                ->setAttribs([])
+                ->setFromDate(date('now'))
+                ->setToDate(NULL)
             ;
             try {
                 $this->entityManager->persist($userRole);
