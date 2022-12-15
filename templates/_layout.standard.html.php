@@ -49,12 +49,14 @@ $this->layout('base.html',
                                     <i class="fa-solid fa-fw fa-navicon"></i>
                                 </a>
                             <div class="btn-group">
-                                <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('app_index')?>">
+                                <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('exam_index')?>">
                                     <i class="fa-solid fa-fw fa-house"></i>
                                 </a>
-                                <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('kq_new_start')?>">
-                                    <i class="fa-solid fa-fw fa-plus"></i>
-                                </a>
+                                <?php if($session->UserHasPermission('create_key_question')):?>
+                                    <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('kq_new_start')?>">
+                                        <i class="fa-solid fa-fw fa-plus"></i>
+                                    </a>
+                                <?php endif;?>
                                 <?php if(!$session->get('login')): ?>
                                     <a class="btn btn-light" data-coreui-toggle="tooltip" data-coreui-placement="bottom" title="Anmelden" href="<?=$response->generateUrlFromRoute('authentication_login')?>"><i class="fa fa-fw fa-sign-in"></i></a>
                                 <?php else: ?>

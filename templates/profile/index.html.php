@@ -183,8 +183,6 @@ $examCountMax = max($examCounts);
                             <?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $exam->getCreated()) ?>
                             <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
                                 <div>
-
-                                    <div><?= $exam->getTopic() ?></div>
                                     <div class="my-2">
                                         <span class="badge text-bg-primary"><?= $exam->getMainSchoolSubject()->getLabel() ?></span>
                                         <span class="badge text-bg-light"><?= $exam->getSecondarySchoolSubject()->getLabel() ?></span>

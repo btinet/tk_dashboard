@@ -32,11 +32,15 @@ class AppController extends AbstractController
         if(!$this->session->getUser()){$this->response->redirectToRoute(302,'authentication_login');}
     }
 
-    public function index ()
+    public function index (): void
     {
-        $this->response->redirectToRoute('302','exam_index');
+        $this->response->redirectToRoute('302','user_profile_index');
     }
 
+
+    /**
+     * @return string|void
+     */
     public function search()
     {
         if($this->request->isFormSubmitted() and $this->request->isPostRequest())
