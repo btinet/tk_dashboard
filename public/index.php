@@ -6,10 +6,12 @@ use Core\Kernel;
 // Definiere das Wurzelverzeichnis des Projekts.
 define("project_root", dirname(__DIR__));
 // Lade die Autoload-Class von Composer zum dynamischen Nachladen unserer Classes.
-require (project_root . './vendor/autoload.php');
+require (project_root . '/vendor/autoload.php');
 
 // Neue Instanz der Kernel-Class.
 $kernel = new Kernel();
+
+print('x');
 try {
     $kernel
         // Routen aus Konfiguration hinzufügen. Entsprechende Methode der Klasse wird ausgeführt.
