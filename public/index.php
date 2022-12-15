@@ -4,9 +4,9 @@
 use Core\ErrorHandler\ErrorExceptionHandler;
 use Core\Kernel;
 // Definiere das Wurzelverzeichnis des Projekts.
-const project_root = __DIR__;
+define("project_root", dirname(__DIR__));
 // Lade die Autoload-Class von Composer zum dynamischen Nachladen unserer Classes.
-require ('./vendor/autoload.php');
+require (project_root . './vendor/autoload.php');
 
 // Neue Instanz der Kernel-Class.
 $kernel = new Kernel();
