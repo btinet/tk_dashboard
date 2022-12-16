@@ -4,6 +4,7 @@ namespace Core\Component\UserComponent;
 
 
 use App\Entity\User;
+use App\Service\EncryptionService;
 
 class UserService
 {
@@ -37,7 +38,8 @@ class UserService
 
     public static function isUnique($repository, $needle, $array, $errorCode = 2101): int
     {
-        $result = $repository->findOneBy(self::$entity,[$needle => $array[$needle]]);
+        $encryptionService = new EncryptionService();
+        $result = $repository->findOneBy(self::$entity,[$needle => $encryptionService->encryptString($array[$needle])]);
         return (array_filter((array)$result)) ? $errorCode : 0;
     }
 
