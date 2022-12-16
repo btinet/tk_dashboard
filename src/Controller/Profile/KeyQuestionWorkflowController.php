@@ -13,6 +13,7 @@ use App\Entity\UserHasExam;
 use App\Menu\MenuBuilder;
 use App\Repository\UserExamRepository;
 use App\Repository\UserRoleRepository;
+use ArrayObject;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
@@ -74,11 +75,14 @@ class KeyQuestionWorkflowController extends AbstractController
                     $attribs = $supervisor->getRoleAtrribs();
                     $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
                 }
+
+                $supervisors = new ArrayObject($supervisorList);
+                $supervisors->asort();
             }
 
             return $this->render('approval_process/new_start_form.html',[
                 'subjects' => $schoolSubjects,
-                'supervisors' => $supervisorList,
+                'supervisors' => $supervisors,
                 'isNew' => true
             ]);
         }
@@ -106,11 +110,14 @@ class KeyQuestionWorkflowController extends AbstractController
                     $attribs = $supervisor->getRoleAtrribs();
                     $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
                 }
+
+                $supervisors = new ArrayObject($supervisorList);
+                $supervisors->asort();
             }
 
             return $this->render('approval_process/claim_start_form.html',[
                 'exam' => $exam,
-                'supervisors' => $supervisorList,
+                'supervisors' => $supervisors,
                 'isNew' => true
             ]);
         }
@@ -138,11 +145,14 @@ class KeyQuestionWorkflowController extends AbstractController
                         $attribs = $supervisor->getRoleAtrribs();
                         $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
                     }
+
+                    $supervisors = new ArrayObject($supervisorList);
+                    $supervisors->asort();
                 }
 
                 return $this->render('approval_process/claim_start_form.html',[
                     'exam' => $exam,
-                    'supervisors' => $supervisorList,
+                    'supervisors' => $supervisors,
                     'isNew' => false
                 ]);
             }
