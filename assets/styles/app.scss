@@ -107,6 +107,11 @@ $font-prefix: "../../node_modules/@ibm/plex";;
 $font-family-sans-serif: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
 $font-family-monospace: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
 
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 100%
+);
 
 
 

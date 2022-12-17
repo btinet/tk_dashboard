@@ -3515,8 +3515,6 @@ progress {
 
 .container,
 .container-fluid,
-.container-xxl,
-.container-xl,
 .container-lg,
 .container-md,
 .container-sm {
@@ -3541,17 +3539,7 @@ progress {
 }
 @media (min-width: 992px) {
   .container-lg, .container-md, .container-sm, .container {
-    max-width: 960px;
-  }
-}
-@media (min-width: 1200px) {
-  .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 1140px;
-  }
-}
-@media (min-width: 1400px) {
-  .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 1320px;
+    max-width: 100%;
   }
 }
 .row {
@@ -6705,15 +6693,11 @@ textarea.form-control-lg {
 .navbar .header > .container-fluid,
 .navbar .header > .container-sm,
 .navbar .header > .container-md,
-.navbar .header > .container-lg,
-.navbar .header > .container-xl,
-.navbar .header > .container-xxl, .navbar > .container,
+.navbar .header > .container-lg, .navbar > .container,
 .navbar > .container-fluid,
 .navbar > .container-sm,
 .navbar > .container-md,
-.navbar > .container-lg,
-.navbar > .container-xl,
-.navbar > .container-xxl {
+.navbar > .container-lg {
   display: flex;
   flex-wrap: inherit;
   align-items: center;
@@ -17539,9 +17523,7 @@ progress {
 .container-fluid,
 .container-sm,
 .container-md,
-.container-lg,
-.container-xl,
-.container-xxl {
+.container-lg {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   width: 100%;
@@ -17563,17 +17545,7 @@ progress {
 }
 @media (min-width: 992px) {
   .container, .container-sm, .container-md, .container-lg {
-    max-width: 960px;
-  }
-}
-@media (min-width: 1200px) {
-  .container, .container-sm, .container-md, .container-lg, .container-xl {
-    max-width: 1140px;
-  }
-}
-@media (min-width: 1400px) {
-  .container, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
-    max-width: 1320px;
+    max-width: 100%;
   }
 }
 .row {
@@ -20859,15 +20831,11 @@ textarea.form-control-lg {
 .navbar .header > .container-fluid,
 .navbar .header > .container-sm,
 .navbar .header > .container-md,
-.navbar .header > .container-lg,
-.navbar .header > .container-xl,
-.navbar .header > .container-xxl, .navbar > .container,
+.navbar .header > .container-lg, .navbar > .container,
 .navbar > .container-fluid,
 .navbar > .container-sm,
 .navbar > .container-md,
-.navbar > .container-lg,
-.navbar > .container-xl,
-.navbar > .container-xxl {
+.navbar > .container-lg {
   display: flex;
   flex-wrap: inherit;
   align-items: center;
@@ -24038,15 +24006,11 @@ textarea.form-control-lg {
 .header > .container-fluid,
 .header > .container-sm,
 .header > .container-md,
-.header > .container-lg,
-.header > .container-xl,
-.header > .container-xxl, .header .navbar > .container,
+.header > .container-lg, .header .navbar > .container,
 .header .navbar > .container-fluid,
 .header .navbar > .container-sm,
 .header .navbar > .container-md,
-.header .navbar > .container-lg,
-.header .navbar > .container-xl,
-.header .navbar > .container-xxl {
+.header .navbar > .container-lg {
   display: flex;
   flex-wrap: inherit;
   align-items: center;
@@ -24056,18 +24020,14 @@ textarea.form-control-lg {
 .header .container-fluid:first-child,
 .header .container-sm:first-child,
 .header .container-md:first-child,
-.header .container-lg:first-child,
-.header .container-xl:first-child,
-.header .container-xxl:first-child {
+.header .container-lg:first-child {
   min-height: calc(var(--bs-header-min-height) - 2 * var(--bs-header-padding-y));
 }
 .header .container:nth-child(n+2),
 .header .container-fluid:nth-child(n+2),
 .header .container-sm:nth-child(n+2),
 .header .container-md:nth-child(n+2),
-.header .container-lg:nth-child(n+2),
-.header .container-xl:nth-child(n+2),
-.header .container-xxl:nth-child(n+2) {
+.header .container-lg:nth-child(n+2) {
   min-height: calc(var(--bs-subheader-min-height) - 2 * var(--bs-header-padding-y));
 }
 .header.header-sticky {
