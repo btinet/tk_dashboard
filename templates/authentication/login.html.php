@@ -34,10 +34,10 @@ $this->layout('_layout.minimal.html',
 
 
 <div class="row g-3 mb-3">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-lg-2">
 
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-lg-8">
 
         <div class="mt-2 mb-5 my-md-5">
             <h1 class="d-flex justify-content-start align-items-center">

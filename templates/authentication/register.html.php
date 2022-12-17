@@ -68,7 +68,7 @@ $this->layout('_layout.minimal.html',
                     <input type="email" class="form-control" id="email" name="email" value="<?=$userData?$userData['email']:false?>" placeholder="<?=$trans->getConfig('email')?>" required>
                     <label for="email"><?=$trans->getConfig('email')?></label>
                     <div class="invalid-feedback">
-                        Bitte gib deine Kennung an.
+                        Bitte gib deine E-Mail-Adresse an.
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@ $this->layout('_layout.minimal.html',
                     <input type="password" class="form-control" id="password" name="password" placeholder="<?=$trans->getConfig('password')?>" required>
                     <label for="password"><?=$trans->getConfig('password')?></label>
                     <div class="invalid-feedback">
-                        Bitte gib deine Kennung an.
+                        Bitte gib dein Kennwort an.
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@ $this->layout('_layout.minimal.html',
                     <input type="password" class="form-control" id="password_repeat" name="password_repeat" placeholder="<?=$trans->getConfig('password_repeat')?>" required>
                     <label for="password_repeat"><?=$trans->getConfig('password_repeat')?></label>
                     <div class="invalid-feedback">
-                        Bitte gib deine Kennung an.
+                        Bitte wiederhole dein Kennwort an.
                     </div>
                 </div>
             </div>
@@ -104,28 +104,40 @@ $this->layout('_layout.minimal.html',
                     <input type="text" class="form-control" id="first_name" name="first_name" value="<?=$userData?$userData['firstName']:false?>" placeholder="<?=$trans->getConfig('first_name')?>" required>
                     <label for="first_name"><?=$trans->getConfig('first_name')?></label>
                     <div class="invalid-feedback">
-                        Bitte gib deine Kennung an.
+                        Bitte gib deinen Vornamen an.
                     </div>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="last_name" name="last_name" value="<?=$userData?$userData['lastName']:false?>" placeholder="<?=$trans->getConfig('last_name')?>" required>
-                    <label for="first_name"><?=$trans->getConfig('last_name')?></label>
+                    <label for="last_name"><?=$trans->getConfig('last_name')?></label>
                     <div class="invalid-feedback">
-                        Bitte gib deine Kennung an.
+                        Bitte gib deinen Nachnamen an.
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="group_key" name="group_key" value="<?=$userData?$userData['groupKey']:false?>" placeholder="<?=$trans->getConfig('group_key')?>" required>
+                    <label for="group_key"><?=$trans->getConfig('group_key')?></label>
+                    <div class="invalid-feedback">
+                        Bitte gib deinen Gruppenschlüssel an.
                     </div>
                 </div>
             </div>
             <div class="col-12">
                 <label for="user_locale" class="form-label"><?=$trans->getConfig('user_locale')?></label>
-                <select class="form-select" id="user_locale" name="user_locale" aria-label="<?=$trans->getConfig('user_locale')?>">
-                    <option selected>auswählen</option>
+                <select class="form-select" id="user_locale" name="user_locale" aria-label="<?=$trans->getConfig('user_locale')?>" required>
+                    <option value="">auswählen</option>
                     <option value="de">Deutsch</option>
                     <option value="en">Englisch</option>
+                    <option value="fr">Français</option>
+                    <option value="ua">українська</option>
+                    <option value="tr">Türkçe</option>
                 </select>
                 <div class="invalid-feedback">
-                    Bitte gib deine Kennung an.
+                    Bitte gib deine bevorzugte Sprache an.
                 </div>
             </div>
             <div class="col-12">

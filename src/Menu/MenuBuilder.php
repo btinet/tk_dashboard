@@ -22,7 +22,7 @@ class MenuBuilder extends AbstractMenu
         $this
             ->add('home',NavigationType::class,[
                 'label' => 'overview',
-                'route' => 'app_index',
+                'route' => 'exam_index',
                 'attrib' => [
                     'class' => ['nav-link'],
                 ],

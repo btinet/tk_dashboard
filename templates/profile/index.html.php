@@ -256,7 +256,7 @@ $examCountMax = max($examCounts);
 
 <div class="row g-3 mb-3">
 
-    <div class="col-12 col-md-5">
+    <div class="col-12 col-lg-6">
         <div class="card shadow-sm">
             <div class="card-body">
                 <div>
@@ -266,7 +266,7 @@ $examCountMax = max($examCounts);
         </div>
     </div>
 
-    <div class="col-12 col-md-5 d-none d-md-block">
+    <div class="col-12 col-lg-6 d-none d-md-block">
         <div class="card shadow-sm">
             <div class="card-body">
                 <div>
@@ -277,7 +277,7 @@ $examCountMax = max($examCounts);
     </div>
 
 
-    <div class="col-12 col-md-2">
+    <div class="col-12">
         <div class="card text-bg-info text-white align-self-stretch h-100 shadow-sm">
             <div class="card-body">
                 <h1>Leitfragen gesamt</h1>
