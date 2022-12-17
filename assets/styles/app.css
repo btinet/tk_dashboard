@@ -29352,6 +29352,14 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.container-fit {
+  width: 100%;
+  padding-left: env(safe-area-inset-left, 16px);
+  padding-right: env(safe-area-inset-right, 16px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
 body {
   padding-top: 3.5rem;
 }

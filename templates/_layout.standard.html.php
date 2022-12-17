@@ -122,8 +122,8 @@ $this->layout('base.html',
             </div>
         <?php endif ?>
     </header>
-    <main id="main" class="flex-grow-1 fit">
-        <div class="container-fluid">
+    <main id="main" class="flex-grow-1">
+        <div class="container-fit">
         <?php if ($this->section('main')): ?>
         <div class="row h-100">
             <div class="col-12 col-lg-3 border-end py-3 px-0">
