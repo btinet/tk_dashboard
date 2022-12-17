@@ -123,7 +123,7 @@ $this->layout('base.html',
         <?php endif ?>
     </header>
     <main id="main" class="flex-grow-1 fit">
-        <div class="container-fluid">
+        <div class="container">
         <?php if ($this->section('main')): ?>
         <div class="row h-100">
             <div class="col-12 col-md-3 border-end py-3 px-0">
