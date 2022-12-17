@@ -36,7 +36,7 @@ $this->layout('base.html',
     ]);
 ?>
 
-    <header id="header" class="py-2 mb-0 border-bottom sticky-top shadow-sm">
+    <header id="header" class="py-2 mb-0 border-bottom sticky-top shadow-sm fit">
         <?php if ($this->section('header')): ?>
             <?=$this->section('header')?>
         <?php else: ?>
@@ -121,7 +121,7 @@ $this->layout('base.html',
             </div>
         <?php endif ?>
     </header>
-    <main id="main" class="flex-grow-1">
+    <main id="main" class="flex-grow-1 fit">
         <div class="container-fluid">
         <?php if ($this->section('main')): ?>
         <div class="row h-100">
@@ -168,16 +168,16 @@ $this->layout('base.html',
         <?php endif ?>
         </div>
     </main>
-<footer id="footer" class="mt-auto border-top text-bg-lighter">
-    <?php if ($this->section('footer')): ?>
-        <?=$this->section('footer')?>
-    <?php else: ?>
-        <div class="container">
-            <div class="py-3 d-flex justify-content-start align-items-center">
-                <a class="small me-2" target="_blank" href="https://github.com/btinet/tk_dashboard"><i class="fa fa-github me-1"></i>Github</a><?=$meta->get('footer_text')?>
+    <footer id="footer" class="mt-auto border-top text-bg-lighter fit">
+        <?php if ($this->section('footer')): ?>
+            <?=$this->section('footer')?>
+        <?php else: ?>
+            <div class="container">
+                <div class="py-3 d-flex justify-content-start align-items-center">
+                    <a class="small me-2" target="_blank" href="https://github.com/btinet/tk_dashboard"><i class="fa fa-github me-1"></i>Github</a><?=$meta->get('footer_text')?>
+                </div>
             </div>
-        </div>
-    <?php endif ?>
-</footer>
+        <?php endif ?>
+    </footer>
 <?php $this->stop() ?>
 
