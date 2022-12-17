@@ -42,18 +42,19 @@ $this->layout('base.html',
         <?php else: ?>
             <div class="container-fluid">
                 <div class="row g-3">
-                    <div class="col-5 col-md-3">
+                    <div class="col-6 col-md-3">
                         <div class="d-flex justify-content-start align-items-center h-100">
 
-                                <a class="btn btn-ghost-light text-dark d-block me-1 d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                                    <i class="fa-solid fa-fw fa-navicon"></i>
-                                </a>
+
                             <div class="btn-group">
                                 <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('exam_index')?>">
                                     <i class="fa-solid fa-fw fa-house"></i>
                                 </a>
+                                <a class="btn btn-ghost-light text-dark d-block me-1 d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <i class="fa-solid fa-fw fa-navicon"></i>
+                                </a>
                                 <?php if($session->UserHasPermission('create_key_question')):?>
-                                    <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('kq_new_start')?>">
+                                    <a class="btn btn-ghost-light text-dark" href="<?=$response->generateUrlFromRoute('kq_new_start')?>">
                                         <i class="fa-solid fa-fw fa-plus"></i>
                                     </a>
                                 <?php endif;?>
@@ -106,7 +107,7 @@ $this->layout('base.html',
                             </div>
                         </div>
                     </div>
-                    <div class="col-7 col-md-9">
+                    <div class="col-6 col-md-9">
                         <div class="d-flex align-items-center">
                             <form class="w-100" role="search" method="post" action="<?=$response->generateUrlFromRoute('app_search')?>">
                                 <div class="input-group">
