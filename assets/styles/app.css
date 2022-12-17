@@ -29396,4 +29396,12 @@ td {
   padding-right: env(safe-area-inset-right, 16px);
 }
 
+.fit-s {
+  padding-left: env(safe-area-inset-left, 16px);
+}
+
+.fit-e {
+  padding-right: env(safe-area-inset-right, 16px);
+}
+
 /*# sourceMappingURL=app.css.map */
