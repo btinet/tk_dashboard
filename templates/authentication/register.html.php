@@ -34,10 +34,10 @@ $this->layout('_layout.minimal.html',
 
 
 <div class="row g-3 mb-3">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-lg-2">
 
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-lg-8">
 
         <?php if($lastError): ?>
             <div class="toast-container position-fixed top-0 end-0 p-3" style="position: absolute; z-index: 10000">
