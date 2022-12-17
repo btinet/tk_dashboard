@@ -47,10 +47,10 @@ $this->layout('base.html',
 
 
                             <div class="btn-group">
-                                <a class="btn btn-ghost-light text-dark d-none d-md-block" href="<?=$response->generateUrlFromRoute('exam_index')?>">
+                                <a class="btn btn-ghost-light text-dark d-none d-lg-block" href="<?=$response->generateUrlFromRoute('exam_index')?>">
                                     <i class="fa-solid fa-fw fa-house"></i>
                                 </a>
-                                <a class="btn btn-ghost-light text-dark d-block me-1 d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                <a class="btn btn-ghost-light text-dark d-block me-1 d-lg-none" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                                     <i class="fa-solid fa-fw fa-navicon"></i>
                                 </a>
                                 <?php if($session->UserHasPermission('create_key_question')):?>
