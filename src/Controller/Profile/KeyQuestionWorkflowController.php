@@ -75,14 +75,12 @@ class KeyQuestionWorkflowController extends AbstractController
                     $attribs = $supervisor->getRoleAtrribs();
                     $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
                 }
-
-                $supervisors = new ArrayObject($supervisorList);
-                $supervisors->asort();
+                uasort($supervisorList,Array ( $this, 'sorting'));
             }
 
             return $this->render('approval_process/new_start_form.html',[
                 'subjects' => $schoolSubjects,
-                'supervisors' => $supervisors,
+                'supervisors' => $supervisorList,
                 'isNew' => true
             ]);
         }
@@ -110,19 +108,22 @@ class KeyQuestionWorkflowController extends AbstractController
                     $attribs = $supervisor->getRoleAtrribs();
                     $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
                 }
-
-                $supervisors = new ArrayObject($supervisorList);
-                $supervisors->asort();
+                uasort($supervisorList,Array ( $this, 'sorting'));
             }
 
             return $this->render('approval_process/claim_start_form.html',[
                 'exam' => $exam,
-                'supervisors' => $supervisors,
+                'supervisors' => $supervisorList,
                 'isNew' => true
             ]);
         }
         $this->setFlash('key_question_locked','danger');
         $this->response->redirectToRoute(302,$this->generateUrlFromRoute('exam_show',[$exam->getId()]),true);
+    }
+
+    protected function sorting($a,$b): int
+    {
+        return strcmp($a->getLastName(true),$b->getLastName(true));
     }
 
     /**
@@ -146,13 +147,12 @@ class KeyQuestionWorkflowController extends AbstractController
                         $supervisorList[] = ($attribs['supervise']['supervise_enable'] and $attribs['supervise']['pupil_amount'] < $count = $userExamRepository->countSupervisorLoad($supervisor->getId()))?:$supervisor;
                     }
 
-                    $supervisors = new ArrayObject($supervisorList);
-                    $supervisors->asort();
+                    uasort($supervisorList,Array ( $this, 'sorting'));
                 }
 
                 return $this->render('approval_process/claim_start_form.html',[
                     'exam' => $exam,
-                    'supervisors' => $supervisors,
+                    'supervisors' => $supervisorList,
                     'isNew' => false
                 ]);
             }
