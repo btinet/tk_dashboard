@@ -71,6 +71,7 @@ $theme-colors: (
         "dark":       $black,
         "black":       $full-black,
         "white":      $white,
+        "side":       $body-bg
 );
 
 #header,.offcanvas,.modal-header,.modal-footer, .toast{
@@ -122,9 +123,8 @@ $container-max-widths: (
 @import "../../node_modules/bootstrap-steps/dist/bootstrap-steps.min.css";
 @import "../../node_modules/@coreui/coreui/scss/coreui";
 
-
 body{
-  padding-top: 3.5rem;
+  padding-top: 3.2rem;
 }
 
 .sortable-theme-bootstrap{

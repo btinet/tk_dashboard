@@ -40,7 +40,7 @@ $this->layout('base.html',
         <?php if ($this->section('header')): ?>
             <?=$this->section('header')?>
         <?php else: ?>
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row g-3">
                     <div class="col-6 col-md-3">
                         <div class="d-flex justify-content-start align-items-center h-100">
@@ -122,15 +122,15 @@ $this->layout('base.html',
             </div>
         <?php endif ?>
     </header>
-    <main id="main" class="flex-grow-1 fit">
+    <main id="main" class="flex-grow-1 bg-lighter fit">
         <div class="container">
         <?php if ($this->section('main')): ?>
         <div class="row h-100">
-            <div class="col-12 col-lg-3 border-end py-3 px-0">
+            <div class="col-12 col-lg-3 border-end py-3 px-0 d-none d-lg-block bg-side">
                 <?php if($user = $session->getUser()): ?>
                     <div class=" sticky-top mb-3" style="top:60px;z-index: 5;">
                     <div class="col-12">
-                        <div class="d-none d-lg-block">
+                        <div class="">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">Fächer</div>
                                 <a class="btn btn-sm btn-light border d-inline-block d-md-none" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -160,7 +160,7 @@ $this->layout('base.html',
                 </div>
                 <?php endif;?>
             </div>
-            <div class="col-12 col-lg-9 bg-lighter align-content-stretch py-3">
+            <div class="col-12 col-lg-9 align-content-stretch py-3">
                 <?=$this->section('main')?>
             </div>
         </div>
