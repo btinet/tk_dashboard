@@ -17,6 +17,7 @@
  * @var int $currentPage current offset
  * @var string $text
  * @var array $file
+ * @var Object $adminMenu Set of menu objects
  */
 
 
@@ -25,9 +26,10 @@ use Core\Component\SessionComponent\Session;
 /**
  * Übergeordnetes Template
  */
-$this->layout('_layout.standard.html',
+$this->layout('_layout.admin.html',
     [
-        'current_school_subject_id' => 0
+        'current_school_subject_id' => 0,
+        'adminMenu' => $adminMenu
     ]
 );
 

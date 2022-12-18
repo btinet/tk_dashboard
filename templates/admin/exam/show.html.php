@@ -13,18 +13,21 @@
  * @var RolePermission $permissions RolePermission object
  * @var array|false $userData Formulardaten des Benutzers
  * @var array $table Tabledata for current entity
+ * @var Object $adminMenu Set of menu objects
  */
 
 
-use App\Entity\RolePermission;
 use App\Entity\Exam;
+use App\Entity\RolePermission;
+use Core\Component\SessionComponent\Session;
 
 /**
  * Übergeordnetes Template
  */
-$this->layout('_layout.standard.html',
+$this->layout('_layout.admin.html',
     [
-        'current_school_subject_id' => 0
+        'current_school_subject_id' => 0,
+        'adminMenu' => $adminMenu
     ]
 );
 

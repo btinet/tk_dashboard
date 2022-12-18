@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Exam;
 use App\Entity\SchoolSubject;
+use App\Entity\UserGroup;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
 use Core\Component\MenuComponent\AbstractMenu;
@@ -41,8 +43,12 @@ class AdminController extends AbstractController
     {
         $this->adminMenu->createMenu();
 
+        $examCount = $this->repository->countDistinctBy(Exam::class,'key_question');
+
         return $this->render('admin/index.html',[
-            'adminMenu' => $this->adminMenu->render()
+            'adminMenu' => $this->adminMenu->render(),
+            'examCount' => $examCount,
+            'groupEntity' => $this->repository->findAll(UserGroup::class)
         ]);
     }
 

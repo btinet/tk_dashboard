@@ -8,12 +8,12 @@
 use Core\Component\ConfigComponent\Config;
 
 ?>
-<div class="list-group">
+<div class="list-group list-group-flush border-top border-bottom">
     <?php if($objects): ?>
         <?php foreach ($objects as $object) : ?>
             <a
                 href="<?= $object->getRoute()?>"
-                class="
+                class="bg-gradient
                 <?php foreach($object->getAttrib() as $class => $value) {
                     echo implode(' ', $value);
                 }

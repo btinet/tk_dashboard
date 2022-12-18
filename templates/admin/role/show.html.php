@@ -13,18 +13,21 @@
  * @var RolePermission $permissions RolePermission object
  * @var array|false $userData Formulardaten des Benutzers
  * @var array $table Tabledata for current entity
+ * @var Object $adminMenu Set of menu objects
  */
 
 
 use App\Entity\RolePermission;
 use App\Entity\UserRole;
+use Core\Component\SessionComponent\Session;
 
 /**
  * Übergeordnetes Template
  */
-$this->layout('_layout.standard.html',
+$this->layout('_layout.admin.html',
     [
-        'current_school_subject_id' => 0
+        'current_school_subject_id' => 0,
+        'adminMenu' => $adminMenu
     ]
 );
 
@@ -55,32 +58,23 @@ $this->layout('_layout.standard.html',
 </div>
 
 <div class="row g-3 mb-3">
-    <div></div>
-    <div class="col-12 col-md-3">
 
-        <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Details von <?=$object->getLabel()?></div>
-
-        <div class="mb-3 d-flex justify-content-start">
-            <a href="<?=$response->generateUrlFromRoute('admin_role_index')?>"  class="btn btn-primary me-2 w-100 d-block">Zur Übersicht</a>
-        </div>
-
+    <div class="col-12">
         <h1>Rolleneigenschaften</h1>
 
-        <div class="">
-            <form class="row row-cols-1 g-3">
-                <div>
-                    <label for="label" class="form-label"><?=$trans->getConfig('label')?></label>
-                    <input id="label" type="text" readonly disabled class="form-control" value="<?=$object->getLabel()?>">
-                </div>
-                <div>
-                    <label for="description" class="form-label"><?=$trans->getConfig('description')?></label>
-                    <textarea id="description" readonly disabled class="form-control"><?=$object->getDescription()?></textarea>
-                </div>
-            </form>
-        </div>
+        <form class="row row-cols-1 g-3">
+            <div>
+                <label for="label" class="form-label"><?=$trans->getConfig('label')?></label>
+                <input id="label" type="text" readonly disabled class="form-control" value="<?=$object->getLabel()?>">
+            </div>
+            <div>
+                <label for="description" class="form-label"><?=$trans->getConfig('description')?></label>
+                <textarea id="description" readonly disabled class="form-control"><?=$object->getDescription()?></textarea>
+            </div>
+        </form>
     </div>
 
-    <div class="col-12 col-md-9">
+    <div class="col-12">
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('permissions')?></div>
 
         <div class="mb-3 d-flex justify-content-start">

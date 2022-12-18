@@ -32,7 +32,7 @@ switch ($isNew)
 /**
  * Übergeordnetes Template
  */
-$this->layout('_layout.standard.html',
+$this->layout('_layout.profile.html',
     [
         'current_school_subject_id' => $current_school_subject_id
     ]
@@ -153,7 +153,7 @@ $this->layout('_layout.standard.html',
                     <button type="submit" form="claim_form" class="btn btn-primary w-100 d-block">Leitfrage einreichen</button>
                 </div>
                 <div class="col-12 col-md-6">
-                    <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="btn btn-light d-block">abbrechen</a>
+                    <a href="<?=$response->generateUrlFromRoute('exam_show',[$exam->getId()])?>" class="btn btn-light border-1 border-secondary d-block">abbrechen</a>
                 </div>
 
             </div>

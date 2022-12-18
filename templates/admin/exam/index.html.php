@@ -15,6 +15,7 @@
  * @var array $table Tabledata for current entitx
  * @var int $rows row count of current entity
  * @var int $currentPage current offset
+ * @var Object $adminMenu Set of menu objects
  */
 
 
@@ -23,9 +24,10 @@ use Core\Component\SessionComponent\Session;
 /**
  * Übergeordnetes Template
  */
-$this->layout('_layout.standard.html',
+$this->layout('_layout.admin.html',
     [
-        'current_school_subject_id' => 0
+        'current_school_subject_id' => 0,
+        'adminMenu' => $adminMenu
     ]
 );
 
@@ -52,22 +54,9 @@ $this->layout('_layout.standard.html',
 </div>
 
 <div class="row g-3 mb-3">
-    <div></div>
-    <div class="col-12 col-md-3">
-        <div class="d-none d-md-block z-10 sticky-top sticky-top-md" style="top: 70px;">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">Menü</div>
-            </div>
-
-            <div class="collapse show" id="collapseExample">
-                <?php $this->insert('app/list_group.html',['objects'=>$adminMenu, 'response'=>$response,]);
-                ?>
-            </div>
-        </div>
-    </div>
 
 
-    <div class="col-12 col-md-9">
+    <div class="col-12">
         <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3"><?=$trans->getConfig('exams')?></div>
 
         <div class="mb-3 d-flex justify-content-start">

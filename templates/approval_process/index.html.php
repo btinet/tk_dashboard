@@ -23,7 +23,7 @@ use Core\Component\SessionComponent\Session;
 /**
  * Übergeordnetes Template
  */
-$this->layout('_layout.standard.html',
+$this->layout('_layout.profile.html',
     [
         'current_school_subject_id' => 0
     ]
