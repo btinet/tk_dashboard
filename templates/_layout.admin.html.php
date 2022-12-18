@@ -36,7 +36,6 @@ $this->layout('base.html',
         'current_school_subject_id' => $current_school_subject_id
     ]);
 ?>
-
     <header id="header" class="py-2 mb-0 border-bottom sticky-top shadow-sm fit">
         <?php if ($this->section('header')): ?>
             <?=$this->section('header')?>
@@ -127,13 +126,13 @@ $this->layout('base.html',
         <div class="container h-100">
         <?php if ($this->section('main')): ?>
         <div class="row h-100">
-            <div class="col-12 col-lg-3 border-end py-3 px-0 d-none d-lg-block bg-side">
-                <div class=" sticky-top mb-3" style="top:60px;z-index: 5;">
+            <div class="col-12 col-lg-3 border-end py-4 px-0 d-none d-lg-block bg-side">
+                <div class=" sticky-top mb-3" style="top:70px;z-index: 5;">
                     <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Administration</div>
                     <?php $this->insert('app/list_group.html',['objects'=>$adminMenu, 'response'=>$response,]); ?>
                 </div>
             </div>
-            <div class="col-12 col-lg-9 align-content-stretch py-3">
+            <div class="col-12 col-lg-9 align-content-stretch py-4">
                 <?=$this->section('main')?>
             </div>
         </div>

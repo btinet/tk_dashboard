@@ -123,12 +123,12 @@ $this->layout('base.html',
         <?php endif ?>
     </header>
     <main id="main" class="flex-grow-1 bg-lighter fit">
-        <div class="container">
+        <div class="container h-100">
         <?php if ($this->section('main')): ?>
         <div class="row h-100">
-            <div class="col-12 col-lg-3 border-end py-3 px-0 d-none d-lg-block bg-side">
+            <div class="col-12 col-lg-3 border-end py-4 px-0 d-none d-lg-block bg-side">
                 <?php if($user = $session->getUser()): ?>
-                    <div class=" sticky-top mb-3" style="top:60px;z-index: 5;">
+                    <div class=" sticky-top mb-3" style="top:70px;z-index: 5;">
                     <div class="col-12">
                         <div class="">
                             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -160,7 +160,7 @@ $this->layout('base.html',
                 </div>
                 <?php endif;?>
             </div>
-            <div class="col-12 col-lg-9 align-content-stretch py-3">
+            <div class="col-12 col-lg-9 align-content-stretch py-4">
                 <?=$this->section('main')?>
             </div>
         </div>
