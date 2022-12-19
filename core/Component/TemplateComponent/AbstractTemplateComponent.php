@@ -28,6 +28,7 @@ abstract class AbstractTemplateComponent
      */
     private ReflectionClass $reflectionClass;
     private ReflectionProperty $reflectionProperty;
+
     private $entity;
 
     public function __construct(View $view)
