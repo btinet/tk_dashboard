@@ -93,7 +93,13 @@ Title: Titel
 Topic: Thema
 topics: Themengruppen
 Topics: Themengruppen
+users: Benutzer
+Users: Benutzer
 User: Benutzer
+Username: Kennung
+FirstName: Vorname
+LastName: Nachname
+Email: E-Mail-Adresse
 Year: Jahr
 overview: Übersicht
 data_import: Datenimport

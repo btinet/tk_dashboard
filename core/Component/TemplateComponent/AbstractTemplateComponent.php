@@ -23,6 +23,9 @@ abstract class AbstractTemplateComponent
      */
     protected array $data;
 
+    /**
+     * @var ReflectionClass
+     */
     private ReflectionClass $reflectionClass;
     private ReflectionProperty $reflectionProperty;
     private $entity;

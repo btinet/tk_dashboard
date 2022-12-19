@@ -18,7 +18,7 @@ use Core\Component\HttpComponent\Response;
         <tr>
             <td></td>
             <?php foreach ($fields as $column): ?>
-                <?php if($column['is_header']):?>
+                <?php if(isset($column['is_header']) and $column['is_header']):?>
                     <th><?=$trans->getConfig($column['label']) ?? $column['label'] ?></th>
                     <?php else: ?>
                         <td><?=$trans->getConfig($column['label']) ?? $column['label']?></td>
@@ -40,16 +40,17 @@ use Core\Component\HttpComponent\Response;
                             <?php
                             $columnValue = null;
                             $getter = "get{$column['label']}";
+                            $parameter = (isset($column['parameter']))?$column['parameter']:false;
                             switch ($column['format'])
                             {
                                 case 'int':
-                                    $columnValue = intval($item->$getter());
+                                    $columnValue = intval($item->$getter($parameter));
                                     break;
                                 case 'year':
-                                    $columnValue = date("Y", mktime(0, 0, 0, 1, 1, $item->$getter()));
+                                    $columnValue = date("Y", mktime(0, 0, 0, 1, 1, $item->$getter($parameter)));
                                     break;
                                 default:
-                                    $columnValue = $item->$getter();
+                                    $columnValue = $item->$getter($parameter);
                                     break;
                             }
                             ?>

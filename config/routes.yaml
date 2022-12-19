@@ -89,6 +89,12 @@ admin_role_add_permission:
   method: 'addPermission'
   request: 'post'
 
+admin_user_index:
+  expression: '/admin/user'
+  controller: 'App\Controller\Admin\UserCrudController'
+  method: 'index'
+  request: ['get','post']
+
 admin_group_index:
   expression: '/admin/group'
   controller: 'App\Controller\Admin\UserGroupCrudController'

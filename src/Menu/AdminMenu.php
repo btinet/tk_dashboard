@@ -97,6 +97,17 @@ class AdminMenu extends AbstractMenu
             );
         }
 
+        if($this->HideUnlessHasPermission('show_user'))
+        {
+            $this->add('users',NavigationType::class,[
+                'label' => 'users',
+                'route' => 'admin_user_index',
+                'attrib' => [
+                    'class' => ['list-group-item list-group-item-action py-3 lh-sm'],
+                ],
+            ]);
+        }
+
         if($this->HideUnlessHasPermission('show_role'))
         {
             $this->add('roles',NavigationType::class,[
