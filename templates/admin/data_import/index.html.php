@@ -46,7 +46,7 @@ $this->layout('_layout.admin.html',
                         <div class="rounded-3 border border-2 p-3 bg-lighter bg-gradient shadow-sm d-flex justify-content-start align-items-center">
                             <i class="fa-solid fa-file-csv fa-2x me-2"></i>
                             <span>
-                                Vorlage <a href="<?=$response->generateUrlFromString('/assets/uploads/vorlage_leitfragen.csv')?>" download>vorlage_leitfragen.csv</a> herunterladen.
+                                Vorlage <a href="<?=$response->generateUrlFromString('/uploads/vorlage_leitfragen.csv')?>" download>vorlage_leitfragen.csv</a> herunterladen.
                             </span>
                         </div>
                         </div>
