@@ -48,9 +48,10 @@ final class User
     }
 
     /**
-     * @return string|null
+     * @param bool $decrypt if parameter is true, first name will be decrypted.
+     * @return string|null first name or null if not set.
      */
-    public function getFirstName($decrypt = false): ?string
+    public function getFirstName(bool $decrypt = false): ?string
     {
         $firstName = $this->firstName;
         if($decrypt)
@@ -61,8 +62,8 @@ final class User
     }
 
     /**
-     * @param string|null $firstName
-     * @return User
+     * @param string|null $firstName sets first name of current user object.
+     * @return User user object to enable method chaining.
      */
     public function setFirstName(?string $firstName): User
     {
@@ -71,9 +72,10 @@ final class User
     }
 
     /**
-     * @return string|null
+     * @param bool $decrypt if parameter is true, last name will be decrypted.
+     * @return string|null last name or null if not set.
      */
-    public function getLastName($decrypt = false): ?string
+    public function getLastName(bool $decrypt = false): ?string
     {
         $lastName = $this->lastName;
         if($decrypt)
@@ -84,8 +86,8 @@ final class User
     }
 
     /**
-     * @param string|null $lastName
-     * @return User
+     * @param string|null $lastName sets last name of current user object.
+     * @return User user object to enable method chaining.
      */
     public function setLastName(?string $lastName): User
     {
@@ -94,9 +96,10 @@ final class User
     }
 
     /**
+     * @param bool $decrypt
      * @return string
      */
-    public function getUsername($decrypt = false): string
+    public function getUsername(bool $decrypt = false): string
     {
         $username = $this->username;
         if($decrypt)
@@ -135,9 +138,10 @@ final class User
     }
 
     /**
+     * @param bool $decrypt
      * @return string
      */
-    public function getEmail($decrypt = false): string
+    public function getEmail(bool $decrypt = false): string
     {
         $email = $this->email;
         if($decrypt)

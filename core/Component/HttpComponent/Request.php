@@ -53,7 +53,7 @@ class Request
 
     /**
      * @param string $FormFieldName
-     * @return false|mixed
+     * @return false|array
      */
     public function getFieldAsArray(string $FormFieldName)
     {

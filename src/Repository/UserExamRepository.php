@@ -9,6 +9,12 @@ use PDOException;
 class UserExamRepository extends AbstractRepositoryFactory
 {
 
+    /**
+     * @param int $userExamId
+     * @param array|string[] $sortBy
+     * @param string $entity
+     * @return mixed|string
+     */
     public function joinStatusByUserExamId(int $userExamId, array $sortBy = ['es.created'=>'desc'],string $entity = ExamStatus::class)
     {
         try {

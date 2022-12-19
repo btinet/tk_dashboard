@@ -123,7 +123,11 @@ class KeyQuestionWorkflowController extends AbstractController
 
     protected function sorting($a,$b): int
     {
-        return strcmp($a->getLastName(true),$b->getLastName(true));
+        if($a instanceof User and $b instanceof User)
+        {
+            return strcmp($a->getLastName(true),$b->getLastName(true));
+        }
+        return 0;
     }
 
     /**

@@ -158,10 +158,10 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * @param string $route
-     * @param array|null $mandatory
-     * @param null $anchor
-     * @return string
+     * @param string $route the name of the route defined in config.
+     * @param array|null $mandatory the needed route parameters (optional).
+     * @param null $anchor the needed anchor (optional).
+     * @return string url including protocol, host, request uri and optional anchor.
      */
     public function generateUrlFromRoute(string $route, array $mandatory = null, $anchor = null): string
     {
@@ -177,7 +177,7 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * @return AbstractRepositoryFactory
+     * @return AbstractRepositoryFactory the repository factory to build sql requests.
      */
     public function getRepositoryManager(): AbstractRepositoryFactory
     {

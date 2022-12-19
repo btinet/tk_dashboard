@@ -93,7 +93,7 @@ final class Exam
     }
 
     /**
-     * @return array|false|object|stdClass|string
+     * @return array|false|object|string
      */
     public function getTopic()
     {
