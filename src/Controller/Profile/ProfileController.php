@@ -11,6 +11,7 @@ use App\Entity\UserRoleHasRolePermission;
 use App\Entity\UserRoleHasUser;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Menu\ProfileMenu;
 use App\Repository\UserRoleRepository;
 use App\Type\TableType;
 use Core\Component\DataStorageComponent\EntityManager;
@@ -47,6 +48,10 @@ class ProfileController extends AbstractController
 
     public function index(): string
     {
+
+        $profileMenu = new ProfileMenu($this->session->getUser());
+        $profileMenu->createMenu();
+
         $foreignExams = false;
         $user = $this->session->getUser();
         $attribs = [];
@@ -76,7 +81,6 @@ class ProfileController extends AbstractController
                 }
             }
 
-
         }
 
         $examCount = $this->repository->countDistinctBy(Exam::class,'key_question');
@@ -86,11 +90,29 @@ class ProfileController extends AbstractController
             'userExam' => $userExam,
             'foreignExams' => $foreignExams,
             'examCount' => $examCount,
-            'attribs' => $attribs
+            'attribs' => $attribs,
+            'menu' => $profileMenu->render()
         ]);
     }
 
-    public function saveSettings()
+    /**
+     * @param int $userExamId id of current user exam
+     * @return string html template
+     */
+    public function showExam(int $userExamId): string
+    {
+        $profileMenu = new ProfileMenu($this->session->getUser());
+        $profileMenu->createMenu();
+
+        $exam = $this->repository->find(UserHasExam::class,$userExamId);
+
+        return $this->render('profile/show_exam.html',[
+            'exam' => $exam,
+            'menu' => $profileMenu->render()
+        ]);
+    }
+
+    public function saveSettings(): void
     {
         if($this->request->isFormSubmitted() and $this->request->isPostRequest())
         {

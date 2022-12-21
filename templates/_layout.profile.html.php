@@ -11,12 +11,17 @@
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var null|int $current_school_subject_id Id des aktuellen Schulfachs
  * @var object $adminMenu Admin Menu
+ * @var ProfileMenu $menu
+ * @var AbstractConfig $trans
  */
 
 /**
  * Übergeordnetes Template
  */
 
+use App\Menu\ProfileMenu;
+use Core\Component\ConfigComponent\AbstractConfig;
+use Core\Component\MenuComponent\AbstractMenuType;
 use Core\Component\SessionComponent\Session;
 
 $this->layout('base.html',
@@ -130,7 +135,21 @@ $this->layout('base.html',
         <div class="row h-100">
             <div class="col-12 col-lg-3 border-end py-4 px-0 d-none d-lg-block bg-side">
                 <div class=" sticky-top mb-3" style="top:70px;z-index: 5;">
-                    <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Informationen</div>
+
+                    <div class="list-group list-group-flush border-top border-bottom mb-3">
+                        <?php foreach ($menu as $item): ?>
+                            <?php if($item instanceof AbstractMenuType):?>
+                            <?php $item->setAttrib('class','bg-gradient') ?>
+                                <a href="<?= $item->getRoute()?>"
+                                <?php foreach($item->getAttrib() as $attrib => $value): ?>
+                                    <?=$attrib?>="<?=implode(' ',$value)?>"
+                                <?php endforeach; ?>
+                                >
+                                    <?= $trans->getConfig($item->getLabel()) ?>
+                                </a>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
                     <!-- Sidebar /-->
                     <div class="container">
                         <div class="row g-3">

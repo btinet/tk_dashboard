@@ -128,7 +128,6 @@ $this->layout('base.html',
         <div class="row h-100">
             <div class="col-12 col-lg-3 border-end py-4 px-0 d-none d-lg-block bg-side">
                 <div class=" sticky-top mb-3" style="top:70px;z-index: 5;">
-                    <div class="h6 fw-light text-muted text-uppercase mb-2 ps-3">Administration</div>
                     <?php $this->insert('app/list_group.html',['objects'=>$adminMenu, 'response'=>$response,]); ?>
                 </div>
             </div>

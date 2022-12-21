@@ -18,9 +18,12 @@
  * @var int $rows row count of current entity
  * @var int $currentPage current offset
  * @var array $attribs user_role attributes and data
+ * @var ProfileMenu $menu
  */
 
 
+use App\Menu\ProfileMenu;
+use Core\Component\MenuComponent\AbstractMenu;
 use Core\Component\SessionComponent\Session;
 
 /**
@@ -28,7 +31,8 @@ use Core\Component\SessionComponent\Session;
  */
 $this->layout('_layout.profile.html',
     [
-        'current_school_subject_id' => 0
+        'current_school_subject_id' => 0,
+        'menu' =>   $menu
     ]
 );
 
@@ -187,7 +191,7 @@ $examCountMax = max($examCounts);
                                         <span class="badge text-bg-primary"><?= $exam->getMainSchoolSubject()->getLabel() ?></span>
                                         <span class="badge text-bg-light"><?= $exam->getSecondarySchoolSubject()->getLabel() ?></span>
                                     </div>
-                                    <a href="#" class="fw-bolder"><?= $exam->getKeyQuestion() ?></a>
+                                    <a href="<?=$response->generateUrlFromRoute('user_profile_show_exam',[$exam->getId()])?>" class="fw-bolder"><?= $exam->getKeyQuestion() ?></a>
                                     <div class="small my-2 text-muted">am <?= $date->format('d.m.Y') ?> erstellt</div>
                                     <span class="text-bg-info badge"><?= $trans->getConfig($exam->getStatus()) ?></span>
                                     <span class="text-bg-light border badge"><?= $exam->getStatus()->getInfo() ?></span>

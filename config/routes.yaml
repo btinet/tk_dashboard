@@ -179,6 +179,12 @@ user_profile_index:
   method: 'index'
   request: 'get'
 
+user_profile_show_exam:
+  expression: '/profile/exam/([0-9]*)/show'
+  controller: 'App\Controller\Profile\ProfileController'
+  method: 'showExam'
+  request: 'get'
+
 user_profile_save_settings:
   expression: '/profile/settings/save'
   controller: 'App\Controller\Profile\ProfileController'

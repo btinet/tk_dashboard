@@ -6,7 +6,10 @@
 * @var object $mainMenu Hauptnavigation
 * @var object $schoolSubjects Schulfächer
 * @var int $current_school_subject_id Id des aktuellen Schulfachs
+* @var AbstractConfig $trans
 */
+
+use Core\Component\ConfigComponent\AbstractConfig;
 
 ?>
 

@@ -132,7 +132,6 @@ $this->layout('base.html',
                     <div class="col-12">
                         <div class="">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="h6 fw-light text-muted text-uppercase mb-0 ps-3">Fächer</div>
                                 <a class="btn btn-sm btn-light border d-inline-block d-md-none" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     Fächer ein-/ausblenden
                                 </a>
@@ -140,6 +139,7 @@ $this->layout('base.html',
                             <div class="collapse show" id="collapseExample">
                                 <div class="list-group list-group-flush border-top border-bottom">
                                     <?php foreach($schoolSubjects as $subject): ?>
+
                                         <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active bg-gradient' : '';?>
                                         <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center" style="border-left-style: solid;border-left-width: 8px!important;border-left-color: <?=$subject->getColor()?>">
                                             <div class=" d-flex justify-content-between align-items-center">
