@@ -71,8 +71,8 @@ class ExamStatusCrudController extends AbstractController
             ->setData($this->getRepositoryManager()->findAll(ExamStatus::class,['label'=>'asc']))
             ->setCaption('Prüfungsstatus')
             ->addIdentifier('label', 'admin_exam_status_index', 'id')
-            ->add('created')
-            ->add('updated');
+            ->add('created','date')
+            ->add('updated','date');
 
         return $this->render('admin/exam_status/index.html', [
             'adminMenu' => $this->adminMenu->render(),

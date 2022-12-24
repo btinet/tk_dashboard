@@ -49,6 +49,15 @@ use Core\Component\HttpComponent\Response;
                                 case 'year':
                                     $columnValue = date("Y", mktime(0, 0, 0, 1, 1, $item->$getter($parameter)));
                                     break;
+                                case 'date':
+                                    $columnValue = ($item->$getter()) ? $item->$getter()->format('d.m.Y') : null;
+                                    break;
+                                case 'time':
+                                    $columnValue = ($item->$getter()) ? $item->$getter()->format('h:i') : null;
+                                    break;
+                                case 'datetime':
+                                    $columnValue = ($item->$getter()) ? $item->$getter()->format('d.m.Y h:i') : null;
+                                    break;
                                 default:
                                     $columnValue = $item->$getter($parameter);
                                     break;

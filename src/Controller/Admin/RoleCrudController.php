@@ -52,8 +52,8 @@ class RoleCrudController extends AbstractController
             ->setCaption('Rollenübersicht')
             ->addIdentifier('label','admin_role_show','id')
             ->add('description')
-            ->add('created')
-            ->add('updated')
+            ->add('created','date')
+            ->add('updated','date')
         ;
 
         if($this->request->isPostRequest() and $this->request->isFormSubmitted())

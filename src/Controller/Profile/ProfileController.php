@@ -3,6 +3,7 @@
 namespace App\Controller\Profile;
 
 use App\Entity\Exam;
+use App\Entity\ExamHasExamStatus;
 use App\Entity\RolePermission;
 use App\Entity\SchoolSubject;
 use App\Entity\UserHasExam;
@@ -108,7 +109,7 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/show_exam.html',[
             'exam' => $exam,
-            'menu' => $profileMenu->render()
+            'menu' => $profileMenu->render(),
         ]);
     }
 

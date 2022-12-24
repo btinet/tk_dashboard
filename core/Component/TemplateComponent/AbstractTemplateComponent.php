@@ -47,7 +47,7 @@ abstract class AbstractTemplateComponent
             }
 
         } catch (ReflectionException $e) {
-            die('Fehler');
+            die($e->getMessage());
         }
 
         return $this;

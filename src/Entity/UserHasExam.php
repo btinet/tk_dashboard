@@ -41,6 +41,7 @@ final class UserHasExam
     public function getSecondarySchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->secondarySubjectId);}
     public function getStatus(){return $this->repository->joinStatusByUserExamId($this->id);}
     public function getSupervisor(){return $this->repository->find(User::class,$this->supervisorId);}
+    public function getAllExamStatus(){return $this->repository->findBy(ExamHasExamStatus::class,['userExamId' => $this->id],['created'=>'desc']);}
 
     /**
      * Entity-Getter

@@ -75,8 +75,7 @@ $examCountMax = max($examCounts);
                     <span class="small mt-2">E-Mail-Adresse</span>
                     <span class="text-truncate"><?= $session->getUser()->getEmail(true) ?></span>
                     <span class="small mt-2">Mitglied seit</span>
-                    <?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $session->getUser()->getCreated()) ?>
-                    <?= $date->format('d.m.Y') ?>
+                    <?= $session->getUser()->getCreated()->format('d.m.Y') ?>
                 </div>
             </div>
             <?php if ($session->UserHasPermission('has_supervisor')): ?>
@@ -184,7 +183,6 @@ $examCountMax = max($examCounts);
                 <div class="list-group list-group-flush">
                     <?php if ($userExam): ?>
                         <?php foreach ($userExam as $exam): ?>
-                            <?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $exam->getCreated()) ?>
                             <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
                                 <div>
                                     <div class="my-2">
@@ -192,7 +190,7 @@ $examCountMax = max($examCounts);
                                         <span class="badge text-bg-light"><?= $exam->getSecondarySchoolSubject()->getLabel() ?></span>
                                     </div>
                                     <a href="<?=$response->generateUrlFromRoute('user_profile_show_exam',[$exam->getId()])?>" class="fw-bolder"><?= $exam->getKeyQuestion() ?></a>
-                                    <div class="small my-2 text-muted">am <?= $date->format('d.m.Y') ?> erstellt</div>
+                                    <div class="small my-2 text-muted">am <?= $exam->getCreated()->format('d.m.Y') ?> erstellt</div>
                                     <span class="text-bg-info badge"><?= $trans->getConfig($exam->getStatus()) ?></span>
                                     <span class="text-bg-light border badge"><?= $exam->getStatus()->getInfo() ?></span>
                                 </div>

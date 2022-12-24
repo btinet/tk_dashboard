@@ -68,8 +68,8 @@ class UserGroupCrudController extends AbstractController
             ->addIdentifier('role','admin_role_show','roleId')
             ->add('description')
             ->add('groupKey')
-            ->add('created')
-            ->add('updated')
+            ->add('created','date')
+            ->add('updated','date')
         ;
 
         return $this->render('admin/group/index.html',[

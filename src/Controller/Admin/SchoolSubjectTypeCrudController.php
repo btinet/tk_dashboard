@@ -76,8 +76,8 @@ class SchoolSubjectTypeCrudController extends AbstractController
             ->setCaption('Fachbereiche')
             ->addIdentifier('label', 'admin_school_subject_type_index', 'id')
             ->add('description')
-            ->add('created')
-            ->add('updated');
+            ->add('created','date')
+            ->add('updated','date');
 
         return $this->render('admin/school_subject_type/index.html', [
             'adminMenu' => $this->adminMenu->render(),

@@ -38,7 +38,7 @@ $this->layout('_layout.profile.html',
                         Bitte prüfe alle Formulardaten, bevor du fortfährst. Mit Absenden des Formulars beginnt der Genehmigungsprozess!
                     </div>
                         <form id="claim_form" method="post" action="<?=$response->generateUrlFromRoute('kq_new_transfer')?>" name="claim_form" class="list-group list-group-flush needs-validation" novalidate>
-                            <input id="topic" name="topic" readonly type="hidden" value="">
+                            <input id="topic" name="topic" readonly type="hidden" value="1">
                             <input type="hidden" name="csrf_token" value="<?=$session->get('csrf_token')?>">
                             <input type="hidden" name="exam_id" value="">
                             <input class="form-control-plaintext" id="school_subject_1" name="school_subject_1" readonly type="hidden" value="">
@@ -52,7 +52,7 @@ $this->layout('_layout.profile.html',
                                     <div class="row g-3 align-items-start">
                                         <div class="col-12 col-md-6">
                                             <label class="form-label" for="reference">Referenzfach</label>
-                                            <select id="reference" name="primary" class="form-select" required>
+                                            <select id="reference" name="school_subject_1" class="form-select" required>
                                                 <option value="">auswählen</option>
                                                 <?php foreach($schoolSubjects as $subject): ?>
                                                     <?php if($subject instanceof SchoolSubject):?>
@@ -66,7 +66,7 @@ $this->layout('_layout.profile.html',
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label class="form-label" for="secondary">Begleitfach</label>
-                                            <select id="secondary" name="secondary" class="form-select" required>
+                                            <select id="secondary" name="school_subject_2" class="form-select" required>
                                                 <option value="">auswählen</option>
                                                 <?php foreach($schoolSubjects as $subject): ?>
                                                     <?php if($subject instanceof SchoolSubject):?>

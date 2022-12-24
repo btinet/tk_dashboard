@@ -72,8 +72,8 @@ class RolePermissionCrudController extends AbstractController
             ->setCaption('Gruppenübersicht')
             ->addIdentifier('label','admin_permission_index','id')
             ->add('description')
-            ->add('created')
-            ->add('updated')
+            ->add('created','date')
+            ->add('updated','date')
         ;
 
         return $this->render('admin/permission/index.html',[

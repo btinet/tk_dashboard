@@ -68,8 +68,8 @@ class SchoolSubjectCrudController extends AbstractController
             ->addIdentifier('label','admin_school_subject_index','id')
             ->add('abbr')
             ->addIdentifier('schoolSubjectType','admin_school_subject_type_index','schoolSubjectTypeId')
-            ->add('created')
-            ->add('updated')
+            ->add('created','date')
+            ->add('updated','date')
         ;
 
         return $this->render('admin/school_subject/index.html',[

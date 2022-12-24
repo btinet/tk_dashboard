@@ -21,7 +21,7 @@ class UserExamRepository extends AbstractRepositoryFactory
             $orderData = self::createOrderData($sortBy);
             $result = self::select
             ("
-                SELECT e.id, e.label, MAX(e.created), e.updated, es.info
+                SELECT es.id, e.label, MAX(e.created), e.updated, es.info
                 FROM exam_status e 
                     INNER JOIN exam_has_exam_status es ON (es.exam_status_id = e.id)
                 WHERE es.user_exam_id = {$userExamId}

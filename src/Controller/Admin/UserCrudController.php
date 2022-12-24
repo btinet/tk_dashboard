@@ -73,8 +73,8 @@ class UserCrudController extends AbstractController
                 'parameter'=>true,
                 'is_header'=>true
             ])
-            ->add('created')
-            ->add('updated')
+            ->add('created','date')
+            ->add('updated','date')
         ;
 
         return $this->render('admin/group/index.html',[

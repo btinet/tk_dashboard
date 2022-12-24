@@ -77,8 +77,8 @@ class TopicCrudController extends AbstractController
             ->setCaption('Fachbereiche')
             ->addIdentifier('title', 'admin_topic_index', 'id')
             ->add('description')
-            ->add('created')
-            ->add('updated');
+            ->add('created','date')
+            ->add('updated','date');
 
         return $this->render('admin/topic/index.html', [
             'adminMenu' => $this->adminMenu->render(),

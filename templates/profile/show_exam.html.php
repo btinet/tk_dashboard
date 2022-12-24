@@ -14,7 +14,7 @@
  * @var int $examCount Number of distinct Exams listet
  * @var Session $session Session-Objekt
  * @var array|false $userData Formulardaten des Benutzers
- * @var array $table Tabledata for current entitx
+ * @var TableType $table Tabledata for current entitx
  * @var int $rows row count of current entity
  * @var int $currentPage current offset
  * @var array $attribs user_role attributes and data
@@ -23,8 +23,10 @@
  */
 
 
+use App\Entity\ExamHasExamStatus;
 use App\Entity\UserHasExam;
 use App\Menu\ProfileMenu;
+use App\Type\TableType;
 use Core\Component\SessionComponent\Session;
 
 /**
@@ -52,17 +54,15 @@ $this->layout('_layout.profile.html',
                 </div>
                 <div class="list-group list-group-flush">
                     <?php if ($exam instanceof UserHasExam): ?>
-                            <?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $exam->getCreated()) ?>
                             <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
                                 <div>
                                     <div class="my-2">
                                         <span class="badge text-bg-primary"><?= $exam->getMainSchoolSubject()->getLabel() ?></span>
                                         <span class="badge text-bg-light"><?= $exam->getSecondarySchoolSubject()->getLabel() ?></span>
                                     </div>
-                                    <a href="#" class="fw-bolder"><?= $exam->getKeyQuestion() ?></a>
-                                    <div class="small my-2 text-muted">am <?= $date->format('d.m.Y') ?> erstellt</div>
+                                    <p class="lead fw-bolder"><?= $exam->getKeyQuestion() ?></p>
+                                    <div class="small my-2 text-muted">am <?= $exam->getCreated()->format('d.m.Y') ?> erstellt</div>
                                     <span class="text-bg-info badge"><?= $trans->getConfig($exam->getStatus()) ?></span>
-                                    <span class="text-bg-light border badge"><?= $exam->getStatus()->getInfo() ?></span>
                                 </div>
                             </div>
                     <?php else: ?>
@@ -70,6 +70,31 @@ $this->layout('_layout.profile.html',
                             <span>Noch kein Prüfungsthema beantragt.</span>
                         </div>
                     <?php endif; ?>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-borderless mb-0">
+                        <caption class="px-2 small">Genehmigungsverlauf</caption>
+                        <thead>
+                        <tr>
+                            <th>Bemerkung</th>
+                            <th>Status</th>
+                            <th>Ersteller</th>
+                            <th class="text-end">erstellt</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($exam->getAllExamStatus() as $item): ?>
+                            <?php if($item instanceof ExamHasExamStatus):?>
+                            <tr>
+                                <td class="text-nowrap"><a href="#">Ansehen</a></td>
+                                <td class="text-nowrap"><?=$trans->getConfig($item->getExamStatus())?></td>
+                                <td class="text-nowrap"><?=$item->getSupervisor()->getUsername(true)?></td>
+                                <td class="text-nowrap text-end"><?=$item->getCreated()->format('d.m.Y')?></td>
+                            </tr>
+                            <?php endif;?>
+                        <?php endforeach;?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
