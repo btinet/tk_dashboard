@@ -13,6 +13,7 @@ use App\Entity\UserRoleHasUser;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
 use App\Menu\ProfileMenu;
+use App\Repository\ExamRepository;
 use App\Repository\UserRoleRepository;
 use App\Type\TableType;
 use Core\Component\DataStorageComponent\EntityManager;
@@ -50,11 +51,12 @@ class ProfileController extends AbstractController
     public function index(): string
     {
 
-        $profileMenu = new ProfileMenu($this->session->getUser());
+        $user = $this->session->getUser();
+        $profileMenu = new ProfileMenu($user);
         $profileMenu->createMenu();
 
         $foreignExams = false;
-        $user = $this->session->getUser();
+
         $attribs = [];
 
         if($this->session->UserHasPermission('has_supervisor'))
@@ -92,7 +94,7 @@ class ProfileController extends AbstractController
             'foreignExams' => $foreignExams,
             'examCount' => $examCount,
             'attribs' => $attribs,
-            'menu' => $profileMenu->render()
+            'menu' => $profileMenu->render(),
         ]);
     }
 

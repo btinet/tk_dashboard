@@ -7,8 +7,6 @@ namespace Core\Component\SessionComponent;
 
 
 use App\Entity\User;
-use App\Repository\UserRoleRepository;
-use Core\Component\DataStorageComponent\EntityManager;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
 class Session
@@ -27,7 +25,7 @@ class Session
      */
     public function init(): Session
     {
-        if ($this->sessionStarted == false) {
+        if (session_status() == 1) {
             session_start();
             $this->sessionStarted = true;
         }

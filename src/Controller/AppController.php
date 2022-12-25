@@ -49,7 +49,7 @@ class AppController extends AbstractController
             $result = [];
             if(!empty($queryString))
             {
-                $result = $this->repository->search($queryString,Exam::class,['year' => 'desc']);
+                $result = $this->repository->search2($queryString);
             }
 
             $mainMenu = new MenuBuilder();
@@ -62,6 +62,7 @@ class AppController extends AbstractController
                 'mainMenu' => $mainMenu->render(),
             ]);
         }
+        $this->setFlash('500');
         $this->response->redirectToRoute('302','exam_index');
     }
 

@@ -135,21 +135,22 @@ $this->layout('base.html',
         <div class="row h-100">
             <div class="col-12 col-lg-3 border-end py-4 px-0 d-none d-lg-block bg-side">
                 <div class=" sticky-top mb-3" style="top:70px;z-index: 5;">
-
-                    <div class="list-group list-group-flush border-top border-bottom mb-3">
-                        <?php foreach ($menu as $item): ?>
-                            <?php if($item instanceof AbstractMenuType):?>
-                            <?php $item->setAttrib('class','bg-gradient') ?>
-                                <a href="<?= $item->getRoute()?>"
-                                <?php foreach($item->getAttrib() as $attrib => $value): ?>
-                                    <?=$attrib?>="<?=implode(' ',$value)?>"
-                                <?php endforeach; ?>
-                                >
-                                    <?= $trans->getConfig($item->getLabel()) ?>
-                                </a>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php if(null !== $menu):?>
+                        <div class="list-group list-group-flush border-top border-bottom mb-3">
+                            <?php foreach ($menu as $item): ?>
+                                <?php if($item instanceof AbstractMenuType):?>
+                                <?php $item->setAttrib('class','bg-gradient') ?>
+                                    <a href="<?= $item->getRoute()?>"
+                                    <?php foreach($item->getAttrib() as $attrib => $value): ?>
+                                        <?=$attrib?>="<?=implode(' ',$value)?>"
+                                    <?php endforeach; ?>
+                                    >
+                                        <?= $trans->getConfig($item->getLabel()) ?>
+                                    </a>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                     <!-- Sidebar /-->
                     <div class="container">
                         <div class="row g-3">

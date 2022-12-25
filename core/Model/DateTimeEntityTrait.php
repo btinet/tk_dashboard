@@ -17,7 +17,7 @@ trait DateTimeEntityTrait
 
     public function getUpdated(): ?DateTime
     {
-        return ($this->created) ? DateTime::createFromFormat('Y-m-d H:i:s',$this->created) : null;
+        return ($this->updated) ? DateTime::createFromFormat('Y-m-d H:i:s',$this->updated) : null;
     }
 
 }

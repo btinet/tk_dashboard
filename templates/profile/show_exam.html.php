@@ -55,7 +55,7 @@ $this->layout('_layout.profile.html',
                 <div class="list-group list-group-flush">
                     <?php if ($exam instanceof UserHasExam): ?>
                             <div class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start">
-                                <div>
+                                <div class="">
                                     <div class="my-2">
                                         <span class="badge text-bg-primary"><?= $exam->getMainSchoolSubject()->getLabel() ?></span>
                                         <span class="badge text-bg-light"><?= $exam->getSecondarySchoolSubject()->getLabel() ?></span>
@@ -72,7 +72,7 @@ $this->layout('_layout.profile.html',
                     <?php endif; ?>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped table-borderless mb-0">
+                    <table class="table table-hover table-striped mb-0">
                         <caption class="px-2 small">Genehmigungsverlauf</caption>
                         <thead>
                         <tr>

@@ -6,13 +6,25 @@
 namespace Core\Model\RepositoryFactory;
 
 use Core\Component\DataStorageComponent\EntityManagerComponent;
+use Core\Model\QueryBuilder;
 use PDO;
 use PDOException;
 use ReflectionException;
-use stdClass;
 
 class AbstractRepositoryFactory extends EntityManagerComponent
 {
+
+    protected QueryBuilder $queryBuilder;
+
+    /**
+     * @param string $entity ORM entity class representing the database table
+     * @param string|null $alias alias of the base table
+     * @return QueryBuilder
+     */
+    public function QueryBuilder(string $entity, string $alias = null): QueryBuilder
+    {
+        return $this->queryBuilder = new QueryBuilder($entity,$alias);
+    }
 
 
     /**

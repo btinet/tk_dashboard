@@ -19,11 +19,12 @@
  * @var int $currentPage current offset
  * @var array $attribs user_role attributes and data
  * @var ProfileMenu $menu
+ * @var null|Exam[]|Exam $test
  */
 
 
+use App\Entity\Exam;
 use App\Menu\ProfileMenu;
-use Core\Component\MenuComponent\AbstractMenu;
 use Core\Component\SessionComponent\Session;
 
 /**
@@ -142,7 +143,6 @@ $examCountMax = max($examCounts);
                     </div>
                     <?php if ($foreignExams): ?>
                         <?php foreach ($foreignExams as $exam): ?>
-                            <?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $exam->getCreated()) ?>
                             <a href="#" class="list-group-item list-group-item-action align-items-center">
                                 <div class="row g-2">
                                     <div class="col-12 col-md-3 text-truncate">
@@ -159,7 +159,7 @@ $examCountMax = max($examCounts);
                                         </span>
                                     </div>
                                     <div class="col-12 col-md-2 text-start text-md-end">
-                                        <div class="text-muted"><?= $date->format('d.m.Y') ?></div>
+                                        <div class="text-muted"><?= $exam->getCreated()->format('d.m.Y') ?></div>
                                     </div>
                                 </div>
                             </a>
@@ -254,6 +254,9 @@ $examCountMax = max($examCounts);
             </div>
         </div>
     <?php endif; ?>
+
+
+
 </div>
 
 <?php $this->stop() ?>

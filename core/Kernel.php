@@ -9,6 +9,7 @@
 
 namespace Core;
 
+use Closure;
 use Core\Component\ConfigComponent\Config;
 use Core\ErrorHandler\Exception\KernelException;
 use Core\ErrorHandler\ExceptionHandler;
@@ -21,13 +22,14 @@ final class Kernel
 
     private static array $routes = array();
     private array $plainRoutes = array();
-    private static ?string $pathNotFound = null;
+    private static ?Closure $pathNotFound = null;
     private static ?string $methodNotAllowed = null;
     protected Config $config;
 
 
     /**
      * Class-Konstruktor. Eine spezielle Methode, die bei der Instanziierung einer Klasse automatisch aufgerufen wird.
+     * @throws Exception
      */
     public function __construct()
     {
@@ -218,11 +220,11 @@ final class Kernel
      */
     private function setNotFoundController()
     {
-        if(!isset($_ENV['NOTFOUND_CONTROLLER']))
+        if(!$notFoundController = $this->config->getConfig('NOTFOUND_CONTROLLER'))
         {
             throw new Exception('NOTFOUND_CONTROLLER: is not set in env.yaml');
         }
-        return $_ENV['NOTFOUND_CONTROLLER'];
+        return $notFoundController;
     }
 
 

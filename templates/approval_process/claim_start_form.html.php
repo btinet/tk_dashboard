@@ -34,7 +34,8 @@ switch ($isNew)
  */
 $this->layout('_layout.profile.html',
     [
-        'current_school_subject_id' => $current_school_subject_id
+        'current_school_subject_id' => 0,
+        'menu' => null
     ]
 );
 

@@ -64,8 +64,9 @@ abstract class AbstractController implements ControllerInterface
         $this->session->init();
         $this->routes = new RouteConfig('config/routes.yaml');
         $this->response = new Response($this->routes);
-        $this->request = new Request($this->session->get('csrf_token'));
-        $this->generateToken();
+        $this->request = new Request($this->session->get('csrf_check'));
+
+
 
         $trans = new Translation($config, $this->session);
         $this->trans = $trans->parse();
@@ -81,6 +82,8 @@ abstract class AbstractController implements ControllerInterface
             'locales'=> $trans->availableLanguages,
             'flash' => $this->getFlash()
         ]);
+
+
 
     }
 
@@ -155,6 +158,7 @@ abstract class AbstractController implements ControllerInterface
         }
 
         $this->session->set('csrf_token', $csrfToken);
+        $this->session->set('csrf_check', $csrfToken);
     }
 
     /**

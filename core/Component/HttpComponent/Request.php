@@ -37,7 +37,7 @@ class Request
      */
     public function isFormSubmitted(): bool
     {
-        $token = filter_input(INPUT_POST, 'csrf_token', FILTER_SANITIZE_SPECIAL_CHARS);
+        $token = ($_POST['csrf_token'])??null;
         return $token === $this->csrf_token;
     }
 

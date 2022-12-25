@@ -23,6 +23,8 @@
       "ext-pdo": "*",
       "ext-curl": "*",
       "ext-mbstring": "*",
-      "ext-openssl": "*"
+      "ext-openssl": "*",
+        "symfony/debug": "4.4.x-dev",
+        "symfony/error-handler": "6.3.x-dev"
     }
 }

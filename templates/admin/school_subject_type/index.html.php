@@ -42,7 +42,7 @@ $this->layout('_layout.admin.html',
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <?=$this->insert('admin/school_subject_type/_form.html',['userData'=>$userData,'userRoles'=>$userRoles]) ?>
+                <?=$this->insert('admin/school_subject_type/_form.html',['userData'=>$userData,'userRoles'=>null]) ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light " data-bs-dismiss="modal">Abbrechen</button>

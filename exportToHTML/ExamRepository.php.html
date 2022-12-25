@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>ExamRepository.php</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #a9b7c6;}
+.s3 { color: #9876aa;}
+.s4 { color: #6a8759;}
+.s5 { color: #629755; font-style: italic;}
+.s6 { color: #629755; font-weight: bold; font-style: italic;}
+.ls0 { height: 1px; border-width: 0; color: #4d4d4d; background-color:#4d4d4d}
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ExamRepository.php</font>
+</center></td></tr></table>
+<pre><span class="s0">public function </span><span class="s2">search2</span><span class="s1">(</span><span class="s3">$query</span><span class="s1">): </span><span class="s0">array</span>
+<a name="l37"><span class="ln">37   </span></a>    <span class="s1">{</span>
+<a name="l38"><span class="ln">38   </span></a>        <span class="s0">return </span><span class="s3">$this</span><span class="s1">-&gt;</span><span class="s2">queryBuilder</span><span class="s1">(</span><span class="s2">Exam</span><span class="s1">::</span><span class="s0">class,</span><span class="s4">'ex'</span><span class="s1">)</span>
+<a name="l39"><span class="ln">39   </span></a>            <span class="s1">-&gt;</span><span class="s2">select</span><span class="s1">(</span><span class="s4">'ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId'</span><span class="s1">)</span>
+<a name="l40"><span class="ln">40   </span></a>            <span class="s1">-&gt;</span><span class="s2">join</span><span class="s1">(</span><span class="s4">'exam_has_school_subject'</span><span class="s0">,</span><span class="s4">'e'</span><span class="s0">,</span><span class="s4">'ex.id = e.exam_id'</span><span class="s1">)</span>
+<a name="l41"><span class="ln">41   </span></a>            <span class="s1">-&gt;</span><span class="s2">join</span><span class="s1">(</span><span class="s4">'school_subject'</span><span class="s0">,</span><span class="s4">'s'</span><span class="s0">, </span><span class="s4">'e.school_subject_id = s.id'</span><span class="s1">)</span>
+<a name="l42"><span class="ln">42   </span></a>            <span class="s1">-&gt;</span><span class="s2">join</span><span class="s1">(</span><span class="s4">'topic'</span><span class="s0">,</span><span class="s4">'t'</span><span class="s0">,</span><span class="s4">'ex.topic_id = t.id'</span><span class="s1">)</span>
+<a name="l43"><span class="ln">43   </span></a>            <span class="s1">-&gt;</span><span class="s2">orWhere</span><span class="s1">(</span><span class="s4">'ex.key_question LIKE :query'</span><span class="s1">)</span>
+<a name="l44"><span class="ln">44   </span></a>            <span class="s1">-&gt;</span><span class="s2">orWhere</span><span class="s1">(</span><span class="s4">'s.label LIKE :query'</span><span class="s1">)</span>
+<a name="l45"><span class="ln">45   </span></a>            <span class="s1">-&gt;</span><span class="s2">orWhere</span><span class="s1">(</span><span class="s4">'s.abbr LIKE :query'</span><span class="s1">)</span>
+<a name="l46"><span class="ln">46   </span></a>            <span class="s1">-&gt;</span><span class="s2">orWhere</span><span class="s1">(</span><span class="s4">'t.title LIKE :query'</span><span class="s1">)</span>
+<a name="l47"><span class="ln">47   </span></a>            <span class="s1">-&gt;</span><span class="s2">orWhere</span><span class="s1">(</span><span class="s4">'t.description LIKE :query'</span><span class="s1">)</span>
+<a name="l48"><span class="ln">48   </span></a>            <span class="s1">-&gt;</span><span class="s2">setParameter</span><span class="s1">(</span><span class="s4">'query'</span><span class="s0">,</span><span class="s4">&quot;%</span><span class="s3">$query</span><span class="s4">%&quot;</span><span class="s1">)</span>
+<a name="l49"><span class="ln">49   </span></a>            <span class="s1">-&gt;</span><span class="s2">groupBy</span><span class="s1">(</span><span class="s4">'ex.key_question'</span><span class="s1">)</span>
+<a name="l50"><span class="ln">50   </span></a>            <span class="s1">-&gt;</span><span class="s2">orderBy</span><span class="s1">(</span><span class="s4">'ex.year'</span><span class="s0">,</span><span class="s4">'desc'</span><span class="s1">)</span>
+<a name="l51"><span class="ln">51   </span></a>            <span class="s1">-&gt;</span><span class="s2">getQuery</span><span class="s1">()</span>
+<a name="l52"><span class="ln">52   </span></a>            <span class="s1">-&gt;</span><span class="s2">getResult</span><span class="s1">()</span>
+<a name="l53"><span class="ln">53   </span></a>        <span class="s0">;</span>
+<a name="l54"><span class="ln">54   </span></a>    <span class="s1">}</span>
+<a name="l55"><span class="ln">55   </span></a>
+<a name="l56"><span class="ln">56   </span></a>    <span class="s5">/**</span>
+<a name="l57"><span class="ln">57   </span></a>     <span class="s5">* </span><span class="s6">@return </span><span class="s5">array|false</span>
+<a name="l58"><span class="ln">58   </span></a>     <span class="s5">*/</span>
+<a name="l59"><span class="ln">59   </span></a>    <span class="s0">public function </span><span class="s2">search</span><span class="s1">(</span><span class="s2">string </span><span class="s3">$queryString</span><span class="s0">,</span><span class="s2">string </span><span class="s3">$entity</span><span class="s0">, array </span><span class="s3">$sortBy </span><span class="s1">= [])</span>
+<a name="l60"><span class="ln">60   </span></a>    <span class="s1">{</span>
+<a name="l61"><span class="ln">61   </span></a>        <span class="s0">try </span><span class="s1">{</span>
+<a name="l62"><span class="ln">62   </span></a>            <span class="s3">$orderData </span><span class="s1">= </span><span class="s2">self</span><span class="s1">::</span><span class="s2">createOrderData</span><span class="s1">(</span><span class="s3">$sortBy</span><span class="s1">)</span><span class="s0">;</span>
+<a name="l63"><span class="ln">63   </span></a>            <span class="s3">$result </span><span class="s1">= </span><span class="s2">self</span><span class="s1">::</span><span class="s2">select</span>
+<a name="l64"><span class="ln">64   </span></a>            <span class="s1">(</span><span class="s4">&quot;</span>
+<a name="l65"><span class="ln">65   </span></a>                <span class="s4">SELECT ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId 
+<a name="l66"><span class="ln">66   </span></a>                FROM exam ex 
+<a name="l67"><span class="ln">67   </span></a>                    INNER JOIN exam_has_school_subject e 
+<a name="l68"><span class="ln">68   </span></a>                        ON (ex.id = e.exam_id)</span>
+<a name="l69"><span class="ln">69   </span></a>                    <span class="s4">INNER JOIN school_subject s 
+<a name="l70"><span class="ln">70   </span></a>                        ON (e.school_subject_id = s.id) 
+<a name="l71"><span class="ln">71   </span></a>                    INNER JOIN topic t 
+<a name="l72"><span class="ln">72   </span></a>                        ON (ex.topic_id = t.id) 
+<a name="l73"><span class="ln">73   </span></a>                WHERE ex.key_question LIKE '%</span><span class="s1">{</span><span class="s3">$queryString</span><span class="s1">}</span><span class="s4">%' 
+<a name="l74"><span class="ln">74   </span></a>                    OR s.label LIKE '%</span><span class="s1">{</span><span class="s3">$queryString</span><span class="s1">}</span><span class="s4">%' 
+<a name="l75"><span class="ln">75   </span></a>                    OR s.abbr LIKE '%</span><span class="s1">{</span><span class="s3">$queryString</span><span class="s1">}</span><span class="s4">%' 
+<a name="l76"><span class="ln">76   </span></a>                    OR t.title LIKE '%</span><span class="s1">{</span><span class="s3">$queryString</span><span class="s1">}</span><span class="s4">%' 
+<a name="l77"><span class="ln">77   </span></a>                    OR t.description LIKE '%</span><span class="s1">{</span><span class="s3">$queryString</span><span class="s1">}</span><span class="s4">%' 
+<a name="l78"><span class="ln">78   </span></a>                        GROUP BY ex.key_question 
+<a name="l79"><span class="ln">79   </span></a>                </span><span class="s1">{</span><span class="s3">$orderData</span><span class="s1">}</span>
+<a name="l80"><span class="ln">80   </span></a>                    <span class="s4">&quot;</span><span class="s1">)</span><span class="s0">;</span>
+<a name="l81"><span class="ln">81   </span></a>            <span class="s0">return </span><span class="s3">$result</span><span class="s1">-&gt;</span><span class="s2">fetchAll</span><span class="s1">(</span><span class="s2">self</span><span class="s1">::</span><span class="s2">FETCH_CLASS</span><span class="s0">, </span><span class="s3">$entity</span><span class="s1">)</span><span class="s0">;</span>
+<a name="l82"><span class="ln">82   </span></a>        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(</span><span class="s2">PDOException </span><span class="s3">$exception</span><span class="s1">) {</span>
+<a name="l83"><span class="ln">83   </span></a>            <span class="s0">return </span><span class="s3">$exception</span><span class="s1">-&gt;</span><span class="s2">getMessage</span><span class="s1">()</span><span class="s0">;</span>
+<a name="l84"><span class="ln">84   </span></a>        <span class="s1">}</span>
+<a name="l85"><span class="ln">85   </span></a>    <span class="s1">}</span></pre>
+</body>
+</html>

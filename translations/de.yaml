@@ -2,6 +2,7 @@
 200: Login erfolgreich.
 201: Logout erfolgreich.
 500: interner Server-Fehler
+404: Fehler
 
 1601: Passwort ist keine Zeichenkette
 1602: Passwörter stimmen nicht überein
@@ -92,6 +93,7 @@ subjects: Fächer
 SchoolSubjectType: Fachbereich
 SchoolSubjectTypes: Fachbereiche
 Title: Titel
+title: Titel
 Topic: Thema
 topics: Themengruppen
 Topics: Themengruppen
