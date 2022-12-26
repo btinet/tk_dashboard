@@ -7,6 +7,7 @@ use App\Entity\Exam;
 use App\Entity\SchoolSubject;
 use App\Menu\MenuBuilder;
 use App\Repository\ExamRepository;
+use App\Repository\SchoolSubjectRepository;
 use Core\Controller\AbstractController;
 
 class AppController extends AbstractController
@@ -24,7 +25,9 @@ class AppController extends AbstractController
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
         $this->repository = new ExamRepository();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $schoolSubjectRepository = new SchoolSubjectRepository();
+        $this->schoolSubjects = $schoolSubjectRepository->findAll(['label' => 'asc']);
+
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),

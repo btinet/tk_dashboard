@@ -7,13 +7,14 @@ use App\Entity\SchoolSubject;
 use App\Entity\SchoolSubjectType;
 use App\Menu\MenuBuilder;
 use App\Repository\ExamRepository;
+use App\Repository\SchoolSubjectRepository;
 use Core\Controller\AbstractController;
 
 class ExamController extends AbstractController
 {
 
     private ExamRepository $repository;
-    protected $schoolSubjects;
+    protected array $schoolSubjects;
 
     public function __construct()
     {
@@ -21,7 +22,8 @@ class ExamController extends AbstractController
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
         $this->repository = new ExamRepository();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $schoolSubjectRepository = new SchoolSubjectRepository();
+        $this->schoolSubjects = $schoolSubjectRepository->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -54,8 +56,8 @@ class ExamController extends AbstractController
      */
     public function list(int $id): string
     {
-        $examsByMainSchoolSubject = $this->repository->findBySubject($id,1, Exam::class, ['year' => 'desc']);
-        $examsBySecondarySchoolSubject = $this->repository->findBySubject($id,0, Exam::class, ['year' => 'desc']);
+        $examsByMainSchoolSubject = $this->repository->findBySubject($id,1, ['year' => 'desc']);
+        $examsBySecondarySchoolSubject = $this->repository->findBySubject($id,0,  ['year' => 'desc']);
 
         return $this->render('exam/list.html', [
             'examsByMainSchoolSubject' => $examsByMainSchoolSubject,

@@ -35,7 +35,9 @@ class QueryBuilder
 
     protected string $entity;
     protected ReflectionClass $reflectionClass;
-    protected string $alias;
+    protected ?string $alias;
+    protected string $limit = "";
+    protected string $offset = "";
     protected array $projection = [];
     protected array $conditions = [];
     protected array $parameters = [];
@@ -236,6 +238,7 @@ class QueryBuilder
      */
     public function setFirstResult(int $row): QueryBuilder
     {
+        $this->offset = "OFFSET {$row}";
         return $this;
     }
 
@@ -245,17 +248,32 @@ class QueryBuilder
      */
     public function setMaxResults(int $amount): QueryBuilder
     {
+        $this->limit = "LIMIT {$amount}";
         return $this;
     }
 
     /**
-     * @param string $field
-     * @param string $direction
+     * @param mixed $data Entweder ein assoziatives Array mit Spalten und Sortierrichtung oder eine
+     * Zeichenkette mit der sortierenden Spalte
+     * @param string $direction Laufrichtung der Sortierung entweder ASC oder DESC
      * @return $this
      */
-    public function orderBy(string $field, string $direction): QueryBuilder
+    public function orderBy($data, string $direction = 'asc'): QueryBuilder
     {
-        $this->orderBy[$field] = $direction;
+        if (is_array($data) and 0 !== count($data))
+        {
+            foreach ($data as $field => $direction)
+            {
+                $this->orderBy[$field] = $direction;
+            }
+            return $this;
+        }
+
+        if(is_string($data))
+        {
+            $this->orderBy[$data] = $direction;
+        }
+
         return $this;
     }
 
@@ -278,9 +296,12 @@ class QueryBuilder
             $this->query['projection'] = "SELECT *";
         }
 
+        $this->query['table'] = "FROM {$this->getTableNameFromEntity()}";
 
-
-        $this->query['table'] = "FROM {$this->getTableNameFromEntity()} {$this->alias}";
+        if(null !== $this->alias)
+        {
+            $this->query['table'] .= " $this->alias ";
+        }
 
         if (0 !== count($this->joins))
         {
@@ -308,6 +329,10 @@ class QueryBuilder
             $this->query['order'] = rtrim($order,',');
 
         }
+
+        $this->query['limit'] = $this->limit;
+
+        $this->query['offset'] = $this->offset;
 
         $this->statement = $this->pdo->prepare( implode(' ',$this->query));
 

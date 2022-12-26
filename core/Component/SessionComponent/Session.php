@@ -7,6 +7,7 @@ namespace Core\Component\SessionComponent;
 
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
 class Session
@@ -64,12 +65,12 @@ class Session
 
     public function getUser()
     {
-       $userRepository = new AbstractRepositoryFactory();
+       $userRepository = new UserRepository();
 
        $user = false;
        if(self::get('user') != 0 and self::get('login') === true)
        {
-           $user = $userRepository->find(User::class,self::get('user'));
+           $user = $userRepository->find(self::get('user'));
        }
         return $user;
     }

@@ -3,50 +3,54 @@
 namespace App\Repository;
 
 use App\Entity\ExamStatus;
+use App\Entity\UserHasExam;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
-use PDOException;
+
+/**
+ * @method false|UserHasExam find(int $id)
+ * @method false|UserHasExam findOneBy(array $data)
+ * @method UserHasExam[] findBy(array $data, array $sortBy = [], int $limit = null, int $offset = null)
+ * @method UserHasExam[] findAll(array $orderBy = [], int $limit = null, int $offset = null)
+ */
 
 class UserExamRepository extends AbstractRepositoryFactory
 {
 
-    /**
-     * @param int $userExamId
-     * @param array|string[] $sortBy
-     * @param string $entity
-     * @return mixed|string
-     */
-    public function joinStatusByUserExamId(int $userExamId, array $sortBy = ['es.created'=>'desc'],string $entity = ExamStatus::class)
+    public function __construct()
     {
-        try {
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT es.id, e.label, MAX(e.created), e.updated, es.info
-                FROM exam_status e 
-                    INNER JOIN exam_has_exam_status es ON (es.exam_status_id = e.id)
-                WHERE es.user_exam_id = {$userExamId}
-                    GROUP BY e.id
-                {$orderData}
-                    ");
-            return $result->fetchObject($entity);
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        }
+        parent::__construct(UserHasExam::class);
     }
 
+
+    public function joinStatusByUserExamId(int $userExamId, array $orderBy = ['es.created'=>'desc'])
+    {
+        return $this->queryBuilder(ExamStatus::class,'e')
+            ->select('es.id, e.label, MAX(e.created) as created, e.updated, es.info')
+            ->join('exam_has_exam_status','es','es.exam_status_id = e.id')
+            ->andWhere('es.user_exam_id = :user_exam_id')
+            ->setParameter('user_exam_id',$userExamId)
+            ->groupBy('e.id')
+            ->setMaxResults(1)
+            ->orderBy($orderBy)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+    }
+
+    /**
+     * @param int $id
+     * @return false|int
+     */
     public function countSupervisorLoad(int $id)
     {
-        try {
-            $result = self::select
-            ("
-                SELECT ue.supervisor_id
-                FROM user_has_exam ue
-                WHERE ue.supervisor_id = {$id}
-                    ");
-            return $result->rowCount();
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        }
+        return $this->queryBuilder(UserHasExam::class,'ue')
+            ->andWhere('ue.supervisor_id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getCountResult()
+        ;
+
     }
 
 }

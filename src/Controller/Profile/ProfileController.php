@@ -14,6 +14,8 @@ use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
 use App\Menu\ProfileMenu;
 use App\Repository\ExamRepository;
+use App\Repository\SchoolSubjectRepository;
+use App\Repository\UserExamRepository;
 use App\Repository\UserRoleRepository;
 use App\Type\TableType;
 use Core\Component\DataStorageComponent\EntityManager;
@@ -35,10 +37,11 @@ class ProfileController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new UserRoleRepository();
+        $this->repository = new UserExamRepository();
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $schoolSubjectRepository = new SchoolSubjectRepository();
+        $this->schoolSubjects = $schoolSubjectRepository->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -67,7 +70,7 @@ class ProfileController extends AbstractController
                 $attribs['supervise']['supervise_enable']=false;
             }
 
-            $examRepository = $this->repository->findBy(UserHasExam::class,['supervisor_id'=> $user->getId()]);
+            $examRepository = $this->repository->findBy(['supervisor_id'=> $user->getId()]);
 
             if($examRepository)
             {
@@ -86,8 +89,8 @@ class ProfileController extends AbstractController
 
         }
 
-        $examCount = $this->repository->countDistinctBy(Exam::class,'key_question');
-        $userExam = $this->repository->findBy(UserHasExam::class,['user_id'=> $user->getId()]);
+        $examCount = $this->repository->countDistinctBy('key_question');
+        $userExam = $this->repository->findBy(['user_id'=> $user->getId()]);
 
         return $this->render('profile/index.html',[
             'userExam' => $userExam,

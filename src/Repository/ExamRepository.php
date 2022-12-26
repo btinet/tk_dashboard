@@ -10,11 +10,11 @@ use App\Entity\SchoolSubject;
 use App\Entity\User;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
-/*
- * @method Exam find(string $entity, $id)
- * @method Exam findOneBy(string $entity, array $data)
- * @method Exam[] findBy(string $entity, array $data, array $sortBy = [])
- * @method Exam[] findAll(string $entity, array $sortBy = [], int $limit = 100, int $offset = 0)
+/**
+ * @method false|Exam find(int $id)
+ * @method false|Exam findOneBy(array $data)
+ * @method Exam[] findBy(array $data, array $sortBy = [], int $limit = null, int $offset = null)
+ * @method Exam[] findAll(array $orderBy = [], int $limit = null, int $offset = null)
  */
 
 class ExamRepository extends AbstractRepositoryFactory
@@ -208,6 +208,7 @@ class ExamRepository extends AbstractRepositoryFactory
     public function findUserByExamId(int $examId, array $orderBy = [])
     {
         $query = $this->queryBuilder(User::class,'u')
+            ->selectOrm()
             ->join('exam_has_school_subject','e','u.id = e.user_id')
             ->andWhere('e.exam_id = :id')
             ->setParameter('id',$examId)

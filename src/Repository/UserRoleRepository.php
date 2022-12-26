@@ -7,277 +7,210 @@ use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Entity\UserRole;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
-use PDOException;
-use ReflectionException;
+
+/**
+ * @method false|UserRole find(int $id)
+ * @method false|UserRole findOneBy(array $data)
+ * @method UserRole[] findBy(array $data, array $sortBy = [], int $limit = null, int $offset = null)
+ * @method UserRole[] findAll(array $orderBy = [], int $limit = null, int $offset = null)
+ */
 
 class UserRoleRepository extends AbstractRepositoryFactory
 {
 
-    /**
-     * @return array|false
-     */
-    public function findUsersJoinGroup(int $id, array $sortBy = ['u.last_name' => 'asc'], string $entity = User::class)
+    public function __construct()
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
-
-
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT u.id, u.username, u.first_name as firstName , u.last_name as lastName
-                FROM {$table} u
-                    INNER JOIN user_group_has_user ughu 
-                        ON (u.id = ughu.user_id)
-                WHERE ughu.user_group_id = {$id}
-                {$orderData}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS, $entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
+        parent::__construct(UserRole::class);
     }
 
-    /**
-     * @return array|false
-     */
-    public function findSupervisorsByLoad(string $searchString = '"supervise_enable":"on"', array $sortBy = ['u.last_name' => 'asc'], string $entity = User::class)
+
+    public function findUsersJoinGroup(int $id, array $orderBy = ['u.last_name' => 'asc']): array
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
+        return $this->queryBuilder(User::class,'u')
+            ->select('u.id, u.username, u.first_name as firstName , u.last_name as lastName')
+            ->join('user_group_has_user','ughu','u.id = ughu.user_id')
+            ->andWhere('ughu.user_group_id = :id')
+            ->setParameter('id',$id)
+            ->orderBy($orderBy)
+            ->getQuery()
+            ->getResult()
+        ;
 
-
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT u.id, u.username, u.first_name as firstName , u.last_name as lastName
-                FROM {$table} u
-                    INNER JOIN user_role_has_user urhu 
-                        ON (u.id = urhu.user_id)
-                WHERE urhu.attribs LIKE '%{$searchString}%'
-                {$orderData}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS, $entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
     }
 
-    /**
-     * @return array|false
-     */
-    public function findByIdJoinPermissions(int $id, array $sortBy = [], string $entity = RolePermission::class)
+    public function findSupervisorsByLoad(string $searchString = '"supervise_enable":"on"', array $orderBy = ['u.last_name' => 'asc']): array
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
+        return $this->queryBuilder(User::class,'u')
+            ->select('u.id, u.username, u.first_name as firstName , u.last_name as lastName')
+            ->join('user_role_has_user','urhu','u.id = urhu.user_id')
+            ->andWhere('urhu.attribs LIKE :search_string')
+            ->setParameter('search_string','%'.$searchString.'%')
+            ->orderBy($orderBy)
+            ->getQuery()
+            ->getResult()
+        ;
 
-
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT p.id AS id, p.label AS label, p.description AS description
-                FROM {$table} p
-                    INNER JOIN user_role_has_role_permission rp
-                        ON (p.id = rp.role_permission_id)
-                WHERE rp.user_role_id = {$id}
-                {$orderData}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS, $entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
     }
 
-    /**
-     * @return array|false
-     */
-    public function findOnePermission(int $roleId, int $permissonId, array $sortBy = [], string $entity = RolePermission::class)
+    public function findByIdJoinPermissions(int $id, array $orderBy = []): array
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
+        return $this->queryBuilder(RolePermission::class,'p')
+            ->select('p.id AS id, p.label AS label, p.description AS description')
+            ->join('user_role_has_role_permission','rp','p.id = rp.role_permission_id')
+            ->andWhere('rp.user_role_id = :id')
+            ->setParameter('id',$id)
+            ->orderBy($orderBy)
+            ->getQuery()
+            ->getResult()
+        ;
 
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT p.id
-                FROM {$table} p
-                    INNER JOIN user_role_has_role_permission rp
-                        ON (p.id = rp.role_permission_id)
-                WHERE rp.user_role_id = {$roleId}
-                AND rp.role_permission_id = {$permissonId}
-                {$orderData}
-                    ");
-            return $result->fetchObject($entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
+    }
+
+    public function findOnePermission(int $roleId, int $permissionId)
+    {
+
+        return $this->queryBuilder(RolePermission::class,'p')
+            ->select('p.id')
+            ->join('user_role_has_role_permission','rp','p.id = rp.role_permission_id')
+            ->andWhere('rp.user_role_id = :role_id')
+            ->andWhere('rp.role_permission_id = :permission_id')
+            ->setParameter('role_id',$roleId)
+            ->setParameter('permission_id',$permissionId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+    }
+
+    public function findUserRole(int $userId): array
+    {
+        return $this->queryBuilder(UserRole::class,'p')
+            ->select('p.label')
+            ->join('user_role_has_user','rp','p.id = rp.user_role_id')
+            ->andWhere('rp.user_id = :user_id')
+            ->setParameter('user_id',$userId)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
+    }
+
+    public function findUserRoles(int $userId, array $orderBy = []): array
+    {
+        return $this->queryBuilder(UserRole::class,'p')
+            ->select('p.id, p.label')
+            ->join('user_role_has_user','rp','p.id = rp.user_role_id')
+            ->andWhere('rp.user_id = :id')
+            ->setParameter('id',$userId)
+            ->orderBy($orderBy)
+            ->getQuery()
+            ->getResult()
+        ;
+
     }
 
 
     /**
-     * @return array|false
+     * @param int $groupId
+     * @param string $roleLabel
+     * @return false|User
      */
-    public function findUserRole(int $userId, string $entity = UserRole::class)
+    public function findUserByRole(int $groupId, string $roleLabel)
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
-            $result = self::select
-            ("
-                SELECT p.label
-                FROM {$table} p
-                    INNER JOIN user_role_has_user rp
-                        ON (p.id = rp.user_role_id)
-                WHERE rp.user_id = {$userId}
-                    ");
-            return $result->fetchObject($entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
+        return $this->queryBuilder(User::class,'user')
+            ->select('user.first_name AS firstName, user.last_name AS lastName, user.id AS id, user.username AS username')
+            ->join('user_group_has_user','user_group','user.id = user_group.user_id')
+            ->join('user_role_has_user','user_roles','user.id = user_roles.user_id')
+            ->join('user_role','role','user_roles.user_role_id = role.id')
+            ->andWhere('user_group.user_group_id =  :group_id')
+            ->andWhere('role.label =  :role_label')
+            ->setParameter('group_id',$groupId)
+            ->setParameter('role_label',$roleLabel)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+    }
+
+
+    /**
+     * @param int $userId
+     * @param array $orderBy
+     * @return UserGroup[]
+     */
+    public function findUserGroup(int $userId, array $orderBy = []): array
+    {
+        return $this->queryBuilder(UserGroup::class,'p')
+            ->select('p.label, p.id, p.role_id AS roleId')
+            ->join('user_group_has_user','rp','p.id = rp.user_group_id')
+            ->andWhere('rp.user_id = :id')
+            ->setParameter('id',$userId)
+            ->orderBy($orderBy)
+            ->getQuery()
+            ->getResult()
+        ;
+
     }
 
     /**
-     * @return array|false
+     * @param int $userId
+     * @return false|UserGroup
      */
-    public function findUserRoles(int $userId, string $entity = UserRole::class)
+    public function findUserCurrentGroup(int $userId)
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
-            $result = self::select
-            ("
-                SELECT p.id, p.label
-                FROM {$table} p
-                    INNER JOIN user_role_has_user rp
-                        ON (p.id = rp.user_role_id)
-                WHERE rp.user_id = {$userId}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS,$entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
+        return $this->queryBuilder(UserGroup::class,'p')
+            ->select('p.label, p.id, max(p.id) as max_id, p.role_id AS roleId')
+            ->join('user_group_has_user','rp','p.id = rp.user_group_id')
+            ->andWhere('rp.user_id =  :id')
+            ->setParameter('id',$userId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
     }
+
 
     /**
-     * @return User|false
+     * @param int $userId
+     * @param array $orderBy
+     * @return RolePermission[]
      */
-    public function findUserByRole(int $groupId,string $roleLabel, string $entity = User::class)
+    public function findUserPermissions(int $userId, array $orderBy = []): array
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
-            $result = self::select
-            ("
-                SELECT user.first_name AS firstName, user.last_name AS lastName, user.id AS id, user.username AS username
-                FROM user
-                INNER JOIN user_group_has_user user_group ON (user.id = user_group.user_id)
-                INNER JOIN user_role_has_user user_roles ON (user.id = user_roles.user_id)
-                INNER JOIN user_role role ON (user_roles.user_role_id = role.id)
-                WHERE user_group.user_group_id = {$groupId}
-                AND role.label = '".$roleLabel."'               
-                    ");
-            return $result->fetchObject($entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
+        return $this->queryBuilder(RolePermission::class,'p')
+            ->select('p.label')
+            ->join('user_role_has_role_permission','rp','p.id = rp.role_permission_id')
+            ->join('user_role','ur','rp.user_role_id = ur.id')
+            ->join('user_role_has_user','urhu','urhu.user_role_id = ur.id')
+            ->join('user','u','urhu.user_id = u.id')
+            ->andWhere('urhu.user_id = :id')
+            ->setParameter('id',$userId)
+            ->orderBy($orderBy)
+            ->getQuery()
+            ->getResult()
+        ;
+
     }
+
 
     /**
-     * @return array|false
+     * @param int $roleId
+     * @param array $orderBy
+     * @return RolePermission[]
      */
-    public function findUserGroup(int $userId, string $entity = UserGroup::class)
+    public function findRolePermissions(int $roleId, array $orderBy = []): array
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
-            $result = self::select
-            ("
-                SELECT p.label, p.id, p.role_id AS roleId
-                FROM {$table} p
-                    INNER JOIN user_group_has_user rp
-                        ON (p.id = rp.user_group_id) 
-                WHERE rp.user_id = {$userId}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS,$entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
-    }
+        return $this->queryBuilder(RolePermission::class,'p')
+            ->select('p.label')
+            ->join('user_role_has_role_permission','rp','p.id = rp.role_permission_id')
+            ->join('user_role','ur','rp.user_role_id = ur.id')
+            ->andWhere('ur.user_role_id = :id')
+            ->setParameter('id',$roleId)
+            ->orderBy($orderBy)
+            ->getQuery()
+            ->getResult()
+            ;
 
-    public function findUserCurrentGroup(int $userId, string $entity = UserGroup::class)
-    {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
-            $result = self::select
-            ("
-                SELECT p.label, p.id, max(p.id) as max_id, p.role_id AS roleId
-                FROM {$table} p
-                    INNER JOIN user_group_has_user rp
-                        ON (p.id = rp.user_group_id) 
-                WHERE rp.user_id = {$userId}
-                    ");
-            return $result->fetchObject($entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
-    }
-
-    /**
-     * @return array|false
-     */
-    public function findUserPermissions(int $userId, string $entity = RolePermission::class)
-    {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
-            $result = self::select
-            ("
-                SELECT p.label
-                FROM {$table} p
-                    INNER JOIN user_role_has_role_permission rp
-                        ON (p.id = rp.role_permission_id)
-                    INNER JOIN user_role ur
-                        ON (rp.user_role_id = ur.id)
-                    INNER JOIN user_role_has_user urhu
-                        ON (urhu.user_role_id = ur.id)
-                    INNER JOIN user u
-                        ON (urhu.user_id = u.id)
-                
-                WHERE urhu.user_id = {$userId}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS,$entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
-    }
-
-    /**
-     * @return array|false
-     */
-    public function findRolePermissions(int $roleId, string $entity = RolePermission::class)
-    {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $table = self::generateSnakeTailString($entityClass->getShortName());
-            $result = self::select
-            ("
-                SELECT p.label
-                FROM {$table} p
-                    INNER JOIN user_role_has_role_permission rp
-                        ON (p.id = rp.role_permission_id)
-                    INNER JOIN user_role ur
-                        ON (rp.user_role_id = ur.id)                
-                WHERE ur.user_role_id = {$roleId}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS,$entity);
-        } catch (PDOException|ReflectionException $e) {
-            return $e->getMessage();
-        }
     }
 
 }

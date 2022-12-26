@@ -6,9 +6,6 @@
 namespace Core\Model\RepositoryFactory;
 
 use Core\Model\QueryBuilder;
-use PDO;
-use PDOException;
-use ReflectionException;
 
 abstract class AbstractRepositoryFactory
 {
@@ -27,7 +24,7 @@ abstract class AbstractRepositoryFactory
      * @param string|null $alias alias of the base table
      * @return QueryBuilder
      */
-    public function QueryBuilder(string $entity, string $alias = null): QueryBuilder
+    protected function QueryBuilder(string $entity, string $alias = null): QueryBuilder
     {
         return $this->queryBuilder = new QueryBuilder($entity,$alias);
     }
@@ -37,7 +34,7 @@ abstract class AbstractRepositoryFactory
      */
     public function count()
     {
-        return $this->queryBuilder($this->entity,'e')
+        return $this->queryBuilder($this->entity)
             ->getQuery()
             ->getCountResult()
         ;
@@ -49,7 +46,7 @@ abstract class AbstractRepositoryFactory
      */
     public function countDistinctBy(string $column)
     {
-        return $this->queryBuilder($this->entity,'e')
+        return $this->queryBuilder($this->entity)
             ->selectDistinct(':column')
             ->setParameter('column',$column)
             ->getQuery()
@@ -66,7 +63,7 @@ abstract class AbstractRepositoryFactory
     {
         return $this->queryBuilder($this->entity)
             ->selectOrm()
-            ->andWhere('e.id = :id')
+            ->andWhere('id = :id')
             ->setParameter('id',$id)
             ->getQuery()
             ->getOneOrNullResult()
@@ -75,86 +72,87 @@ abstract class AbstractRepositoryFactory
     }
 
 
-    /**
-     * @param string $entity
-     * @param array $sortBy
-     * @param int $limit
-     * @param int $offset
-     * @return array|false|string
-     */
-    public function findAll(string $entity, array $sortBy = [], int $limit = 100, int $offset = 0 )
-    {
-        if($limit){
-            $limit = "LIMIT $limit";
-    } else {
-            $limit = '';
-        }
-        if($offset){
-            $offset = "OFFSET $offset";
-        } else {
-            $offset = '';
-        }
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $entityShortName = self::generateSnakeTailString($entityClass->getShortname());
 
-            $columns = self::setColumns($entityClass);
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select("SELECT {$columns} FROM {$entityShortName} $orderData $limit $offset");
-            return $result->fetchAll(PDO::FETCH_CLASS, $entity);
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        } catch (ReflectionException $e) {
-            echo $e->getMessage();
-            return false;
+    public function findAll(array $orderBy = [], int $limit = null, int $offset = null ): array
+    {
+        $query = $this->queryBuilder($this->entity)
+            ->selectOrm()
+        ;
+
+        if(null !== $limit)
+        {
+            $query->setMaxResults($limit);
         }
+
+        if(null !== $offset)
+        {
+            $query->setFirstResult($offset);
+        }
+
+        return $query
+            ->getQuery()
+            ->getResult()
+        ;
 
     }
 
-    /**
-     * @param string $entity
-     * @param array $data
-     * @param array $sortBy
-     * @return array|false|string
-     */
-    public function findBy(string $entity, array $data, array $sortBy = [])
+    public function findBy(array $data, array $sortBy = [], int $limit = null, int $offset = null)
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $tableName = self::generateSnakeTailString($entityClass->getShortName());
-            $columns = self::setColumns($entityClass);
-            $orderData = self::createOrderData($sortBy);
-            $preparedStatement = self::setPreparedStatement($data);
-            $data = self::setBindValues($data);
-            $result = self::select("SELECT {$columns} FROM {$tableName} WHERE ($preparedStatement) $orderData", $data);
-            return ($result->rowCount() !== 0 ) ? $result->fetchAll(PDO::FETCH_CLASS, $entity):false;
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        } catch (ReflectionException $e) {
-            return $e->getMessage();
+        $query = $this->queryBuilder($this->entity)
+            ->selectOrm()
+        ;
+
+        if(0 !== count($data))
+        {
+            foreach ($data as $key => $value)
+            {
+                $query
+                    ->andWhere("$key = :$key")
+                    ->setParameter($key, $value)
+                ;
+            }
         }
+
+        if(null !== $limit)
+        {
+            $query->setMaxResults($limit);
+        }
+
+        if(null !== $offset)
+        {
+            $query->setFirstResult($offset);
+        }
+
+        $query
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
-     * @param string $entity
-     * @param array $data
-     * @return false|object|string|array
+     * @param array $data Array
      */
-    public function findOneBy(string $entity, array $data)
+    public function findOneBy(array $data)
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $tableName = self::generateSnakeTailString($entityClass->getShortName());
-            $columns = self::setColumns($entityClass);
-            $preparedStatement = self::setPreparedStatement($data);
-            $data = self::setBindValues($data);
-            $result = self::select("SELECT {$columns} FROM {$tableName} WHERE ({$preparedStatement}) LIMIT 1", $data);
-            return ($result->rowCount() !== 0 ) ? $result->fetchObject($entity):false;
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        } catch (ReflectionException $e) {
-            return $e->getMessage();
+        $query = $this->queryBuilder($this->entity)
+            ->selectOrm()
+        ;
+
+        if(0 !== count($data))
+        {
+            foreach ($data as $key => $value)
+            {
+                $query
+                    ->andWhere("$key = :$key")
+                    ->setParameter($key, $value)
+                ;
+            }
         }
+
+        $query
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
 }
