@@ -93,31 +93,31 @@ final class Exam
     }
 
     /**
-     * @return array|false|object|string
+     * @return Exam|false
      */
     public function getTopic()
     {
-        return $this->repository->findOneBy(Topic::class, [
+        return $this->repository->findOneBy([
             'id' => $this->getTopicId()
         ]);
     }
 
 
     /**
-     * @return array|false|string
+     * @return false|User
      */
     public function getUser()
     {
-         return $this->repository->findUserByExamId($this->id, User::class);
+         return $this->repository->findUserByExamId($this->id);
     }
 
     /**
-     * @return array|false
+     * @return SchoolSubject[]
      */
-    public function getSchoolSubjects()
+    public function getSchoolSubjects(): array
     {
 
-        return $this->repository->joinSchoolSubjects($this->id, SchoolSubject::class);
+        return $this->repository->joinSchoolSubjects($this->id);
 
     }
 
@@ -131,7 +131,7 @@ final class Exam
 
     public function countExams(): int
     {
-        return $this->repository->countDistinctBy(Exam::class,'key_question');
+        return $this->repository->countDistinctBy('key_question');
     }
 
 }

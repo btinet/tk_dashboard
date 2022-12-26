@@ -56,10 +56,9 @@ abstract class AbstractRepositoryFactory
     }
 
     /**
-     * @param int $id
      * @return false|mixed
      */
-    public function find(int $id)
+    public function find($id)
     {
         return $this->queryBuilder($this->entity)
             ->selectOrm()
@@ -70,8 +69,6 @@ abstract class AbstractRepositoryFactory
             ;
 
     }
-
-
 
     public function findAll(array $orderBy = [], int $limit = null, int $offset = null ): array
     {
@@ -123,7 +120,7 @@ abstract class AbstractRepositoryFactory
             $query->setFirstResult($offset);
         }
 
-        $query
+        return $query
             ->getQuery()
             ->getResult()
         ;
@@ -149,7 +146,7 @@ abstract class AbstractRepositoryFactory
             }
         }
 
-        $query
+        return $query
             ->getQuery()
             ->getOneOrNullResult()
         ;

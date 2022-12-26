@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\SchoolSubjectRepository;
 use App\Repository\UserExamRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
@@ -12,7 +13,8 @@ final class UserHasExam
     use IdEntityTrait;
     use DateTimeEntityTrait;
 
-    private AbstractRepositoryFactory $repository;
+    private UserExamRepository $repository;
+    private SchoolSubjectRepository $subjectRepository;
 
     protected int $userId;
     protected string $keyQuestion;
@@ -24,6 +26,7 @@ final class UserHasExam
     public function __construct()
     {
         $this->repository = new UserExamRepository();
+        $this->subjectRepository = new SchoolSubjectRepository();
     }
 
     public function __toString()
@@ -35,13 +38,13 @@ final class UserHasExam
      * Repository-Getter
      */
 
-    public function getUser(){return $this->repository->find(User::class,$this->userId);}
-    public function getTopic(){return $this->repository->find(Topic::class,$this->topicId);}
-    public function getMainSchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->mainSubjectId);}
-    public function getSecondarySchoolSubject(){return $this->repository->find(SchoolSubject::class,$this->secondarySubjectId);}
+    public function getUser(){return $this->repository->find($this->userId);}
+    public function getTopic(){return $this->repository->find($this->topicId);}
+    public function getMainSchoolSubject(){return $this->subjectRepository->find($this->mainSubjectId);}
+    public function getSecondarySchoolSubject(){return $this->subjectRepository->find($this->secondarySubjectId);}
     public function getStatus(){return $this->repository->joinStatusByUserExamId($this->id);}
-    public function getSupervisor(){return $this->repository->find(User::class,$this->supervisorId);}
-    public function getAllExamStatus(){return $this->repository->findBy(ExamHasExamStatus::class,['userExamId' => $this->id],['created'=>'desc']);}
+    public function getSupervisor(){return $this->repository->find($this->supervisorId);}
+    public function getAllExamStatus(){return $this->repository->findBy(['userExamId' => $this->id],['created'=>'desc']);}
 
     /**
      * Entity-Getter

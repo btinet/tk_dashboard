@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\SchoolSubjectRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -18,7 +19,7 @@ final class SchoolSubjectType
 
     public function __construct()
     {
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new SchoolSubjectRepository();
     }
 
     public function __toString()
@@ -64,7 +65,7 @@ final class SchoolSubjectType
 
     public function getSchoolSubjects()
     {
-        return $this->repository->findBy(SchoolSubject::class,['school_subject_type_id'=>$this->id],['label'=>'asc']);
+        return $this->repository->findBy(['school_subject_type_id'=>$this->id],['label'=>'asc']);
     }
 
 }

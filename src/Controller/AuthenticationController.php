@@ -6,6 +6,7 @@ use App\Entity\SchoolSubject;
 use App\Entity\User;
 use App\Menu\MenuBuilder;
 use App\Repository\ExamRepository;
+use App\Repository\UserRepository;
 use App\Service\EncryptionService;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\UserComponent\UserService;
@@ -25,10 +26,10 @@ class AuthenticationController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new UserRepository();
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = [];
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -51,8 +52,8 @@ class AuthenticationController extends AbstractController
             ];
 
             if($loginData['username'] and $loginData['password']) {
-                if (0 === ($tryLoginLastError = UserService::tryLogin($this->repository, User::class, $loginData))) {
-                    $user = $this->repository->findOneBy(User::class, ['username' => $loginData['username']]);
+                if (0 === ($tryLoginLastError = UserService::tryLogin($this->repository, $loginData))) {
+                    $user = $this->repository->findOneBy(['username' => $loginData['username']]);
                     if ($user) {
                         $this->session->set('user', $user->getId());
                         $this->session->set('login', true);
@@ -102,7 +103,7 @@ class AuthenticationController extends AbstractController
                 'language' => $this->request->getFieldAsString('user_locale')
             ];
 
-            if(0 === ($validationLastError = UserService::validate(User::class, $this->getRepositoryManager(), $userInputData))){
+            if(0 === ($validationLastError = UserService::validate(User::class, $this->repository, $userInputData))){
                 $user = new User();
                 $user->setUsername($userInputData['username']);
                 $user->setEmail($userInputData['email']);

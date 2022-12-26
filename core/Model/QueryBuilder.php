@@ -185,9 +185,9 @@ class QueryBuilder
      * @param string $alias
      * @return $this
      */
-    public function leftJoin(string $table, string $alias): QueryBuilder
+    public function leftJoin(string $table, string $alias, string $condition): QueryBuilder
     {
-        $this->joins[] = "LEFT JOIN {$table} {$alias}";
+        $this->joins[] = "LEFT JOIN {$table} {$alias} ON ({$condition})";
         return $this;
     }
 
@@ -338,7 +338,7 @@ class QueryBuilder
 
         foreach ($this->parameters as $key => $value)
         {
-            $this->statement->bindValue(':' . $key, $value);
+            $this->statement->bindValue(":{$key}", $value);
         }
 
         return $this;
