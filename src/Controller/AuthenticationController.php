@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\SchoolSubject;
 use App\Entity\User;
 use App\Menu\MenuBuilder;
+use App\Repository\ExamRepository;
 use App\Service\EncryptionService;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\UserComponent\UserService;

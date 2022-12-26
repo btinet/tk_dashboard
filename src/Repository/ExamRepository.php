@@ -6,11 +6,26 @@
 namespace App\Repository;
 
 use App\Entity\Exam;
+use App\Entity\SchoolSubject;
+use App\Entity\User;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
-use PDOException;
+
+/*
+ * @method Exam find(string $entity, $id)
+ * @method Exam findOneBy(string $entity, array $data)
+ * @method Exam[] findBy(string $entity, array $data, array $sortBy = [])
+ * @method Exam[] findAll(string $entity, array $sortBy = [], int $limit = 100, int $offset = 0)
+ */
 
 class ExamRepository extends AbstractRepositoryFactory
 {
+
+    public function __construct()
+    {
+        parent::__construct(Exam::class);
+    }
+
+    /*
 
     public function selectAll(): array
     {
@@ -21,8 +36,6 @@ class ExamRepository extends AbstractRepositoryFactory
         ;
     }
 
-
-
     public function selectOne($value = 5): ?Exam
     {
         return $this->QueryBuilder(Exam::class,'e')
@@ -31,10 +44,12 @@ class ExamRepository extends AbstractRepositoryFactory
             ->setParameter('id',$value)
             ->getQuery()
             ->getOneOrNullResult()
-            ;
+        ;
     }
 
-    public function search2($query): array
+    */
+
+    public function search($query): array
     {
         return $this->queryBuilder(Exam::class,'ex')
             ->select('ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId')
@@ -54,145 +69,163 @@ class ExamRepository extends AbstractRepositoryFactory
         ;
     }
 
-    /**
-     * @return array|false
-     */
-    public function search(string $queryString,string $entity, array $sortBy = [])
+    public function countExams()
     {
-        try {
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId
-                FROM exam ex
-                    INNER JOIN exam_has_school_subject e
-                        ON (ex.id = e.exam_id)
-                    INNER JOIN school_subject s
-                        ON (e.school_subject_id = s.id)
-                    INNER JOIN topic t
-                        ON (ex.topic_id = t.id)
-                WHERE ex.key_question LIKE '%{$queryString}%'
-                    OR s.label LIKE '%{$queryString}%'
-                    OR s.abbr LIKE '%{$queryString}%'
-                    OR t.title LIKE '%{$queryString}%'
-                    OR t.description LIKE '%{$queryString}%'
-                        GROUP BY ex.key_question
-                {$orderData}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS, $entity);
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        }
+        return $this->queryBuilder(Exam::class,'e')
+            ->select('count(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 
     /**
-     * @return array|false
+     * @param int $id
+     * @param array $orderBy
+     * @return SchoolSubject[] Gibt ein Array mit Objekten der jeweiligen ORM Entity zurück
      */
-    public function joinSchoolSubjects(int $id,string $entity, array $sortBy = [])
+    public function joinSchoolSubjects(int $id, array $orderBy = []): array
     {
-        try {
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT e.id, e.is_main_school_subject AS isMainSchoolSubject, s.label, s.abbr, s.id
-                FROM school_subject s 
-                    INNER JOIN exam_has_school_subject e ON (e.school_subject_id = s.id)
-                WHERE e.exam_id = {$id}
-                {$orderData}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS, $entity);
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
+        $query = $this->queryBuilder(SchoolSubject::class,'s')
+            ->select('e.id, e.is_main_school_subject AS isMainSchoolSubject')
+            ->select('s.label, s.abbr, s.id')
+            ->join('exam_has_school_subject','e','e.school_subject_id = s.id')
+            ->andWhere('e.exam_id = :id')
+            ->setParameter('id',$id)
+        ;
+
+        if(0 !== count($orderBy))
+        {
+            foreach ($orderBy as $key => $value)
+            {
+                $query->orderBy($key,$value);
+            }
         }
+
+        return $query
+            ->getQuery()
+            ->getResult()
+        ;
+
     }
 
     /**
-     * @return array|false
+     * @param int $id
+     * @param int $isMainSchoolSubject
+     * @param array $orderBy
+     * @return Exam[]
      */
-    public function findBySubject(int $id,int $isMainSchoolSubject, string $entity, array $sortBy = [])
+    public function findBySubject(int $id,int $isMainSchoolSubject, array $orderBy = []): array
     {
-        try {
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT ex.id AS id, ex.year AS year, ex.key_question AS keyQuestion, ex.topic_id AS topicId
-                FROM exam ex
-                    INNER JOIN exam_has_school_subject e
-                        ON (ex.id = e.exam_id)
-                    INNER JOIN school_subject s
-                        ON (e.school_subject_id = s.id)
-                WHERE e.school_subject_id = {$id}
-                  AND e.is_main_school_subject = {$isMainSchoolSubject}
-                  GROUP BY ex.key_question
-                {$orderData}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS, $entity);
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        }
-    }
+        $query = $this->queryBuilder(Exam::class,'ex')
+            ->select('ex.id AS id, ex.year AS year, ex.key_question AS keyQuestion, ex.topic_id AS topicId')
+            ->join('exam_has_school_subject','e','ex.id = e.exam_id')
+            ->join('school_subject','s','e.school_subject_id = s.id')
+            ->andWhere('e.school_subject_id = :id')
+            ->andWhere('e.is_main_school_subject = :is_main_subject')
+            ->setParameter('id',$id)
+            ->setParameter('is_main_subject',$isMainSchoolSubject)
+            ->groupBy('ex.key_question')
+        ;
 
-    public function findOneBySubject(int $id, string $entity, array $sortBy = [])
-    {
-        try {
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId
-                FROM exam ex
-                    INNER JOIN exam_has_school_subject e
-                        ON (ex.id = e.exam_id)
-                    INNER JOIN school_subject s
-                        ON (e.school_subject_id = s.id)
-                WHERE e.exam_id = {$id}
-                    ");
-            return $result->fetchObject($entity);
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
+        if(0 !== count($orderBy))
+        {
+            foreach ($orderBy as $key => $value)
+            {
+                $query->orderBy($key,$value);
+            }
         }
+
+        return $query
+            ->getQuery()
+            ->getResult()
+        ;
+
     }
 
     /**
-     * @return array|false
+     * @param int $id
+     * @param array $orderBy
+     * @return bool|Exam
      */
-    public function findExamsGroupByKeyQuestion(string $entity, array $sortBy = [])
+    public function findOneBySubject(int $id, array $orderBy = [])
     {
-        try {
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT ex.key_question AS keyQuestion, ex.id, ex.year, ex.topic_id AS topicId
-                FROM exam ex
-                    INNER JOIN exam_has_school_subject e
-                        ON (ex.id = e.exam_id)
-                    INNER JOIN school_subject s
-                        ON (e.school_subject_id = s.id)
-                        GROUP BY ex.key_question
-                {$orderData}
-                    ");
-            return $result->fetchAll(self::FETCH_CLASS, $entity);
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
+        $query = $this->queryBuilder(Exam::class,'ex')
+            ->select('ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId')
+            ->join('exam_has_school_subject','e','ex.id = e.exam_id')
+            ->join('school_subject','s','e.school_subject_id = s.id')
+            ->andWhere('e.exam_id = :id')
+            ->setParameter('id',$id)
+        ;
+
+        if(0 !== count($orderBy))
+        {
+            foreach ($orderBy as $key => $value)
+            {
+                $query->orderBy($key,$value);
+            }
         }
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
     }
 
-    public function findUserByExamId(int $examId, string $entity, array $sortBy = [])
+    /**
+     * @param array $orderBy
+     * @return Exam[]
+     */
+    public function findExamsGroupByKeyQuestion(array $orderBy = []): array
     {
-        try {
-            $orderData = self::createOrderData($sortBy);
-            $result = self::select
-            ("
-                SELECT *
-                FROM user u
-                    INNER JOIN exam_has_school_subject e
-                        ON (u.id = e.user_id)
-                WHERE e.exam_id = {$examId}
-                    ");
-            return $result->fetchObject($entity);
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
+        $query = $this->queryBuilder(Exam::class,'ex')
+            ->select('ex.key_question AS keyQuestion, ex.id, ex.year, ex.topic_id AS topicId')
+            ->join('exam_has_school_subject','e','ex.id = e.exam_id')
+            ->join('school_subject','s','e.school_subject_id = s.id')
+            ->groupBy('ex.key_question')
+        ;
+
+        if(0 !== count($orderBy))
+        {
+            foreach ($orderBy as $key => $value)
+            {
+                $query->orderBy($key,$value);
+            }
         }
+
+        return $query
+            ->getQuery()
+            ->getResult()
+        ;
+
     }
 
+    /**
+     * @param int $examId
+     * @param array $orderBy
+     * @return false|User
+     */
+    public function findUserByExamId(int $examId, array $orderBy = [])
+    {
+        $query = $this->queryBuilder(User::class,'u')
+            ->join('exam_has_school_subject','e','u.id = e.user_id')
+            ->andWhere('e.exam_id = :id')
+            ->setParameter('id',$examId)
+        ;
+
+        if(0 !== count($orderBy))
+        {
+            foreach ($orderBy as $key => $value)
+            {
+                $query->orderBy($key,$value);
+            }
+        }
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+    }
 
 }

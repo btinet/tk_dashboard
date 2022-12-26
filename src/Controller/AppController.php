@@ -49,7 +49,7 @@ class AppController extends AbstractController
             $result = [];
             if(!empty($queryString))
             {
-                $result = $this->repository->search2($queryString);
+                $result = $this->repository->search($queryString);
             }
 
             $mainMenu = new MenuBuilder();

@@ -3,13 +3,13 @@
 <title>AbstractRepositoryFactory.php</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
-.s0 { color: #629755; font-style: italic;}
-.s1 { color: #629755; font-weight: bold; font-style: italic;}
+.s0 { color: #a9b7c6;}
+.s1 { color: #cc7832;}
 .s2 { color: #a9b7c6;}
-.s3 { color: #cc7832;}
-.s4 { color: #a9b7c6;}
-.s5 { color: #9876aa;}
-.s6 { color: #6a8759;}
+.s3 { color: #9876aa;}
+.s4 { color: #6a8759;}
+.s5 { color: #629755; font-style: italic;}
+.s6 { color: #629755; font-weight: bold; font-style: italic;}
 .s7 { color: #6897bb;}
 .ls0 { height: 1px; border-width: 0; color: #4d4d4d; background-color:#4d4d4d}
 .ln { color: #606366; font-weight: normal; font-style: normal; }
@@ -21,25 +21,37 @@
 <font face="Arial, Helvetica" color="#000000">
 AbstractRepositoryFactory.php</font>
 </center></td></tr></table>
-<pre><span class="s0">/**</span>
-<a name="l72"><span class="ln">72   </span></a>     <span class="s0">* </span><span class="s1">@param </span><span class="s0">$id</span>
-<a name="l73"><span class="ln">73   </span></a>     <span class="s0">* </span><span class="s1">@param </span><span class="s0">string $entity</span>
-<a name="l74"><span class="ln">74   </span></a>     <span class="s0">* </span><span class="s1">@return </span><span class="s0">false|mixed|object|string</span>
-<a name="l75"><span class="ln">75   </span></a>     <span class="s0">*/</span>
-<a name="l76"><span class="ln">76   </span></a>    <span class="s3">public function </span><span class="s4">find</span><span class="s2">(</span><span class="s4">string </span><span class="s5">$entity</span><span class="s3">, </span><span class="s5">$id</span><span class="s2">)</span>
-<a name="l77"><span class="ln">77   </span></a>    <span class="s2">{</span>
-<a name="l78"><span class="ln">78   </span></a>        <span class="s5">$preparedStatement </span><span class="s2">= </span><span class="s6">&quot; id = :id &quot;</span><span class="s3">;</span>
-<a name="l79"><span class="ln">79   </span></a>        <span class="s3">try </span><span class="s2">{</span>
-<a name="l80"><span class="ln">80   </span></a>            <span class="s5">$entityClass </span><span class="s2">= </span><span class="s4">self</span><span class="s2">::</span><span class="s4">setEntityClass</span><span class="s2">(</span><span class="s5">$entity</span><span class="s2">)</span><span class="s3">;</span>
-<a name="l81"><span class="ln">81   </span></a>            <span class="s5">$tableName </span><span class="s2">= </span><span class="s4">self</span><span class="s2">::</span><span class="s4">generateSnakeTailString</span><span class="s2">(</span><span class="s5">$entityClass</span><span class="s2">-&gt;</span><span class="s4">getShortName</span><span class="s2">())</span><span class="s3">;</span>
-<a name="l82"><span class="ln">82   </span></a>            <span class="s5">$columns </span><span class="s2">= </span><span class="s4">self</span><span class="s2">::</span><span class="s4">setColumns</span><span class="s2">(</span><span class="s5">$entityClass</span><span class="s2">)</span><span class="s3">;</span>
-<a name="l83"><span class="ln">83   </span></a>            <span class="s5">$result </span><span class="s2">= </span><span class="s4">self</span><span class="s2">::</span><span class="s4">select</span><span class="s2">(</span><span class="s6">&quot;SELECT </span><span class="s2">{</span><span class="s5">$columns</span><span class="s2">} </span><span class="s6">FROM </span><span class="s2">{</span><span class="s5">$tableName</span><span class="s2">} </span><span class="s6">WHERE </span><span class="s2">{</span><span class="s5">$preparedStatement</span><span class="s2">}</span><span class="s6">&quot;</span><span class="s3">, </span><span class="s2">[</span><span class="s6">'id' </span><span class="s2">=&gt; </span><span class="s5">$id</span><span class="s2">])</span><span class="s3">;</span>
-<a name="l84"><span class="ln">84   </span></a>            <span class="s3">return </span><span class="s2">(</span><span class="s5">$result</span><span class="s2">-&gt;</span><span class="s4">rowCount</span><span class="s2">() !== </span><span class="s7">0 </span><span class="s2">) ? </span><span class="s5">$result</span><span class="s2">-&gt;</span><span class="s4">fetchObject</span><span class="s2">(</span><span class="s5">$entity</span><span class="s2">):</span><span class="s4">false</span><span class="s3">;</span>
-<a name="l85"><span class="ln">85   </span></a>        <span class="s2">} </span><span class="s3">catch </span><span class="s2">(</span><span class="s4">PDOException </span><span class="s5">$exception</span><span class="s2">) {</span>
-<a name="l86"><span class="ln">86   </span></a>            <span class="s3">return </span><span class="s5">$exception</span><span class="s2">-&gt;</span><span class="s4">getMessage</span><span class="s2">()</span><span class="s3">;</span>
-<a name="l87"><span class="ln">87   </span></a>        <span class="s2">} </span><span class="s3">catch </span><span class="s2">(</span><span class="s4">ReflectionException </span><span class="s5">$e</span><span class="s2">) {</span>
-<a name="l88"><span class="ln">88   </span></a>            <span class="s3">return </span><span class="s5">$e</span><span class="s2">-&gt;</span><span class="s4">getMessage</span><span class="s2">()</span><span class="s3">;</span>
-<a name="l89"><span class="ln">89   </span></a>        <span class="s2">}</span>
-<a name="l90"><span class="ln">90   </span></a>    <span class="s2">}</span></pre>
+<pre>
+<a name="l77"><span class="ln">77   </span></a>
+<a name="l78"><span class="ln">78   </span></a>    <span class="s1">public function </span><span class="s2">find2</span><span class="s0">(</span><span class="s2">int </span><span class="s3">$id</span><span class="s0">)</span>
+<a name="l79"><span class="ln">79   </span></a>    <span class="s0">{</span>
+<a name="l80"><span class="ln">80   </span></a>        <span class="s1">return </span><span class="s3">$this</span><span class="s0">-&gt;</span><span class="s2">queryBuilder</span><span class="s0">(</span><span class="s3">$this</span><span class="s0">-&gt;</span><span class="s2">entity</span><span class="s1">,</span><span class="s4">'e'</span><span class="s0">)</span>
+<a name="l81"><span class="ln">81   </span></a>            <span class="s0">-&gt;</span><span class="s2">andWhere</span><span class="s0">(</span><span class="s4">'e.id = :id'</span><span class="s0">)</span>
+<a name="l82"><span class="ln">82   </span></a>            <span class="s0">-&gt;</span><span class="s2">setParameter</span><span class="s0">(</span><span class="s4">'id'</span><span class="s1">,</span><span class="s3">$id</span><span class="s0">)</span>
+<a name="l83"><span class="ln">83   </span></a>            <span class="s0">-&gt;</span><span class="s2">getQuery</span><span class="s0">()</span>
+<a name="l84"><span class="ln">84   </span></a>            <span class="s0">-&gt;</span><span class="s2">getOneOrNullResult</span><span class="s0">()</span>
+<a name="l85"><span class="ln">85   </span></a>            <span class="s1">;</span>
+<a name="l86"><span class="ln">86   </span></a>    <span class="s0">}</span>
+<a name="l87"><span class="ln">87   </span></a>
+<a name="l88"><span class="ln">88   </span></a>    <span class="s5">/**</span>
+<a name="l89"><span class="ln">89   </span></a>     <span class="s5">* </span><span class="s6">@param </span><span class="s5">$id</span>
+<a name="l90"><span class="ln">90   </span></a>     <span class="s5">* </span><span class="s6">@param </span><span class="s5">string $entity</span>
+<a name="l91"><span class="ln">91   </span></a>     <span class="s5">* </span><span class="s6">@return </span><span class="s5">false|mixed|object|string</span>
+<a name="l92"><span class="ln">92   </span></a>     <span class="s5">*/</span>
+<a name="l93"><span class="ln">93   </span></a>    <span class="s1">public function </span><span class="s2">find</span><span class="s0">(</span><span class="s2">string </span><span class="s3">$entity</span><span class="s1">, </span><span class="s3">$id</span><span class="s0">)</span>
+<a name="l94"><span class="ln">94   </span></a>    <span class="s0">{</span>
+<a name="l95"><span class="ln">95   </span></a>        <span class="s3">$preparedStatement </span><span class="s0">= </span><span class="s4">&quot; id = :id &quot;</span><span class="s1">;</span>
+<a name="l96"><span class="ln">96   </span></a>        <span class="s1">try </span><span class="s0">{</span>
+<a name="l97"><span class="ln">97   </span></a>            <span class="s3">$entityClass </span><span class="s0">= </span><span class="s2">self</span><span class="s0">::</span><span class="s2">setEntityClass</span><span class="s0">(</span><span class="s3">$entity</span><span class="s0">)</span><span class="s1">;</span>
+<a name="l98"><span class="ln">98   </span></a>            <span class="s3">$tableName </span><span class="s0">= </span><span class="s2">self</span><span class="s0">::</span><span class="s2">generateSnakeTailString</span><span class="s0">(</span><span class="s3">$entityClass</span><span class="s0">-&gt;</span><span class="s2">getShortName</span><span class="s0">())</span><span class="s1">;</span>
+<a name="l99"><span class="ln">99   </span></a>            <span class="s3">$columns </span><span class="s0">= </span><span class="s2">self</span><span class="s0">::</span><span class="s2">setColumns</span><span class="s0">(</span><span class="s3">$entityClass</span><span class="s0">)</span><span class="s1">;</span>
+<a name="l100"><span class="ln">100  </span></a>            <span class="s3">$result </span><span class="s0">= </span><span class="s2">self</span><span class="s0">::</span><span class="s2">select</span><span class="s0">(</span><span class="s4">&quot;SELECT </span><span class="s0">{</span><span class="s3">$columns</span><span class="s0">} </span><span class="s4">FROM </span><span class="s0">{</span><span class="s3">$tableName</span><span class="s0">} </span><span class="s4">WHERE </span><span class="s0">{</span><span class="s3">$preparedStatement</span><span class="s0">}</span><span class="s4">&quot;</span><span class="s1">, </span><span class="s0">[</span><span class="s4">'id' </span><span class="s0">=&gt; </span><span class="s3">$id</span><span class="s0">])</span><span class="s1">;</span>
+<a name="l101"><span class="ln">101  </span></a>            <span class="s1">return </span><span class="s0">(</span><span class="s3">$result</span><span class="s0">-&gt;</span><span class="s2">rowCount</span><span class="s0">() !== </span><span class="s7">0 </span><span class="s0">) ? </span><span class="s3">$result</span><span class="s0">-&gt;</span><span class="s2">fetchObject</span><span class="s0">(</span><span class="s3">$entity</span><span class="s0">):</span><span class="s2">false</span><span class="s1">;</span>
+<a name="l102"><span class="ln">102  </span></a>        <span class="s0">} </span><span class="s1">catch </span><span class="s0">(</span><span class="s2">PDOException </span><span class="s3">$exception</span><span class="s0">) {</span>
+<a name="l103"><span class="ln">103  </span></a>            <span class="s1">return </span><span class="s3">$exception</span><span class="s0">-&gt;</span><span class="s2">getMessage</span><span class="s0">()</span><span class="s1">;</span>
+<a name="l104"><span class="ln">104  </span></a>        <span class="s0">} </span><span class="s1">catch </span><span class="s0">(</span><span class="s2">ReflectionException </span><span class="s3">$e</span><span class="s0">) {</span>
+<a name="l105"><span class="ln">105  </span></a>            <span class="s1">return </span><span class="s3">$e</span><span class="s0">-&gt;</span><span class="s2">getMessage</span><span class="s0">()</span><span class="s1">;</span>
+<a name="l106"><span class="ln">106  </span></a>        <span class="s0">}</span>
+<a name="l107"><span class="ln">107  </span></a>    <span class="s0">}</span></pre>
 </body>
 </html>

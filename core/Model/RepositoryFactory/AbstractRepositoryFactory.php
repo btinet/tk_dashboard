@@ -5,16 +5,22 @@
 
 namespace Core\Model\RepositoryFactory;
 
-use Core\Component\DataStorageComponent\EntityManagerComponent;
 use Core\Model\QueryBuilder;
 use PDO;
 use PDOException;
 use ReflectionException;
 
-class AbstractRepositoryFactory extends EntityManagerComponent
+abstract class AbstractRepositoryFactory
 {
 
+    protected string $entity;
+
     protected QueryBuilder $queryBuilder;
+
+    public function __construct(string $entity)
+    {
+        $this->entity = $entity;
+    }
 
     /**
      * @param string $entity ORM entity class representing the database table
@@ -26,69 +32,48 @@ class AbstractRepositoryFactory extends EntityManagerComponent
         return $this->queryBuilder = new QueryBuilder($entity,$alias);
     }
 
-
     /**
-     * @param string $entity
-     * @return int|string|null
+     * @return false|int
      */
-    public function count(string $entity)
+    public function count()
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $entityShortName = self::generateSnakeTailString($entityClass->getShortname());
+        return $this->queryBuilder($this->entity,'e')
+            ->getQuery()
+            ->getCountResult()
+        ;
 
-            $result = self::select("SELECT * FROM {$entityShortName}");
-            return $result->rowCount();
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        } catch (ReflectionException $e) {
-            echo $e->getMessage();
-
-        }
-        return null;
     }
 
     /**
-     * @param string $entity
-     * @return int|string|null
+     * @return false|int
      */
-    public function countDistinctBy(string $entity, string $column)
+    public function countDistinctBy(string $column)
     {
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $tableName = self::generateSnakeTailString($entityClass->getShortName());
-            $column = self::setColumns($entityClass);
-            $result = self::select("SELECT DISTINCT {$column} FROM {$tableName}");
-            return $result->rowCount();
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        } catch (ReflectionException $e) {
-            echo $e->getMessage();
+        return $this->queryBuilder($this->entity,'e')
+            ->selectDistinct(':column')
+            ->setParameter('column',$column)
+            ->getQuery()
+            ->getCountResult()
+        ;
 
-        }
-        return null;
     }
 
     /**
-     * @param $id
-     * @param string $entity
-     * @return false|mixed|object|string
+     * @param int $id
+     * @return false|mixed
      */
-    public function find(string $entity, $id)
+    public function find(int $id)
     {
-        $preparedStatement = " id = :id ";
-        try {
-            $entityClass = self::setEntityClass($entity);
-            $tableName = self::generateSnakeTailString($entityClass->getShortName());
-            $columns = self::setColumns($entityClass);
-            $result = self::select("SELECT {$columns} FROM {$tableName} WHERE {$preparedStatement}", ['id' => $id]);
-            return ($result->rowCount() !== 0 ) ? $result->fetchObject($entity):false;
-        } catch (PDOException $exception) {
-            return $exception->getMessage();
-        } catch (ReflectionException $e) {
-            return $e->getMessage();
-        }
+        return $this->queryBuilder($this->entity)
+            ->selectOrm()
+            ->andWhere('e.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+
     }
+
 
     /**
      * @param string $entity

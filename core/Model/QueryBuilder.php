@@ -34,8 +34,9 @@ class QueryBuilder
     private Config $config;
 
     protected string $entity;
+    protected ReflectionClass $reflectionClass;
     protected string $alias;
-    protected ?string $projection = null;
+    protected array $projection = [];
     protected array $conditions = [];
     protected array $parameters = [];
     protected array $query = [];
@@ -46,6 +47,7 @@ class QueryBuilder
     protected PDOStatement $statement;
     protected PDO $pdo;
 
+
     public function __construct
     (
         string $entity,
@@ -53,6 +55,11 @@ class QueryBuilder
     )
     {
         $this->entity = $entity;
+        try {
+            $this->reflectionClass = $this->setEntityClass($entity);
+        } catch (ReflectionException $e) {
+            var_dump($e->getMessage());die;
+        }
         $this->alias = $alias;
 
         $type = 'mysql';
@@ -82,23 +89,41 @@ class QueryBuilder
         }
     }
 
+
     /**
      * @throws ReflectionException
      */
-    protected function setEntityClass($entity): ReflectionClass
+    private function setEntityClass($entity): ReflectionClass
     {
-        if (!class_exists($entity)) throw new ReflectionException();
+        if (!class_exists($entity)) {
+            throw new ReflectionException();
+        }
         return new ReflectionClass($entity);
     }
 
-    protected function generateSnakeTailString(string $value): string
+    private function getColumns(): string
+    {
+        $entityProperties = $this->reflectionClass->getProperties();
+        $columns = false;
+        foreach ($entityProperties as $property) {
+            if(!$property->isPrivate())
+            {
+                $propertyNameAsArray = preg_split('/(?=[A-Z])/', $property->getName());
+                $propertyNameAsSnakeTail = strtolower(implode('_', $propertyNameAsArray));
+                $columns .= "{$propertyNameAsSnakeTail} AS {$property->getName()},";
+            }
+        }
+        return $columns = rtrim($columns, ',');
+    }
+
+    private function generateSnakeTailString(string $value): string
     {
         $valueAsArray = preg_split('/(?=[A-Z])/', $value);
         return strtolower(ltrim($propertyNameAsSnakeTail = implode('_', $valueAsArray),'_'));
     }
 
 
-    protected function getTableNameFromEntity(): string
+    private function getTableNameFromEntity(): string
     {
         try {
             return $this->generateSnakeTailString($this->setEntityClass($this->entity)->getShortName());
@@ -117,7 +142,27 @@ class QueryBuilder
      */
     public function select(string $fields): QueryBuilder
     {
-        $this->projection = $fields;
+        $this->projection[] = $fields;
+        return $this;
+    }
+
+    /**
+     * @return $this Übergibt alle Klasseneigenschaften der Sichtbarkeit "protected, public" als kommagetrennte
+     * Snake-Tail-Zeichenkette an die SQL-Abfrage
+     */
+    public function selectOrm(): QueryBuilder
+    {
+        $this->projection[] = $this->getColumns();
+        return $this;
+    }
+
+    /**
+     * @param string $fields
+     * @return $this
+     */
+    public function selectDistinct(string $fields): QueryBuilder
+    {
+        $this->projection[] = "DISTINCT {$fields}";
         return $this;
     }
 
@@ -130,6 +175,17 @@ class QueryBuilder
     public function join(string $table, string $alias, string $condition): QueryBuilder
     {
         $this->joins[] = "INNER JOIN {$table} {$alias} ON ({$condition})";
+        return $this;
+    }
+
+    /**
+     * @param string $table
+     * @param string $alias
+     * @return $this
+     */
+    public function leftJoin(string $table, string $alias): QueryBuilder
+    {
+        $this->joins[] = "LEFT JOIN {$table} {$alias}";
         return $this;
     }
 
@@ -215,9 +271,9 @@ class QueryBuilder
     public function getQuery(): QueryBuilder
     {
 
-        if($this->projection)
+        if(0 !== count($this->projection))
         {
-            $this->query['projection'] = "SELECT {$this->projection}";
+            $this->query['projection'] = "SELECT " . implode(',',$this->projection);
         } else {
             $this->query['projection'] = "SELECT *";
         }
@@ -264,7 +320,7 @@ class QueryBuilder
     }
 
     /**
-     * @return array
+     * @return array Returns array containing designated objects
      */
     public function getResult(): array
     {
@@ -280,6 +336,9 @@ class QueryBuilder
         return [];
     }
 
+    /**
+     * @return false|mixed Returns single row as object
+     */
     public function getOneOrNullResult()
     {
         if($this->statement->execute())
@@ -290,6 +349,34 @@ class QueryBuilder
             }
         }
 
+        return false;
+    }
+
+    /**
+     * @return false|mixed Returns single scalar element
+     */
+    public function getSingleScalarResult()
+    {
+        if($this->statement->execute())
+        {
+            if($this->statement->rowCount() == 1)
+            {
+                return $this->statement->fetchColumn();
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return false|int Returns row count
+     */
+    public function getCountResult()
+    {
+        if($this->statement->execute())
+        {
+            return $this->statement->rowCount();
+        }
         return false;
     }
 
