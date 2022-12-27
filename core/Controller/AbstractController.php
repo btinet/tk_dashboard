@@ -183,9 +183,10 @@ abstract class AbstractController implements ControllerInterface
     }
 
     /**
-     * @return AbstractRepositoryFactory the repository factory to build sql requests.
+     * @param string $entity
+     * @return GenericRepository the repository factory to build sql requests.
      */
-    public function getRepositoryManager(string $entity): AbstractRepositoryFactory
+    public function getRepositoryManager(string $entity): GenericRepository
     {
         return  new GenericRepository($entity);
     }

@@ -13,13 +13,14 @@
  * @var object $adminMenu Admin Menu
  * @var ProfileMenu $menu
  * @var AbstractConfig $trans
+ * @var GenericRepository|null $repository
  */
 
 /**
  * Übergeordnetes Template
  */
-
 use App\Menu\ProfileMenu;
+use App\Repository\GenericRepository;
 use Core\Component\ConfigComponent\AbstractConfig;
 use Core\Component\MenuComponent\AbstractMenuType;
 use Core\Component\SessionComponent\Session;
@@ -35,9 +36,6 @@ $this->layout('base.html',
 
 <?php $this->start('body') ?>
 <?php $this->insert('app/_offcanvas.html',[
-        'mainMenu'=>$mainMenu,
-        'response'=>$response,
-        'schoolSubjects' => $schoolSubjects,
         'current_school_subject_id' => $current_school_subject_id
     ]);
 ?>

@@ -2,24 +2,12 @@
 
 namespace App\Controller\Profile;
 
-use App\Entity\Exam;
-use App\Entity\ExamHasExamStatus;
-use App\Entity\RolePermission;
-use App\Entity\SchoolSubject;
 use App\Entity\UserHasExam;
-use App\Entity\UserRole;
-use App\Entity\UserRoleHasRolePermission;
 use App\Entity\UserRoleHasUser;
-use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
 use App\Menu\ProfileMenu;
-use App\Repository\ExamRepository;
-use App\Repository\SchoolSubjectRepository;
-use App\Repository\UserExamRepository;
-use App\Repository\UserRoleRepository;
-use App\Type\TableType;
+use App\Repository\GenericRepository;
 use Core\Component\DataStorageComponent\EntityManager;
-use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
@@ -28,38 +16,34 @@ class ProfileController extends AbstractController
 
     protected AbstractRepositoryFactory $repository;
 
-    /**
-     * @var array|false|string
-     */
-    private $schoolSubjects;
-    private AbstractMenu $adminMenu;
-
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new UserExamRepository();
+
+        $this->repository = new GenericRepository(UserHasExam::class);
         $mainMenu = new MenuBuilder();
-        $mainMenu->createMenu();
-        $schoolSubjectRepository = new SchoolSubjectRepository();
-        $this->schoolSubjects = $schoolSubjectRepository->findAll(['label' => 'asc']);
+
         $this->getView()->addData([
-            'schoolSubjects' => $this->schoolSubjects,
-            'mainMenu' => $mainMenu->render(),
+            'mainMenu' => $mainMenu->createMenu()->render(),
             'repository' => $this->repository
         ]);
 
+        /**
+         * Access Control
+         */
         $this->denyAccessUnlessHasPermission('show_profile');
     }
 
+    /**
+     * @return string
+     */
     public function index(): string
     {
 
         $user = $this->session->getUser();
         $profileMenu = new ProfileMenu($user);
-        $profileMenu->createMenu();
 
         $foreignExams = false;
-
         $attribs = [];
 
         if($this->session->UserHasPermission('has_supervisor'))
@@ -69,9 +53,7 @@ class ProfileController extends AbstractController
                 $attribs['supervise']['pupil_amount']=null;
                 $attribs['supervise']['supervise_enable']=false;
             }
-
             $examRepository = $this->repository->findBy(['supervisor_id'=> $user->getId()]);
-
             if($examRepository)
             {
                 foreach ($examRepository as $exam)
@@ -86,18 +68,15 @@ class ProfileController extends AbstractController
                     }
                 }
             }
-
         }
 
-        $examCount = $this->repository->countDistinctBy('key_question');
         $userExam = $this->repository->findBy(['user_id'=> $user->getId()]);
 
         return $this->render('profile/index.html',[
             'userExam' => $userExam,
             'foreignExams' => $foreignExams,
-            'examCount' => $examCount,
             'attribs' => $attribs,
-            'menu' => $profileMenu->render(),
+            'menu' => $profileMenu->createMenu()->render(),
         ]);
     }
 

@@ -40,6 +40,7 @@ class QueryBuilder
     protected string $offset = "";
     protected array $projection = [];
     protected array $conditions = [];
+    protected array $groupConditions = [];
     protected array $parameters = [];
     protected array $query = [];
     protected array $joins = [];
@@ -289,6 +290,28 @@ class QueryBuilder
         return $this;
     }
 
+    public function andHaving(string $condition): QueryBuilder
+    {
+        if(0 == $count = count($this->groupConditions))
+        {
+            $this->groupConditions[] = "$condition";
+        } else {
+            $this->groupConditions[] = "AND $condition";
+        }
+        return $this;
+    }
+
+    public function orHaving(string $condition): QueryBuilder
+    {
+        if(0 == $count = count($this->groupConditions))
+        {
+            $this->groupConditions[] = "$condition";
+        } else {
+            $this->groupConditions[] = "OR $condition";
+        }
+        return $this;
+    }
+
     /**
      * @return $this
      */
@@ -322,6 +345,11 @@ class QueryBuilder
         if (0 !== count($this->groupBy))
         {
             $this->query['group'] = "GROUP BY " . implode(',',$this->groupBy);
+        }
+
+        if (0 !== count($this->groupConditions))
+        {
+            $this->query['group_condition'] = "HAVING " . implode(' ',$this->groupConditions);
         }
 
         if (0 !== count($this->orderBy))

@@ -6,6 +6,7 @@
 namespace Core\Model\RepositoryFactory;
 
 use Core\Model\QueryBuilder;
+use League\Plates\Template\Func;
 
 abstract class AbstractRepositoryFactory
 {
@@ -74,6 +75,7 @@ abstract class AbstractRepositoryFactory
     {
         $query = $this->queryBuilder($this->entity)
             ->selectOrm()
+            ->orderBy($orderBy)
         ;
 
         if(null !== $limit)
@@ -93,20 +95,22 @@ abstract class AbstractRepositoryFactory
 
     }
 
-    public function findBy(array $data, array $sortBy = [], int $limit = null, int $offset = null): array
+    public function findBy(array $data, array $orderBy = [], int $limit = null, int $offset = null): array
     {
         $query = $this->queryBuilder($this->entity)
             ->selectOrm()
+            ->orderBy($orderBy)
         ;
 
         if(0 !== count($data))
         {
             foreach ($data as $key => $value)
             {
-                $query
-                    ->andWhere("$key = :$key")
-                    ->setParameter($key, $value)
-                ;
+                $query->andWhere($this->makeCondition($key, $value));
+                if(!is_bool($value))
+                {
+                    $query->setParameter($key, $value);
+                }
             }
         }
 
@@ -139,10 +143,11 @@ abstract class AbstractRepositoryFactory
         {
             foreach ($data as $key => $value)
             {
-                $query
-                    ->andWhere("$key = :$key")
-                    ->setParameter($key, $value)
-                ;
+                $query->andWhere($this->makeCondition($key, $value));
+                if(!is_bool($value))
+                {
+                    $query->setParameter($key, $value);
+                }
             }
         }
 
@@ -150,6 +155,27 @@ abstract class AbstractRepositoryFactory
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    private function makeCondition(string $key, $value): string
+    {
+        $condition = null;
+        switch(strtoupper(gettype($value))){
+
+            case 'NULL': // $foo === null
+                $condition = "$key IS NULL";
+                break;
+
+            case 'BOOLEAN': // $foo === false
+                $condition = ($value) ? "$key IS NOT NULL" : "$key IS NULL" ;
+                break;
+
+            default:
+                $condition = "$key = :$key";
+                break;
+        }
+
+        return $condition;
     }
 
 }

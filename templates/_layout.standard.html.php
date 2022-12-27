@@ -10,12 +10,15 @@
  * @var Session $session Session-Objekt
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var null|int $current_school_subject_id Id des aktuellen Schulfachs
+ * @var GenericRepository $repository
  */
 
 /**
  * Übergeordnetes Template
  */
 
+use App\Entity\SchoolSubject;
+use App\Repository\GenericRepository;
 use Core\Component\SessionComponent\Session;
 
 $this->layout('base.html',
@@ -29,9 +32,6 @@ $this->layout('base.html',
 
 <?php $this->start('body') ?>
 <?php $this->insert('app/_offcanvas.html',[
-        'mainMenu'=>$mainMenu,
-        'response'=>$response,
-        'schoolSubjects' => $schoolSubjects,
         'current_school_subject_id' => $current_school_subject_id
     ]);
 ?>
@@ -138,7 +138,7 @@ $this->layout('base.html',
                             </div>
                             <div class="collapse show" id="collapseExample">
                                 <div class="list-group list-group-flush border-top border-bottom">
-                                    <?php foreach($schoolSubjects as $subject): ?>
+                                    <?php foreach($schoolSubjects = $repository->setEntity(SchoolSubject::class)->findAll(['label'=>'asc']) as $subject): ?>
 
                                         <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active bg-gradient' : '';?>
                                         <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center" style="border-left-style: solid;border-left-width: 8px!important;border-left-color: <?=$subject->getColor()?>">

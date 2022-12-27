@@ -5,7 +5,6 @@
 
 /**
  * @var object $response enthält Response-Daten des Controllers
- * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var object $exams enthält die MySQL-Tabelle "exam"
  * @var array $subjectTypes Fachbereiche
  */

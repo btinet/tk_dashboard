@@ -4,11 +4,13 @@
 * @var object|null $meta enthält Meta-Daten der Website
 * @var object $response enthält Response-Daten des Controllers
 * @var object $mainMenu Hauptnavigation
-* @var object $schoolSubjects Schulfächer
 * @var int $current_school_subject_id Id des aktuellen Schulfachs
 * @var AbstractConfig $trans
+* @var GenericRepository $repository
 */
 
+use App\Entity\SchoolSubject;
+use App\Repository\GenericRepository;
 use Core\Component\ConfigComponent\AbstractConfig;
 
 ?>
@@ -37,7 +39,7 @@ use Core\Component\ConfigComponent\AbstractConfig;
 
         <h5 class="h6 text-uppercase fw-light px-3 mt-5">Fächer</h5>
         <div class="list-group list-group-flush border mb-3">
-            <?php if($schoolSubjects): ?>
+            <?php if($schoolSubjects = $repository->setEntity(SchoolSubject::class)->findAll(['label'=>'asc'])): ?>
                 <?php foreach($schoolSubjects as $subject): ?>
                     <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active' : '';?>
                     <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center">

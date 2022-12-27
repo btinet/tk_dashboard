@@ -39,28 +39,6 @@ $this->layout('_layout.profile.html',
 
 ?>
 
-<?php
-$groups = [];
-$groupCount = [];
-foreach ($session->getUser()->getGroup() as $group) {
-    $groups[] = $group->getLabel();
-    $groupCount[] = count($group->getUsers());
-}
-
-$subjects = [];
-$examCounts = [];
-$subjectColors = [];
-
-
-foreach ($schoolSubjects as $subject) {
-    $subjects[] = $subject->getAbbr();
-    $examCounts[] = $subject->countExams();
-    $subjectColors[] = $subject->getColor();
-}
-$examCountMax = max($examCounts);
-
-?>
-
 <?php $this->start('main') ?>
 
 
