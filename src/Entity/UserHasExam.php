@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\GenericRepository;
 use App\Repository\SchoolSubjectRepository;
 use App\Repository\UserExamRepository;
 use Core\Model\DateTimeEntityTrait;
@@ -44,7 +45,15 @@ final class UserHasExam
     public function getSecondarySchoolSubject(){return $this->subjectRepository->find($this->secondarySubjectId);}
     public function getStatus(){return $this->repository->joinStatusByUserExamId($this->id);}
     public function getSupervisor(){return $this->repository->find($this->supervisorId);}
-    public function getAllExamStatus(){return $this->repository->findBy(['userExamId' => $this->id],['created'=>'desc']);}
+
+    /**
+     * @return ExamHasExamStatus[]
+     */
+    public function getAllExamStatus(): array
+    {
+        $examStatusRepo = new GenericRepository(ExamHasExamStatus::class);
+        return $examStatusRepo->findBy(['user_exam_id' => $this->id],['created'=>'desc']);
+    }
 
     /**
      * Entity-Getter

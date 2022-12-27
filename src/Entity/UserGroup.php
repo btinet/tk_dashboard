@@ -104,7 +104,7 @@ final class UserGroup
 
     public function getRole()
     {
-        $role = $this->repository->findOneBy(UserRole::class,[
+        $role = $this->repository->findOneBy([
             'id' => $this->roleId
         ]);
         if(!array_filter((array)$role)) return false;

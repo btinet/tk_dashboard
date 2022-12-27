@@ -2,6 +2,8 @@
 
 namespace Core\Controller;
 
+use App\Entity\SchoolSubjectType;
+use App\Repository\GenericRepository;
 use Core\Component\ConfigComponent\Config;
 use Core\Component\ConfigComponent\RouteConfig;
 use Core\Component\HttpComponent\Request;
@@ -183,9 +185,9 @@ abstract class AbstractController implements ControllerInterface
     /**
      * @return AbstractRepositoryFactory the repository factory to build sql requests.
      */
-    public function getRepositoryManager(): AbstractRepositoryFactory
+    public function getRepositoryManager(string $entity): AbstractRepositoryFactory
     {
-        return new AbstractRepositoryFactory();
+        return  new GenericRepository($entity);
     }
 
     /**

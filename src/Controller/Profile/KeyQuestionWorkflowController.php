@@ -37,7 +37,7 @@ class KeyQuestionWorkflowController extends AbstractController
         $this->repository = new UserRoleRepository();
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -63,7 +63,8 @@ class KeyQuestionWorkflowController extends AbstractController
         if($this->session->getUser())
         {
 
-            $schoolSubjects = $this->repository->findAll(SchoolSubject::class);
+            $sr = $this->getRepositoryManager(SchoolSubject::class);
+            $schoolSubjects = $sr->findAll();
             $userExamRepository = new UserExamRepository();
 
             $supervisorList = [];
@@ -94,7 +95,8 @@ class KeyQuestionWorkflowController extends AbstractController
      */
     public function copyKeyQuestion(int $examId)
     {
-        $exam = $this->repository->find(Exam::class,$examId);
+        $er = $this->getRepositoryManager(Exam::class);
+        $exam = $er->find($examId);
         if($this->session->getUser())
         {
             $userExamRepository = new UserExamRepository();

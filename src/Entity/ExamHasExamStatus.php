@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\GenericRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -18,9 +19,26 @@ final class ExamHasExamStatus
 
     private AbstractRepositoryFactory $repository;
 
-    public function getSupervisor(){return $this->repository->find(User::class,$this->supervisorId);}
-    public function getUserExam(){return $this->repository->find(UserHasExam::class,$this->userExamId);}
-    public function getExamStatus(){return $this->repository->find(ExamStatus::class,$this->examStatusId);}
+    /**
+     * @return false|User
+     */
+    public function getSupervisor(){
+        return $this->repository->setEntity(User::class)->find($this->supervisorId);
+    }
+
+    /**
+     * @return false|UserHasExam
+     */
+    public function getUserExam(){
+        return $this->repository->setEntity(UserHasExam::class)->find($this->userExamId);
+    }
+
+    /**
+     * @return false|ExamStatus
+     */
+    public function getExamStatus(){
+        return $this->repository->setEntity(ExamStatus::class)->find($this->examStatusId);
+    }
 
     /**
      * Entity-Attributes
@@ -33,7 +51,7 @@ final class ExamHasExamStatus
 
     public function __construct()
     {
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new GenericRepository(ExamHasExamStatus::class);
     }
 
     /**

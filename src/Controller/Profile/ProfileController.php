@@ -110,7 +110,7 @@ class ProfileController extends AbstractController
         $profileMenu = new ProfileMenu($this->session->getUser());
         $profileMenu->createMenu();
 
-        $exam = $this->repository->find(UserHasExam::class,$userExamId);
+        $exam = $this->repository->find($userExamId);
 
         return $this->render('profile/show_exam.html',[
             'exam' => $exam,
@@ -123,7 +123,8 @@ class ProfileController extends AbstractController
         if($this->request->isFormSubmitted() and $this->request->isPostRequest())
         {
             $em = new EntityManager();
-            $userRoleHasUser = $this->getRepositoryManager()->findOneBy(UserRoleHasUser::class,[
+
+            $userRoleHasUser = $this->getRepositoryManager(UserRoleHasUser::class)->findOneBy([
                 'userId' => $this->session->getUser()->getId(),
                 'userRoleId' => 18
             ]);

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ExamRepository;
+use App\Repository\GenericRepository;
 use Core\Model\DateTimeEntityTrait;
 use Core\Model\IdEntityTrait;
 use stdClass;
@@ -97,7 +98,8 @@ final class Exam
      */
     public function getTopic()
     {
-        return $this->repository->findOneBy([
+        $tr = new GenericRepository(Topic::class);
+        return $tr->findOneBy([
             'id' => $this->getTopicId()
         ]);
     }

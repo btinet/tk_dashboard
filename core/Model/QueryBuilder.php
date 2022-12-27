@@ -112,7 +112,13 @@ class QueryBuilder
             {
                 $propertyNameAsArray = preg_split('/(?=[A-Z])/', $property->getName());
                 $propertyNameAsSnakeTail = strtolower(implode('_', $propertyNameAsArray));
-                $columns .= "{$propertyNameAsSnakeTail} AS {$property->getName()},";
+                if(null !== $this->alias)
+                {
+                    $columns .= "{$this->alias}.{$propertyNameAsSnakeTail} AS {$property->getName()},";
+                } else {
+                    $columns .= "{$propertyNameAsSnakeTail} AS {$property->getName()},";
+                }
+
             }
         }
         return $columns = rtrim($columns, ',');

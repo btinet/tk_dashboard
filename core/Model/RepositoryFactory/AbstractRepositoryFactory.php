@@ -93,7 +93,7 @@ abstract class AbstractRepositoryFactory
 
     }
 
-    public function findBy(array $data, array $sortBy = [], int $limit = null, int $offset = null)
+    public function findBy(array $data, array $sortBy = [], int $limit = null, int $offset = null): array
     {
         $query = $this->queryBuilder($this->entity)
             ->selectOrm()

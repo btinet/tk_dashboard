@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\GenericRepository;
 use App\Repository\UserRoleRepository;
 use App\Service\EncryptionService;
 use Core\Component\DataStorageComponent\EntityManager;
@@ -246,8 +247,10 @@ final class User
      */
     public function setUserRoleId(int $userRoleId = 10): User
     {
-        $user = $this->repository->findOneBy(User::class,['username' => $this->getUsername()]);
-        if(!$userHasRole = $this->repository->find(UserRoleHasUser::class,$user->getId())){
+        $gr = new GenericRepository(User::class);
+        $user = $gr->findOneBy(['username' => $this->getUsername()]);
+        $gr->setEntity(UserRoleHasUser::class);
+        if(!$userHasRole = $gr->find($user->getId())){
             $userRole = new UserRoleHasUser();
             $userRole
                 ->setUserId($user->getId())
@@ -271,7 +274,8 @@ final class User
      */
     public function getRoleAtrribs(int $roleId = 18)
     {
-        $result = $this->repository->findOneBy(UserRoleHasUser::class,['user_id'=>$this->id,'user_role_id'=>$roleId]);
+        $gr = new GenericRepository(UserRoleHasUser::class);
+        $result = $gr->findOneBy(['user_id'=>$this->id,'user_role_id'=>$roleId]);
         return ($result)? $result->getAttribsAsArray():null;
     }
 

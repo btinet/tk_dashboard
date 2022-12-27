@@ -7,6 +7,7 @@ use App\Entity\SchoolSubject;
 use App\Entity\SchoolSubjectType;
 use App\Menu\MenuBuilder;
 use App\Repository\ExamRepository;
+use App\Repository\GenericRepository;
 use App\Repository\SchoolSubjectRepository;
 use Core\Controller\AbstractController;
 
@@ -14,6 +15,7 @@ class ExamController extends AbstractController
 {
 
     private ExamRepository $repository;
+    private SchoolSubjectRepository $subjectRepository;
     protected array $schoolSubjects;
 
     public function __construct()
@@ -22,8 +24,8 @@ class ExamController extends AbstractController
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
         $this->repository = new ExamRepository();
-        $schoolSubjectRepository = new SchoolSubjectRepository();
-        $this->schoolSubjects = $schoolSubjectRepository->findAll(['label' => 'asc']);
+        $this->subjectRepository = new SchoolSubjectRepository();
+        $this->schoolSubjects = $this->subjectRepository->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -36,9 +38,8 @@ class ExamController extends AbstractController
      */
     public function index(): string
     {
-        $schoolSubjects = $this->schoolSubjects;
         $exams = []; //$this->repository->findExamsGroupByKeyQuestion( Exam::class, ['year' => 'desc']);
-        $examTypes = $this->repository->findAll(SchoolSubjectType::class);
+        $examTypes = $this->getRepositoryManager(SchoolSubjectType::class)->findAll();
 
         /**
          * Meta-Daten müssen nicht manuell der render-Methode übergeben werden.
@@ -63,7 +64,7 @@ class ExamController extends AbstractController
             'examsByMainSchoolSubject' => $examsByMainSchoolSubject,
             'examsBySecondarySchoolSubject' => $examsBySecondarySchoolSubject,
             'current_school_subject_id' => $id,
-            'currentSchoolSubject' => $this->repository->find(SchoolSubject::class,$id)
+            'currentSchoolSubject' => $this->subjectRepository->find($id)
         ]);
     }
 
@@ -73,7 +74,7 @@ class ExamController extends AbstractController
      */
     public function show(int $examId): string
     {
-        $exam = $this->repository->find(Exam::class,$examId);
+        $exam = $this->getRepositoryManager(Exam::class)->find($examId);
 
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
