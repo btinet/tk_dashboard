@@ -2,7 +2,6 @@
 
 namespace Core\Controller;
 
-use App\Entity\SchoolSubjectType;
 use App\Repository\GenericRepository;
 use Core\Component\ConfigComponent\Config;
 use Core\Component\ConfigComponent\RouteConfig;
@@ -13,50 +12,27 @@ use Core\Component\SessionComponent\Session;
 use Core\Component\SessionComponent\Translation;
 use Core\ErrorHandler\Exception\ResponseException;
 use Core\ErrorHandler\ExceptionHandler;
-use Core\Model\AbstractModel;
-use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 use Exception;
 use League\Plates\Engine as View;
-use PDO;
 
 abstract class AbstractController implements ControllerInterface
 {
 
-    /**
-     * @var Meta
-     */
+
     protected Meta $meta;
 
-    /**
-     * @var Request
-     */
     protected Request $request;
 
-    /**
-     * @var Response
-     */
     protected Response $response;
 
-    /**
-     * @var Session
-     */
     protected Session $session;
 
-    /**
-     * @var RouteConfig
-     */
     private RouteConfig $routes;
 
     protected Config $trans;
 
-    /**
-     * @var array|null
-     */
     private ?array $templateData = [];
 
-    /**
-     * @var View
-     */
     private View $view;
 
     public function __construct()
@@ -67,8 +43,6 @@ abstract class AbstractController implements ControllerInterface
         $this->routes = new RouteConfig('config/routes.yaml');
         $this->response = new Response($this->routes);
         $this->request = new Request($this->session->get('csrf_check'));
-
-
 
         $trans = new Translation($config, $this->session);
         $this->trans = $trans->parse();
@@ -198,9 +172,9 @@ abstract class AbstractController implements ControllerInterface
     public function getFlash(string $message = null, string $type = null): ?string
     {
 
-        $message = $message ? $message : $this->session->get('message');
-        $type = $type ? $type : $this->session->get('message_type');
-        $type = $type ? $type : 'success';
+        $message = $message ?: $this->session->get('message');
+        $type = $type ?: $this->session->get('message_type');
+        $type = $type ?: 'success';
 
         if ($message) {
 

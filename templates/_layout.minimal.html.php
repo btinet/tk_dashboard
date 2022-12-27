@@ -5,43 +5,17 @@
 
 /**
  * @var object|null $meta enthält Meta-Daten der Website
- * @var object $response enthält Response-Daten des Controllers
- * @var object $mainMenu Hauptnavigation
- * @var Session $session Session-Objekt
- * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
- * @var null|int $current_school_subject_id Id des aktuellen Schulfachs
  */
 
-/**
- * Übergeordnetes Template
- */
-
-use Core\Component\SessionComponent\Session;
-
-$this->layout('base.html',
-    [
-        'meta'=>$meta,
-        'response'=>$response,
-    ]
-);
+$this->layout('base.html');
 
 ?>
 
 <?php $this->start('body') ?>
-<?php $this->insert('app/_offcanvas.html',[
-        'mainMenu'=>$mainMenu,
-        'response'=>$response,
-        'schoolSubjects' => $schoolSubjects,
-        'current_school_subject_id' => $current_school_subject_id
-    ]);
-?>
 
-
-        <?php if ($this->section('header')): ?>
-            <?=$this->section('header')?>
-        <?php else: ?>
-
-        <?php endif ?>
+    <?php if ($this->section('header')): ?>
+        <?=$this->section('header')?>
+    <?php endif ?>
 
     <main id="main" class="flex-grow-1">
         <div class="container-fluid">
@@ -56,16 +30,17 @@ $this->layout('base.html',
         <?php endif ?>
         </div>
     </main>
-<footer id="footer" class="mt-auto border-top text-bg-lighter">
-    <?php if ($this->section('footer')): ?>
-        <?=$this->section('footer')?>
-    <?php else: ?>
-        <div class="container">
-            <div class="py-3 d-flex justify-content-start align-items-center">
-                <a class="small me-2" target="_blank" href="https://github.com/btinet/tk_dashboard"><i class="fa fa-github me-1"></i>Github</a><?=$meta->get('footer_text')?>
-            </div>
-        </div>
-    <?php endif ?>
-</footer>
-<?php $this->stop() ?>
 
+    <footer id="footer" class="mt-auto border-top text-bg-lighter">
+        <?php if ($this->section('footer')):?>
+            <?=$this->section('footer')?>
+        <?php else: ?>
+            <div class="container">
+                <div class="py-3 d-flex justify-content-start align-items-center">
+                    <a class="small me-2" target="_blank" href="https://github.com/btinet/tk_dashboard"><i class="fa fa-github me-1"></i>Github</a><?=$meta->get('footer_text')?>
+                </div>
+            </div>
+        <?php endif ?>
+    </footer>
+
+<?php $this->stop() ?>
