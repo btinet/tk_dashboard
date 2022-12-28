@@ -11,8 +11,8 @@ use App\Entity\User;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 
 /**
- * @method false|Exam find(int $id)
- * @method false|Exam findOneBy(array $data)
+ * @method null|Exam find(int $id)
+ * @method null|Exam findOneBy(array $data)
  * @method Exam[] findBy(array $data, array $sortBy = [], int $limit = null, int $offset = null)
  * @method Exam[] findAll(array $orderBy = [], int $limit = null, int $offset = null)
  */
@@ -123,7 +123,7 @@ class ExamRepository extends AbstractRepositoryFactory
     /**
      * @param int $id
      * @param array $orderBy
-     * @return bool|Exam
+     * @return false|Exam
      */
     public function findOneBySubject(int $id, array $orderBy = [])
     {
@@ -134,6 +134,7 @@ class ExamRepository extends AbstractRepositoryFactory
             ->andWhere('e.exam_id = :id')
             ->setParameter('id',$id)
             ->orderBy($orderBy)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;

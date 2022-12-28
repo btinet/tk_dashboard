@@ -385,13 +385,8 @@ class QueryBuilder
     {
         if($this->statement->execute())
         {
-
-            if($this->statement->rowCount() !== 0)
-            {
-                return $this->statement->fetchAll($this->pdo::FETCH_CLASS, $this->entity);
-            }
+            return $this->statement->fetchAll($this->pdo::FETCH_CLASS, $this->entity);
         }
-
         return [];
     }
 
@@ -402,12 +397,8 @@ class QueryBuilder
     {
         if($this->statement->execute())
         {
-            if($this->statement->rowCount() !== 0)
-            {
-                return $this->statement->fetchObject($this->entity);
-            }
+            return $this->statement->fetchObject($this->entity);
         }
-
         return false;
     }
 
@@ -423,7 +414,6 @@ class QueryBuilder
                 return $this->statement->fetchColumn();
             }
         }
-
         return false;
     }
 

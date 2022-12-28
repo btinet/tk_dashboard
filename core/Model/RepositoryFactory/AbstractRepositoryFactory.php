@@ -55,12 +55,13 @@ abstract class AbstractRepositoryFactory implements RepositoryFactoryInterface
 
     }
 
-    public function find($id): ?object
+    public function find($id)
     {
         return $this->queryBuilder($this->entity)
             ->selectOrm()
             ->andWhere('id = :id')
             ->setParameter('id',$id)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
             ;
@@ -145,6 +146,7 @@ abstract class AbstractRepositoryFactory implements RepositoryFactoryInterface
         }
 
         return $query
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
