@@ -9,8 +9,8 @@
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var Object $adminMenu Set of menu objects
  * @var Object $trans Translation object
- * @var Object $userExam user exam object
- * @var Object $foreignExams foreign user exam object
+ * @var UserHasExam[] $userExam user exam object
+ * @var UserHasExam[] $foreignExams foreign user exam object
  * @var int $examCount Number of distinct Exams listet
  * @var Session $session Session-Objekt
  * @var array|false $userData Formulardaten des Benutzers
@@ -19,11 +19,11 @@
  * @var int $currentPage current offset
  * @var array $attribs user_role attributes and data
  * @var ProfileMenu $menu
- * @var null|Exam[]|Exam $test
  */
 
 
 use App\Entity\Exam;
+use App\Entity\UserHasExam;
 use App\Menu\ProfileMenu;
 use Core\Component\SessionComponent\Session;
 

@@ -85,27 +85,16 @@ class ExamRepository extends AbstractRepositoryFactory
      */
     public function joinSchoolSubjects(int $id, array $orderBy = []): array
     {
-        $query = $this->queryBuilder(SchoolSubject::class,'s')
+        return $this->queryBuilder(SchoolSubject::class,'s')
             ->select('e.id, e.is_main_school_subject AS isMainSchoolSubject')
             ->select('s.label, s.abbr, s.id')
             ->join('exam_has_school_subject','e','e.school_subject_id = s.id')
             ->andWhere('e.exam_id = :id')
             ->setParameter('id',$id)
-        ;
-
-        if(0 !== count($orderBy))
-        {
-            foreach ($orderBy as $key => $value)
-            {
-                $query->orderBy($key,$value);
-            }
-        }
-
-        return $query
+            ->orderBy($orderBy)
             ->getQuery()
             ->getResult()
         ;
-
     }
 
     /**
@@ -116,7 +105,7 @@ class ExamRepository extends AbstractRepositoryFactory
      */
     public function findBySubject(int $id,int $isMainSchoolSubject, array $orderBy = []): array
     {
-        $query = $this->queryBuilder(Exam::class,'ex')
+        return $this->queryBuilder(Exam::class,'ex')
             ->select('ex.id AS id, ex.year AS year, ex.key_question AS keyQuestion, ex.topic_id AS topicId')
             ->join('exam_has_school_subject','e','ex.id = e.exam_id')
             ->join('school_subject','s','e.school_subject_id = s.id')
@@ -125,21 +114,10 @@ class ExamRepository extends AbstractRepositoryFactory
             ->setParameter('id',$id)
             ->setParameter('is_main_subject',$isMainSchoolSubject)
             ->groupBy('ex.key_question')
-        ;
-
-        if(0 !== count($orderBy))
-        {
-            foreach ($orderBy as $key => $value)
-            {
-                $query->orderBy($key,$value);
-            }
-        }
-
-        return $query
+            ->orderBy($orderBy)
             ->getQuery()
             ->getResult()
         ;
-
     }
 
     /**
@@ -149,27 +127,16 @@ class ExamRepository extends AbstractRepositoryFactory
      */
     public function findOneBySubject(int $id, array $orderBy = [])
     {
-        $query = $this->queryBuilder(Exam::class,'ex')
+        return $this->queryBuilder(Exam::class,'ex')
             ->select('ex.id, ex.year, ex.key_question AS keyQuestion, ex.topic_id AS topicId')
             ->join('exam_has_school_subject','e','ex.id = e.exam_id')
             ->join('school_subject','s','e.school_subject_id = s.id')
             ->andWhere('e.exam_id = :id')
             ->setParameter('id',$id)
-        ;
-
-        if(0 !== count($orderBy))
-        {
-            foreach ($orderBy as $key => $value)
-            {
-                $query->orderBy($key,$value);
-            }
-        }
-
-        return $query
+            ->orderBy($orderBy)
             ->getQuery()
             ->getOneOrNullResult()
         ;
-
     }
 
     /**
@@ -178,26 +145,15 @@ class ExamRepository extends AbstractRepositoryFactory
      */
     public function findExamsGroupByKeyQuestion(array $orderBy = []): array
     {
-        $query = $this->queryBuilder(Exam::class,'ex')
+        return $this->queryBuilder(Exam::class,'ex')
             ->select('ex.key_question AS keyQuestion, ex.id, ex.year, ex.topic_id AS topicId')
             ->join('exam_has_school_subject','e','ex.id = e.exam_id')
             ->join('school_subject','s','e.school_subject_id = s.id')
             ->groupBy('ex.key_question')
-        ;
-
-        if(0 !== count($orderBy))
-        {
-            foreach ($orderBy as $key => $value)
-            {
-                $query->orderBy($key,$value);
-            }
-        }
-
-        return $query
+            ->orderBy($orderBy)
             ->getQuery()
             ->getResult()
         ;
-
     }
 
     /**
@@ -207,26 +163,15 @@ class ExamRepository extends AbstractRepositoryFactory
      */
     public function findUserByExamId(int $examId, array $orderBy = [])
     {
-        $query = $this->queryBuilder(User::class,'u')
+        return $this->queryBuilder(User::class,'u')
             ->selectOrm()
             ->join('exam_has_school_subject','e','u.id = e.user_id')
             ->andWhere('e.exam_id = :id')
             ->setParameter('id',$examId)
-        ;
-
-        if(0 !== count($orderBy))
-        {
-            foreach ($orderBy as $key => $value)
-            {
-                $query->orderBy($key,$value);
-            }
-        }
-
-        return $query
+            ->orderBy($orderBy)
             ->getQuery()
             ->getOneOrNullResult()
         ;
-
     }
 
 }

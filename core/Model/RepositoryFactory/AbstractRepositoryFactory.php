@@ -6,9 +6,8 @@
 namespace Core\Model\RepositoryFactory;
 
 use Core\Model\QueryBuilder;
-use League\Plates\Template\Func;
 
-abstract class AbstractRepositoryFactory
+abstract class AbstractRepositoryFactory implements RepositoryFactoryInterface
 {
 
     protected string $entity;
@@ -56,10 +55,7 @@ abstract class AbstractRepositoryFactory
 
     }
 
-    /**
-     * @return false|mixed
-     */
-    public function find($id)
+    public function find($id): ?object
     {
         return $this->queryBuilder($this->entity)
             ->selectOrm()
@@ -130,10 +126,7 @@ abstract class AbstractRepositoryFactory
         ;
     }
 
-    /**
-     * @param array $data Array
-     */
-    public function findOneBy(array $data)
+    public function findOneBy(array $data): ?object
     {
         $query = $this->queryBuilder($this->entity)
             ->selectOrm()
@@ -162,11 +155,11 @@ abstract class AbstractRepositoryFactory
         $condition = null;
         switch(strtoupper(gettype($value))){
 
-            case 'NULL': // $foo === null
+            case 'NULL':
                 $condition = "$key IS NULL";
                 break;
 
-            case 'BOOLEAN': // $foo === false
+            case 'BOOLEAN':
                 $condition = ($value) ? "$key IS NOT NULL" : "$key IS NULL" ;
                 break;
 

@@ -49,8 +49,11 @@ $this->layout('_layout.profile.html',
     <?php if ($session->UserHasPermission('show_user_exam')): ?>
         <div class="col-12">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h2 class="h5 mb-0">Meine Prüfung</h2>
+                <div class="card-body text-bg-light bg-gradient">
+                    <div class="d-flex align-items-center">
+                        <span class="badge shadow-sm text-bg-warning me-2"><i class="fa fa-fw fa-info"></i></span>
+                        <?= $trans->getConfig($exam->getStatus()) ?>
+                    </div>
                 </div>
                 <div class="list-group list-group-flush">
                     <?php if ($exam instanceof UserHasExam): ?>
@@ -60,10 +63,16 @@ $this->layout('_layout.profile.html',
                                         <span class="badge text-bg-primary"><?= $exam->getMainSchoolSubject()->getLabel() ?></span>
                                         <span class="badge text-bg-light"><?= $exam->getSecondarySchoolSubject()->getLabel() ?></span>
                                     </div>
-                                    <p class="lead fw-bolder"><?= $exam->getKeyQuestion() ?></p>
+                                    <p class="lead fw-bolder mb-1"><?= $exam->getKeyQuestion() ?></p>
                                     <p>Betreuende Lehrkraft: <?=$exam->getSupervisor()->getFullName()?></p>
+                                    <div class="">
+                                        <?php if('revise' == $exam->getStatus()):?>
+                                            <a href="#" class="btn btn-primary">überarbeiten</a>
+                                            <?php else: ?>
+                                            <a href="#" class="btn btn-primary disabled">überarbeiten</a>
+                                        <?php endif ?>
+                                    </div>
                                     <div class="small my-2 text-muted">am <?= $exam->getCreated()->format('d.m.Y') ?> erstellt</div>
-                                    <span class="text-bg-info badge"><?= $trans->getConfig($exam->getStatus()) ?></span>
                                 </div>
                             </div>
                     <?php else: ?>
