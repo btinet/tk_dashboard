@@ -134,7 +134,7 @@ class KeyQuestionWorkflowController extends AbstractController
      */
     public function claimKeyQuestion(int $examId)
     {
-        $exam = $this->repository->find(Exam::class,$examId);
+        $exam = $this->repository->setEntity(Exam::class)->find($examId);
         if(date('Y') >= ($exam->getYear()+3) and !$exam->getUser() and $this->session->getUser())
             {
                 $userExamRepository = new UserExamRepository();
@@ -165,7 +165,7 @@ class KeyQuestionWorkflowController extends AbstractController
 
     public function transferKeyQuestion()
     {
-        $exam = $this->repository->find(Exam::class,$this->request->getFieldAsString('exam_id'));
+        $exam = $this->repository->setEntity(Exam::class)->find($this->request->getFieldAsString('exam_id'));
 
         if($this->request->isFormSubmitted() and $this->request->isPostRequest() and !$exam->getUser())
         {

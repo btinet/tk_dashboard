@@ -170,7 +170,6 @@ $this->layout('_layout.profile.html',
                                     <a href="<?=$response->generateUrlFromRoute('user_profile_show_exam',[$exam->getId()])?>" class="fw-bolder"><?= $exam->getKeyQuestion() ?></a>
                                     <div class="small my-2 text-muted">am <?= $exam->getCreated()->format('d.m.Y') ?> erstellt</div>
                                     <span class="text-bg-info badge"><?= $trans->getConfig($exam->getStatus()) ?></span>
-                                    <span class="text-bg-light border badge"><?= $exam->getStatus()->getInfo() ?></span>
                                 </div>
                             </div>
                         <?php endforeach; ?>

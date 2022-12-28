@@ -61,6 +61,7 @@ $this->layout('_layout.profile.html',
                                         <span class="badge text-bg-light"><?= $exam->getSecondarySchoolSubject()->getLabel() ?></span>
                                     </div>
                                     <p class="lead fw-bolder"><?= $exam->getKeyQuestion() ?></p>
+                                    <p>Betreuende Lehrkraft: <?=$exam->getSupervisor()->getFullName()?></p>
                                     <div class="small my-2 text-muted">am <?= $exam->getCreated()->format('d.m.Y') ?> erstellt</div>
                                     <span class="text-bg-info badge"><?= $trans->getConfig($exam->getStatus()) ?></span>
                                 </div>
