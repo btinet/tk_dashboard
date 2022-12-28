@@ -10,6 +10,7 @@ use App\Entity\SchoolSubject;
 use App\Entity\Topic;
 use App\Entity\User;
 use App\Entity\UserHasExam;
+use App\Entity\UserRole;
 use App\Menu\MenuBuilder;
 use App\Repository\UserExamRepository;
 use App\Repository\UserRoleRepository;
@@ -25,22 +26,15 @@ class KeyQuestionWorkflowController extends AbstractController
 
     protected AbstractRepositoryFactory $repository;
 
-    /**
-     * @var array|false|string
-     */
-    private $schoolSubjects;
     private AbstractMenu $adminMenu;
 
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new UserRoleRepository();
+        $this->repository = $this->getRepositoryManager(UserRole::class);
         $mainMenu = new MenuBuilder();
-        $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
-            'schoolSubjects' => $this->schoolSubjects,
-            'mainMenu' => $mainMenu->render(),
+            'mainMenu' => $mainMenu->createMenu()->render(),
             'repository' => $this->repository
         ]);
 
@@ -66,10 +60,11 @@ class KeyQuestionWorkflowController extends AbstractController
             $sr = $this->getRepositoryManager(SchoolSubject::class);
             $schoolSubjects = $sr->findAll();
             $userExamRepository = new UserExamRepository();
+            $roleRepository = new UserRoleRepository();
 
             $supervisorList = [];
 
-            if($supervisors = $this->repository->findSupervisorsByLoad())
+            if($supervisors = $roleRepository->findSupervisorsByLoad())
             {
                 foreach ($supervisors as $supervisor)
                 {
@@ -100,10 +95,11 @@ class KeyQuestionWorkflowController extends AbstractController
         if($this->session->getUser())
         {
             $userExamRepository = new UserExamRepository();
+            $roleRepository = new UserRoleRepository();
 
             $supervisorList = [];
 
-            if($supervisors = $this->repository->findSupervisorsByLoad())
+            if($supervisors = $roleRepository->findSupervisorsByLoad())
             {
                 foreach ($supervisors as $supervisor)
                 {
@@ -142,10 +138,11 @@ class KeyQuestionWorkflowController extends AbstractController
         if(date('Y') >= ($exam->getYear()+3) and !$exam->getUser() and $this->session->getUser())
             {
                 $userExamRepository = new UserExamRepository();
+                $roleRepository = new UserRoleRepository();
 
                 $supervisorList = [];
 
-                if($supervisors = $this->repository->findSupervisorsByLoad())
+                if($supervisors = $roleRepository->findSupervisorsByLoad())
                 {
                     foreach ($supervisors as $supervisor)
                     {
@@ -178,9 +175,9 @@ class KeyQuestionWorkflowController extends AbstractController
                 $this->response->redirectToRoute(302,$this->generateUrlFromRoute('exam_show',[$exam->getId()]),true);
             }
             $user = $this->session->getUser();
-            $topic = $this->repository->findOneBy(Topic::class,['title' => $this->request->getFieldAsString('topic')]);
-            $mainSubject = $this->repository->findOneBy(SchoolSubject::class,['label' => $this->request->getFieldAsString('school_subject_1')]);
-            $secondarySubject = $this->repository->findOneBy(SchoolSubject::class,['label' => $this->request->getFieldAsString('school_subject_2')]);
+            $topic = $this->repository->setEntity(Topic::class)->findOneBy(['title' => $this->request->getFieldAsString('topic')]);
+            $mainSubject = $this->repository->setEntity(SchoolSubject::class)->findOneBy(['label' => $this->request->getFieldAsString('school_subject_1')]);
+            $secondarySubject = $this->repository->setEntity(SchoolSubject::class)->findOneBy(['label' => $this->request->getFieldAsString('school_subject_2')]);
 
             $userHasExam = new UserHasExam();
             $entityManager = new EntityManager();
@@ -196,7 +193,7 @@ class KeyQuestionWorkflowController extends AbstractController
 
             $userExamId = $entityManager->persist($userHasExam);
 
-            $status = $this->repository->findOneBy(ExamStatus::class,['label' => 'clearance']);
+            $status = $this->repository->setEntity(ExamStatus::class)->findOneBy(['label' => 'clearance']);
 
             $examStatus = new ExamHasExamStatus();
 
@@ -207,7 +204,7 @@ class KeyQuestionWorkflowController extends AbstractController
 
             $entityManager->persist($examStatus);
 
-            $exams = $this->repository->findBy(ExamHasSchoolSubject::class,['exam_id' => $this->request->getFieldAsString('exam_id')]);
+            $exams = $this->repository->setEntity(ExamHasSchoolSubject::class)->findBy(['exam_id' => $this->request->getFieldAsString('exam_id')]);
 
             foreach ($exams as $examObject)
             {
@@ -232,8 +229,8 @@ class KeyQuestionWorkflowController extends AbstractController
                 $this->response->redirectToRoute(302,'user_profile_index');
             }
             $user = $this->session->getUser();
-            $mainSubject = $this->repository->find(SchoolSubject::class,$this->request->getFieldAsString('school_subject_1'));
-            $secondarySubject = $this->repository->find(SchoolSubject::class,$this->request->getFieldAsString('school_subject_2'));
+            $mainSubject = $this->repository->setEntity(SchoolSubject::class)->find($this->request->getFieldAsString('school_subject_1'));
+            $secondarySubject = $this->repository->setEntity(SchoolSubject::class)->find($this->request->getFieldAsString('school_subject_2'));
 
             $userHasExam = new UserHasExam();
             $entityManager = new EntityManager();
@@ -249,7 +246,7 @@ class KeyQuestionWorkflowController extends AbstractController
 
             $userExamId = $entityManager->persist($userHasExam);
 
-            $status = $this->repository->findOneBy(ExamStatus::class,['label' => 'clearance']);
+            $status = $this->repository->setEntity(ExamStatus::class)->findOneBy(['label' => 'clearance']);
 
             $examStatus = new ExamHasExamStatus();
 

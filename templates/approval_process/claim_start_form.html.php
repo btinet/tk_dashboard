@@ -62,9 +62,6 @@ $this->layout('_layout.profile.html',
                             <span class="badge text-bg-light text-muted"><?=$subject->countExams()?></span>
                         </a>
                     <?php endforeach; ?>
-                    <?php if(!$schoolSubjects): ?>
-                        <li class="list-group-item">Keine Prüfungen gefunden.</li>
-                    <?php endif; ?>
                 </div>
             </div>
 

@@ -11,10 +11,12 @@
  * @var Session $session Session-Objekt
  * @var array $supervisors List of supervisors
  * @var bool $isNew Leitfrage neu?
+ * @var GenericRepository $repository
  */
 
 use App\Entity\SchoolSubject;
 use App\Entity\User;
+use App\Repository\GenericRepository;
 use Core\Component\SessionComponent\Session;
 
 /**
@@ -55,7 +57,7 @@ $this->layout('_layout.profile.html',
                                             <label class="form-label" for="reference">Referenzfach</label>
                                             <select id="reference" name="school_subject_1" class="form-select" required>
                                                 <option value="">auswählen</option>
-                                                <?php foreach($schoolSubjects as $subject): ?>
+                                                <?php foreach($repository->setEntity(SchoolSubject::class)->findAll(['label' => 'asc']) as $subject): ?>
                                                     <?php if($subject instanceof SchoolSubject):?>
                                                         <option value="<?=$subject->getId()?>"><?=$subject->getLabel()?></option>
                                                     <?php endif;?>
@@ -69,7 +71,7 @@ $this->layout('_layout.profile.html',
                                             <label class="form-label" for="secondary">Begleitfach</label>
                                             <select id="secondary" name="school_subject_2" class="form-select" required>
                                                 <option value="">auswählen</option>
-                                                <?php foreach($schoolSubjects as $subject): ?>
+                                                <?php foreach($repository->setEntity(SchoolSubject::class)->findAll(['label' => 'asc']) as $subject): ?>
                                                     <?php if($subject instanceof SchoolSubject):?>
                                                         <option value="<?=$subject->getId()?>"><?=$subject->getLabel()?></option>
                                                     <?php endif;?>
