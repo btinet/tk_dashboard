@@ -17,7 +17,7 @@ use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
  * @method SchoolSubject[] findAll(array $orderBy = [], int $limit = null, int $offset = null)
  */
 
-class SchoolSubjectRepository extends AbstractRepositoryFactory
+class SchoolSubjectRepository extends GenericRepository
 {
 
     public function __construct()

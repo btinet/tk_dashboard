@@ -7,6 +7,7 @@
 use App\Entity\SchoolSubject;
 use App\Repository\GenericRepository;
 use Core\Component\SessionComponent\Session;
+use Core\Controller\AbstractController;
 
 /**
  * @var object|null $meta enthält Meta-Daten der Website
@@ -15,7 +16,7 @@ use Core\Component\SessionComponent\Session;
  * @var Session $session Session-Objekt
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var null|int $current_school_subject_id Id des aktuellen Schulfachs
- * @var GenericRepository $repository
+ * @var AbstractController $controller
  */
 
 $this->layout('base.html');
@@ -129,7 +130,7 @@ $this->layout('base.html');
                                 </div>
                                 <div class="collapse show" id="collapseExample">
                                     <div class="list-group list-group-flush border-top border-bottom">
-                                        <?php foreach($schoolSubjects = $repository->setEntity(SchoolSubject::class)->findAll(['label'=>'asc']) as $subject): ?>
+                                        <?php foreach($schoolSubjects = $controller->getRepositoryManager(SchoolSubject::class)->findAll(['label'=>'asc']) as $subject): ?>
 
                                             <?php $isActive = ($current_school_subject_id == $subject->getId()) ? 'active bg-gradient' : '';?>
                                             <a href="<?=$response->generateUrlFromRoute('exam_list',[$subject->getId()]) ?>" class="list-group-item <?=$isActive?> list-group-item-action lh-sm py-3 d-flex justify-content-between align-items-center" style="border-left-style: solid;border-left-width: 8px!important;border-left-color: <?=$subject->getColor()?>">

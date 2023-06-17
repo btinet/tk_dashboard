@@ -73,7 +73,7 @@ final class SchoolSubject
      */
     public function getSchoolSubjectType(): SchoolSubjectType
     {
-        return $this->repository->find(SchoolSubjectType::class,$this->schoolSubjectTypeId);
+        return $this->repository->setEntity(SchoolSubjectType::class)->find($this->schoolSubjectTypeId);
     }
 
     /**
@@ -129,7 +129,7 @@ final class SchoolSubject
 
     public function countExams(): int
     {
-        return $this->repository->countExams($this->id, SchoolSubject::class);
+        return $this->repository->countExams($this->id);
     }
 
 }

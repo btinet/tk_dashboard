@@ -1,8 +1,6 @@
 <?php
 // PHP-Dateien werden mit <?php eingeleitet. Folgt danach kein HTML, darf das schließende Tag am Ende fehlen.
 // Verwende die Kernel-Class als Kernel.
-use App\Repository\ExamRepository;
-use Core\ErrorHandler\ErrorExceptionHandler;
 use Core\Kernel;
 use Symfony\Component\ErrorHandler\Debug;
 

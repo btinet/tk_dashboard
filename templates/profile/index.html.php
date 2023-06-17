@@ -69,14 +69,14 @@ $this->layout('_layout.profile.html',
                                 Kollegiat:innen</label>
                             <div class="input-group">
                                 <div class="input-group-text"><i class="fa-solid fa-users"></i></div>
-                                <input type="number" name="pupil_amount" min="1" max="10"
-                                       value="<?= $attribs['supervise']['pupil_amount'] ?: 1 ?>" class="form-control"
+                                <input type="number" name="pupil_amount" min="1" max="10" disabled
+                                       value="<?= $attribs['supervise']['pupil_amount'] ?: 1 ?>" class="form-control disabled"
                                        id="inlineFormInputGroupUsername" placeholder="Anzahl Kollegiat:innen">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" name="enable"
+                                <input class="form-check-input disabled" name="enable" disabled
                                        type="checkbox" <?= $attribs['supervise']['supervise_enable'] ? 'checked' : '' ?>
                                        role="switch" id="flexSwitchCheckDefault">
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Betreuung
@@ -84,7 +84,7 @@ $this->layout('_layout.profile.html',
                             </div>
                         </div>
                         <div class="col-12">
-                            <button type="submit" name="submit" class="btn btn-primary">Speichern</button>
+                            <button type="submit" name="submit" disabled class="btn btn-primary disabled">Speichern</button>
                         </div>
                         <input type="hidden" id="csrf_token" name="csrf_token"
                                value="<?= $session->get('csrf_token') ?>">

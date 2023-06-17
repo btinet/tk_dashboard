@@ -104,8 +104,8 @@ class ProfileController extends AbstractController
             $em = new EntityManager();
 
             $userRoleHasUser = $this->getRepositoryManager(UserRoleHasUser::class)->findOneBy([
-                'userId' => $this->session->getUser()->getId(),
-                'userRoleId' => 18
+                'user_id' => $this->session->getUser()->getId(),
+                'user_role_id' => 18
             ]);
 
             if($userRoleHasUser)
