@@ -19,8 +19,6 @@ use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 class SchoolSubjectCrudController extends AbstractController
 {
 
-    protected AbstractRepositoryFactory $repository;
-
     /**
      * @var array|false|string
      */
@@ -30,11 +28,10 @@ class SchoolSubjectCrudController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -63,7 +60,7 @@ class SchoolSubjectCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(SchoolSubject::class)
-            ->setData($this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc'],20))
+            ->setData($this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc'],20))
             ->setCaption('Fächer')
             ->addIdentifier('label','admin_school_subject_index','id')
             ->add('abbr')
@@ -74,7 +71,7 @@ class SchoolSubjectCrudController extends AbstractController
 
         return $this->render('admin/school_subject/index.html',[
             'adminMenu' => $this->adminMenu->render(),
-            'objects' => $this->getRepositoryManager()->findAll(SchoolSubjectType::class),
+            'objects' => $this->getRepositoryManager(SchoolSubjectType::class)->findAll(),
             'userData' => $userData,
             'table' => $table->render()
         ]);
@@ -90,7 +87,7 @@ class SchoolSubjectCrudController extends AbstractController
             $em = new EntityManager();
             $entity = new SchoolSubject();
 
-            if(0 === $em->isUnique(SchoolSubject::class,'label', $this->request->getFieldAsString('label'),$this->getRepositoryManager()))
+            if(0 === $em->isUnique('label', $this->request->getFieldAsString('label'),$this->getRepositoryManager(SchoolSubject::class)))
             {
                 $entity->setLabel($this->request->getFieldAsString('label'));
                 $entity->setAbbr($this->request->getFieldAsString('abbr'));

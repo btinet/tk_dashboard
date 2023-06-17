@@ -8,6 +8,9 @@ use App\Entity\UserGroup;
 use App\Entity\UserRole;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Repository\SchoolSubjectRepository;
+use App\Repository\UserRepository;
+use App\Repository\UserRoleRepository;
 use App\Type\TableType;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
@@ -26,11 +29,10 @@ class UserCrudController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -59,7 +61,7 @@ class UserCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(User::class)
-            ->setData($this->getRepositoryManager()->findAll(User::class))
+            ->setData($this->getRepositoryManager(User::class)->findAll())
             ->setCaption('Gruppenübersicht')
             ->addIdentifier('username','admin_user_index','id',false,[
                 'parameter'=>true,
@@ -79,8 +81,8 @@ class UserCrudController extends AbstractController
 
         return $this->render('admin/group/index.html',[
             'adminMenu' => $this->adminMenu->render(),
-            'objects' => $this->getRepositoryManager()->findAll(User::class),
-            'userRoles' => $this->repository->findAll(UserRole::class),
+            'objects' => $this->getRepositoryManager(User::class)->findAll(),
+            'userRoles' => $this->repository->findAll(),
             'userData' => $userData,
             'table' => $table->render()
         ]);

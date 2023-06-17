@@ -18,8 +18,6 @@ use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 class UserGroupCrudController extends AbstractController
 {
 
-    protected AbstractRepositoryFactory $repository;
-
     /**
      * @var array|false|string
      */
@@ -29,11 +27,10 @@ class UserGroupCrudController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -62,7 +59,7 @@ class UserGroupCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(UserGroup::class)
-            ->setData($this->getRepositoryManager()->findAll(UserGroup::class))
+            ->setData($this->getRepositoryManager(UserGroup::class)->findAll())
             ->setCaption('Gruppenübersicht')
             ->addIdentifier('label','admin_group_index','id')
             ->addIdentifier('role','admin_role_show','roleId')
@@ -74,8 +71,8 @@ class UserGroupCrudController extends AbstractController
 
         return $this->render('admin/group/index.html',[
             'adminMenu' => $this->adminMenu->render(),
-            'objects' => $this->getRepositoryManager()->findAll(UserGroup::class),
-            'userRoles' => $this->repository->findAll(UserRole::class),
+            'objects' => $this->getRepositoryManager(UserGroup::class)->findAll(),
+            'userRoles' => $this->getRepositoryManager(UserRole::class)->findAll(),
             'userData' => $userData,
             'table' => $table->render()
         ]);
@@ -91,7 +88,7 @@ class UserGroupCrudController extends AbstractController
             $em = new EntityManager();
             $entity = new UserGroup();
 
-            if(0 === $em->isUnique(UserGroup::class,'label', $this->request->getFieldAsString('label'),$this->getRepositoryManager()))
+            if(0 === $em->isUnique('label', $this->request->getFieldAsString('label'),$this->getRepositoryManager(UserGroup::class)))
             {
                 $entity->setLabel($this->request->getFieldAsString('label'));
                 $entity->setDescription($this->request->getFieldAsString('description'));

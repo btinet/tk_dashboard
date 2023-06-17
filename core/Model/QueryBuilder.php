@@ -424,6 +424,7 @@ class QueryBuilder
     {
         if($this->statement->execute())
         {
+            //die(print_r($this->query));
             return $this->statement->rowCount();
         }
         return false;

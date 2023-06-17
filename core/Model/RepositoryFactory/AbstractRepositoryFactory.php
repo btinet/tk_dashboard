@@ -47,8 +47,7 @@ abstract class AbstractRepositoryFactory implements RepositoryFactoryInterface
     public function countDistinctBy(string $column)
     {
         return $this->queryBuilder($this->entity)
-            ->selectDistinct(':column')
-            ->setParameter('column',$column)
+            ->selectDistinct($column)
             ->getQuery()
             ->getCountResult()
         ;
@@ -127,7 +126,7 @@ abstract class AbstractRepositoryFactory implements RepositoryFactoryInterface
         ;
     }
 
-    public function findOneBy(array $data): ?object
+    public function findOneBy(array $data)
     {
         $query = $this->queryBuilder($this->entity)
             ->selectOrm()

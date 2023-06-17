@@ -11,6 +11,7 @@ use App\Entity\UserGroup;
 use App\Entity\UserRole;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Repository\SchoolSubjectRepository;
 use App\Type\TableType;
 use Core\Component\DataStorageComponent\EntityManager;
 use Core\Component\MenuComponent\AbstractMenu;
@@ -31,11 +32,11 @@ class ExamCrudController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new SchoolSubjectRepository();
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -72,12 +73,12 @@ class ExamCrudController extends AbstractController
         $this->adminMenu->createMenu();
         $userData = [];
 
-        $rows = $this->getRepositoryManager()->count(Exam::class);
+        $rows = $this->getRepositoryManager(Exam::class)->count();
 
         $table = new TableType($this->getView());
         $table
             ->configureComponent(Exam::class)
-            ->setData($this->getRepositoryManager()->findAll(Exam::class,['year'=>'desc'],20,$offset*20))
+            ->setData($this->getRepositoryManager(Exam::class)->findAll(['year'=>'desc'],20,$offset*20))
             ->setCaption('Prüfungen')
             ->addIdentifier('keyQuestion','admin_exam_show','id')
             ->addIdentifier('topic','admin_topic_index','topicId')
@@ -99,13 +100,13 @@ class ExamCrudController extends AbstractController
      */
     public function show(int $id):string
     {
-        $object = $this->getRepositoryManager()->find(Exam::class, $id);
+        $object = $this->getRepositoryManager(Exam::class)->find( $id);
 
 
         $this->adminMenu->createMenu();
         $userData = [];
 
-        $permissions = $this->repository->findAll(RolePermission::class);
+        $permissions = $this->getRepositoryManager(RolePermission::class)->findAll();
 
         $table = new TableType($this->getView());
         $table

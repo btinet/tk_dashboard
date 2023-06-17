@@ -56,7 +56,8 @@ abstract class AbstractController implements ControllerInterface
             'trans' => $this->trans,
             'locale'=> $trans->locale,
             'locales'=> $trans->availableLanguages,
-            'flash' => $this->getFlash()
+            'flash' => $this->getFlash(),
+            'controller' => $this,
         ]);
 
 

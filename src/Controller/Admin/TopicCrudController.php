@@ -21,8 +21,6 @@ use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 class TopicCrudController extends AbstractController
 {
 
-    protected AbstractRepositoryFactory $repository;
-
     /**
      * @var array|false|string
      */
@@ -32,11 +30,10 @@ class TopicCrudController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class, ['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -73,7 +70,7 @@ class TopicCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(Topic::class)
-            ->setData($this->getRepositoryManager()->findAll(Topic::class,['title'=>'asc']))
+            ->setData($this->getRepositoryManager(Topic::class)->findAll(['title'=>'asc']))
             ->setCaption('Fachbereiche')
             ->addIdentifier('title', 'admin_topic_index', 'id')
             ->add('description')
@@ -96,7 +93,7 @@ class TopicCrudController extends AbstractController
             $em = new EntityManager();
             $entity = new Topic();
 
-            if (0 === $em->isUnique(Topic::class, 'title', $this->request->getFieldAsString('title'), $this->getRepositoryManager())) {
+            if (0 === $em->isUnique('title', $this->request->getFieldAsString('title'), $this->getRepositoryManager(Topic::class))) {
                 $entity->setTitle($this->request->getFieldAsString('title'));
                 $entity->setDescription($this->request->getFieldAsString('description'));
                 $em->persist($entity);

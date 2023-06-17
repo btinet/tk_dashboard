@@ -7,6 +7,7 @@ use App\Entity\SchoolSubject;
 use App\Entity\UserGroup;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Repository\ExamRepository;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -25,15 +26,17 @@ class AdminController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new ExamRepository();
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
+
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
-            'mainMenu' => $mainMenu->render(),
+            'mainMenu' => $mainMenu->render()
         ]);
+
 
         $this->denyAccessUnlessHasPermission('show_dashboard');
 
@@ -43,12 +46,12 @@ class AdminController extends AbstractController
     {
         $this->adminMenu->createMenu();
 
-        $examCount = $this->repository->countDistinctBy(Exam::class,'key_question');
+        $examCount = $this->repository->countDistinctBy('key_question');
 
         return $this->render('admin/index.html',[
             'adminMenu' => $this->adminMenu->render(),
             'examCount' => $examCount,
-            'groupEntity' => $this->repository->findAll(UserGroup::class)
+            'groupEntity' => $this->getRepositoryManager(UserGroup::class)->findAll()
         ]);
     }
 

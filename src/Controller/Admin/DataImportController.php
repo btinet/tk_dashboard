@@ -7,8 +7,8 @@ use App\Entity\ExamHasSchoolSubject;
 use App\Entity\SchoolSubject;
 use App\Menu\AdminMenu;
 use App\Menu\MenuBuilder;
+use App\Repository\SchoolSubjectRepository;
 use Core\Component\DataStorageComponent\EntityManager;
-use Core\Component\DataStorageComponent\EntityManagerComponent;
 use Core\Component\MenuComponent\AbstractMenu;
 use Core\Controller\AbstractController;
 use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
@@ -18,17 +18,17 @@ class DataImportController extends AbstractController
 
     protected AbstractRepositoryFactory $repository;
 
-    private $schoolSubjects;
+    private array $schoolSubjects;
     private AbstractMenu $adminMenu;
 
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
+        $this->repository = new SchoolSubjectRepository();
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -63,14 +63,14 @@ class DataImportController extends AbstractController
                         $examHasSchoolSubject = new ExamHasSchoolSubject();
                         $examHasSchoolSubject->setExamId($id);
                         $examHasSchoolSubject->setUserId(NULL);
-                        $examHasSchoolSubject->setSchoolSubjectId($this->repository->findOneBy(SchoolSubject::class,['abbr'=>$data[1]])->getId());
+                        $examHasSchoolSubject->setSchoolSubjectId($this->repository->findOneBy(['abbr'=>$data[1]])->getId());
                         $examHasSchoolSubject->setIsMainSchoolSubject(1);
                         $em->persist($examHasSchoolSubject);
 
                         $examHasSchoolSubject = new ExamHasSchoolSubject();
                         $examHasSchoolSubject->setExamId($id);
                         $examHasSchoolSubject->setUserId(NULL);
-                        $examHasSchoolSubject->setSchoolSubjectId($this->repository->findOneBy(SchoolSubject::class,['abbr'=>$data[2]])->getId());
+                        $examHasSchoolSubject->setSchoolSubjectId($this->repository->findOneBy(['abbr'=>$data[2]])->getId());
                         $examHasSchoolSubject->setIsMainSchoolSubject(0);
                         $em->persist($examHasSchoolSubject);
                         $row++;

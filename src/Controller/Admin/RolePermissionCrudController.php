@@ -16,9 +16,7 @@ use Core\Model\RepositoryFactory\AbstractRepositoryFactory;
 class RolePermissionCrudController extends AbstractController
 {
 
-    protected AbstractRepositoryFactory $repository;
-
-    /**
+     /**
      * @var array|false|string
      */
     private $schoolSubjects;
@@ -27,11 +25,10 @@ class RolePermissionCrudController extends AbstractController
     public function __construct()
     {
         parent::__construct();
-        $this->repository = new AbstractRepositoryFactory();
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -68,7 +65,7 @@ class RolePermissionCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(RolePermission::class)
-            ->setData($this->getRepositoryManager()->findAll(RolePermission::class,[],100))
+            ->setData($this->getRepositoryManager(RolePermission::class)->findAll([],100))
             ->setCaption('Gruppenübersicht')
             ->addIdentifier('label','admin_permission_index','id')
             ->add('description')
@@ -78,7 +75,7 @@ class RolePermissionCrudController extends AbstractController
 
         return $this->render('admin/permission/index.html',[
             'adminMenu' => $this->adminMenu->render(),
-            'objects' => $this->getRepositoryManager()->findAll(RolePermission::class),
+            'objects' => $this->getRepositoryManager(RolePermission::class)->findAll(),
             'userData' => $userData,
             'table' => $table->render()
         ]);
@@ -94,7 +91,7 @@ class RolePermissionCrudController extends AbstractController
             $em = new EntityManager();
             $role = new RolePermission();
 
-            if(0 === $em->isUnique(RolePermission::class,'label', $this->request->getFieldAsString('label'),$this->getRepositoryManager()))
+            if(0 === $em->isUnique('label', $this->request->getFieldAsString('label'),$this->getRepositoryManager(RolePermission::class)))
             {
                 $role->setLabel($this->request->getFieldAsString('label'));
                 $role->setDescription($this->request->getFieldAsString('description'));

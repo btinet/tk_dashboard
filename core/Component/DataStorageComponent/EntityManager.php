@@ -83,9 +83,9 @@ class EntityManager extends EntityManagerComponent
         }
     }
 
-    public function isUnique(string $entity, string $column, string $data, AbstractRepositoryFactory $repositoryFactory): int
+    public function isUnique(string $column, string $data, AbstractRepositoryFactory $repositoryFactory): int
     {
-        $result = $repositoryFactory->findOneBy($entity,[$column => $data]);
+        $result = $repositoryFactory->findOneBy([$column => $data]);
         return (bool)array_filter((array)$result);
     }
 }

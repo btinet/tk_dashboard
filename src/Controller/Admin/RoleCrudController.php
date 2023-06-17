@@ -33,7 +33,7 @@ class RoleCrudController extends AbstractController
         $mainMenu = new MenuBuilder($this->session->getUser());
         $this->adminMenu = new AdminMenu($this->session->getUser());
         $mainMenu->createMenu();
-        $this->schoolSubjects = $this->getRepositoryManager()->findAll(SchoolSubject::class,['label' => 'asc']);
+        $this->schoolSubjects = $this->getRepositoryManager(SchoolSubject::class)->findAll(['label' => 'asc']);
         $this->getView()->addData([
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
@@ -48,7 +48,7 @@ class RoleCrudController extends AbstractController
         $table = new TableType($this->getView());
         $table
             ->configureComponent(UserRole::class)
-            ->setData($this->getRepositoryManager()->findAll(UserRole::class,[],100))
+            ->setData($this->getRepositoryManager(UserRole::class)->findAll([],100))
             ->setCaption('Rollenübersicht')
             ->addIdentifier('label','admin_role_show','id')
             ->add('description')
@@ -77,7 +77,7 @@ class RoleCrudController extends AbstractController
 
         return $this->render('admin/role/index.html',[
             'adminMenu' => $this->adminMenu->render(),
-            'objects' => $this->getRepositoryManager()->findAll(UserRole::class,[],100),
+            'objects' => $this->getRepositoryManager(UserRole::class)->findAll([],100),
             'userData' => $userData,
             'table' => $table->render()
         ]);
@@ -89,7 +89,7 @@ class RoleCrudController extends AbstractController
      */
     public function show(int $id):string
     {
-        $object = $this->getRepositoryManager()->find(UserRole::class, $id);
+        $object = $this->getRepositoryManager(UserRole::class)->find($id);
 
         if($this->request->getFieldAsArray('mark_row')){
             foreach($this->request->getFieldAsArray('mark_row') as $permission)
@@ -103,7 +103,7 @@ class RoleCrudController extends AbstractController
         $this->adminMenu->createMenu();
         $userData = [];
 
-        $permissions = $this->repository->findAll(RolePermission::class,[],100);
+        $permissions = $this->getRepositoryManager(RolePermission::class)->findAll([],100);
 
         $table = new TableType($this->getView());
         $table
@@ -136,7 +136,7 @@ class RoleCrudController extends AbstractController
             $em = new EntityManager();
             $role = new UserRole();
 
-            if(0 === $em->isUnique(UserRole::class,'label', $this->request->getFieldAsString('label'),$this->getRepositoryManager()))
+            if(0 === $em->isUnique('label', $this->request->getFieldAsString('label'),$this->getRepositoryManager(UserRole::class)))
             {
                 $role->setLabel($this->request->getFieldAsString('label'));
                 $role->setDescription($this->request->getFieldAsString('description'));
