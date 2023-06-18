@@ -46,13 +46,7 @@ abstract class AbstractController implements ControllerInterface
 
 
         $this->request = new Request();
-
-        $this->session->set("csrf_token","csrf_token");
-        $this->request->setToken("csrf_token");
-
-
-
-
+        $this->request->setToken($this->session->get("csrf_token"));
 
         $trans = new Translation($config, $this->session);
         $this->trans = $trans->parse();
@@ -134,15 +128,18 @@ abstract class AbstractController implements ControllerInterface
     /**
      * @return void
      */
-    private function generateToken(): void
+    protected function generateToken(): void
     {
-        $csrfToken = null;
-        try {
-            $csrfToken = sha1(random_bytes(9));
-        } catch (Exception $e) {
-        }
+        if($this->request->isGetRequest())
+        {
+            $csrfToken = null;
+            try {
+                $csrfToken = sha1(random_bytes(9));
+            } catch (Exception $e) {
+            }
 
-        $this->session->set('csrf_token', $csrfToken);
+            $this->session->set('csrf_token', $csrfToken);
+        }
     }
 
     /**

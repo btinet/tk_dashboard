@@ -14,7 +14,7 @@ class Request
      */
     public string $csrf_token;
 
-    public string $query;
+    public ?string $query;
 
 
     public function __construct()
@@ -31,7 +31,15 @@ class Request
      */
     public function isPostRequest(): bool
     {
-        return ($_SERVER['REQUEST_METHOD'] === 'POST');
+        return (strtoupper($_SERVER['REQUEST_METHOD']) == 'POST');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGetRequest(): bool
+    {
+        return ($_SERVER['REQUEST_METHOD'] == 'GET');
     }
 
     /**
@@ -39,50 +47,54 @@ class Request
      */
     public function isFormSubmitted(): bool
     {
-        $token = ($_POST['csrf_token'])??null;
+        $token = ($this->getFieldAsString('csrf_token'))??null;
         return $token == $this->csrf_token;
     }
 
     /**
      * @param string $FormFieldName
-     * @return string|false
+     * @return string|null
      */
     public function getFieldAsString(string $FormFieldName): ?string
     {
         $query = filter_input(INPUT_POST, $FormFieldName, FILTER_SANITIZE_STRIPPED);
-        return $this->query = $query ?? false;
+        return $this->query = $query ?? null;
     }
 
     /**
      * @param string $FormFieldName
-     * @return false|array
+     * @return array|null
      */
-    public function getFieldAsArray(string $FormFieldName)
+    public function getFieldAsArray(string $FormFieldName): ?array
     {
-        return $query = (isset($_POST[$FormFieldName]))?$_POST[$FormFieldName]:false;
+        return $query = (isset($_POST[$FormFieldName]))?$_POST[$FormFieldName]:null;
     }
 
-    public function getFieldAsFile(string $FormFieldName)
+    /**
+     * @param string $FormFieldName
+     * @return mixed
+     */
+    public function getFieldAsFile(string $FormFieldName): mixed
     {
-        return $query = (isset($_FILES[$FormFieldName]))?$_FILES[$FormFieldName]:false;
+        return $query = (isset($_FILES[$FormFieldName]))?$_FILES[$FormFieldName]:null;
     }
 
     /**
      * @param string $key
-     * @return string|false
+     * @return string|null
      */
     public function getQueryAsString(string $key): ?string
     {
         $query = filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRIPPED);
-        return $this->query = $query ?? false;
+        return $this->query = $query ?? null;
     }
 
     /**
      * @param string $key
-     * @return false|mixed
+     * @return mixed
      */
-    public function getQueryAsArray(string $key)
+    public function getQueryAsArray(string $key): mixed
     {
-        return $query = (isset($_GET[$key]))?$_GET[$key]:false;
+        return $query = (isset($_GET[$key]))?$_GET[$key]:null;
     }
 }

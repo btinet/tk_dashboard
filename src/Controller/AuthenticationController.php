@@ -26,6 +26,7 @@ class AuthenticationController extends AbstractController
     public function __construct()
     {
         parent::__construct();
+        $this->generateToken();
         $this->repository = new UserRepository();
         $mainMenu = new MenuBuilder();
         $mainMenu->createMenu();
@@ -34,6 +35,9 @@ class AuthenticationController extends AbstractController
             'schoolSubjects' => $this->schoolSubjects,
             'mainMenu' => $mainMenu->render(),
         ]);
+
+
+
     }
 
     public function login(): string
