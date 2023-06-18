@@ -67,7 +67,24 @@ $this->layout('_layout.profile.html',
                                     <p>Betreuende Lehrkraft: <?=$exam->getSupervisor()->getFullName()?></p>
                                     <div class="">
                                         <?php if('clearance' == $exam->getStatus()):?>
-                                            <a href="#" class="btn btn-secondary">Überarbeitung anfordern</a>
+                                        <form method="post" action="<?=$response->generateUrlFromRoute('update_workflow')?>" name="update" class="row g-3 mb-4 needs-validation" novalidate>
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="info" name="info" placeholder="<?=$trans->getConfig('info')?>" required>
+                                                    <label for="info"><?=$trans->getConfig('info')?></label>
+                                                    <div class="invalid-feedback">
+                                                        Bitte gib eine Bemerkung ein.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="exam_status" name="exam_status" value="revise">
+                                            <input type="hidden" id="exam_id" name="exam_id" value="<?=$exam->getId()?>">
+                                            <input type="hidden" id="csrf_token" name="csrf_token" value="<?=$session->get('csrf_token')?>">
+                                            <div class="col-12">
+                                                <button type="submit" name="submit" class="btn btn-light border-1 border-secondary">Überarbeitung anfordern</button>
+                                            </div>
+                                        </form>
+
                                             <a href="#" class="btn btn-success">An Fachbereichsleitung weiterleiten</a>
                                             <?php else: ?>
                                             <a href="#" class="btn btn-primary disabled">überarbeiten</a>

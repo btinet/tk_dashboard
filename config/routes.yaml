@@ -226,3 +226,9 @@ kq_new_transfer:
   controller: 'App\Controller\Profile\KeyQuestionWorkflowController'
   method: 'createKeyQuestion'
   request: 'post'
+
+update_workflow:
+  expression: '/exam-status/update'
+  controller: 'App\Controller\Workflow\GrantWorkflow'
+  method: 'updateWorkflow'
+  request: 'post'

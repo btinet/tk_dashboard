@@ -54,6 +54,7 @@ school_subject_type_deleted: Fachbereich gelöscht.
 key_question_locked: Leitfrage ist gesperrt. Sie kann nicht beansprucht werden.
 no_supervisor_available: Keine betreuende Lehrkraft verfügbar.
 key_question_send_to_clearance: Leitfrage wurde zur Überprüfung eingereicht.
+key_question_send_to_revision: Leitfrage wurde zur Überarbeitung zurückgestellt.
 
 clearance: Warten auf Prüfung durch Betreuung
 revise: Überarbeitung angefordert

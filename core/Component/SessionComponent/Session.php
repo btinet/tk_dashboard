@@ -47,9 +47,9 @@ class Session
     /**
      * @param $key
      * @param false $secondKey
-     * @return false|mixed
+     * @return mixed
      */
-    public function get($key, bool $secondKey = false)
+    public function get($key, bool $secondKey = false): mixed
     {
         if ($secondKey == true) {
             if (isset($_SESSION[$this->appSecret . $key][$secondKey])) {

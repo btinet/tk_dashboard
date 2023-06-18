@@ -16,12 +16,14 @@ class Request
 
     public string $query;
 
-    /**
-     * @param $csrf_token
-     */
-    public function __construct($csrf_token)
+
+    public function __construct()
     {
-        $this->csrf_token = $csrf_token;
+    }
+
+    public function setToken($csrfToken)
+    {
+        $this->csrf_token = $csrfToken;
     }
 
     /**
@@ -38,7 +40,7 @@ class Request
     public function isFormSubmitted(): bool
     {
         $token = ($_POST['csrf_token'])??null;
-        return $token === $this->csrf_token;
+        return $token == $this->csrf_token;
     }
 
     /**
