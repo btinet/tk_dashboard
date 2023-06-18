@@ -97,6 +97,23 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    /**
+     * @param int $userExamId id of current user exam
+     * @return string html template
+     */
+    public function updateExam(int $userExamId): string
+    {
+        $profileMenu = new ProfileMenu($this->session->getUser());
+        $profileMenu->createMenu();
+
+        $exam = $this->repository->find($userExamId);
+
+        return $this->render('profile/update_exam.html',[
+            'exam' => $exam,
+            'menu' => $profileMenu->render(),
+        ]);
+    }
+
     public function saveSettings(): void
     {
         if($this->request->isFormSubmitted() and $this->request->isPostRequest())

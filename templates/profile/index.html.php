@@ -5,7 +5,7 @@
  */
 
 /**
- * @var object $response enthält Response-Daten des Controllers
+ * @var Response $response enthält Response-Daten des Controllers
  * @var object $schoolSubjects enthält die MySQL-Tabelle "school_subject"
  * @var Object $adminMenu Set of menu objects
  * @var Object $trans Translation object
@@ -25,6 +25,7 @@
 use App\Entity\Exam;
 use App\Entity\UserHasExam;
 use App\Menu\ProfileMenu;
+use Core\Component\HttpComponent\Response;
 use Core\Component\SessionComponent\Session;
 
 /**
@@ -121,7 +122,7 @@ $this->layout('_layout.profile.html',
                     </div>
                     <?php if ($foreignExams): ?>
                         <?php foreach ($foreignExams as $exam): ?>
-                            <a href="#" class="list-group-item list-group-item-action align-items-center">
+                            <a href="<?=$response->generateUrlFromRoute('user_profile_update_exam',[$exam->getId()]) ?>" class="list-group-item list-group-item-action align-items-center">
                                 <div class="row g-2">
                                     <div class="col-12 col-md-3 text-truncate">
                                         <span class="d-flex align-items-baseline">

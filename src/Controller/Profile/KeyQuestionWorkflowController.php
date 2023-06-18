@@ -163,6 +163,32 @@ class KeyQuestionWorkflowController extends AbstractController
         $this->response->redirectToRoute(302,$this->generateUrlFromRoute('exam_show',[$exam->getId()]),true);
     }
 
+    public function updateWorkflow()
+    {
+
+        // TODO: Workflow-Update implementieren
+
+        if($this->request->isFormSubmitted() and $this->request->isPostRequest())
+        {
+            $examId = $this->request->getFieldAsString('exam_id');
+            $examStatus = $this->request->getFieldAsString('exam_status');
+            if($exam = $this->getRepositoryManager(ExamHasExamStatus::class)->find($examId))
+            {
+                $em = new EntityManager();
+                if($exam instanceof ExamHasExamStatus)
+                {
+                    $workflowObject = new ExamHasExamStatus();
+                    $workflowObject
+                        ->setUserExamId($exam->getUserExamId())
+                        ->setSupervisorId($this->session->getUser()->getId())
+                        ->set
+                    ;
+                }
+            }
+        }
+
+    }
+
     public function transferKeyQuestion()
     {
         $exam = $this->repository->setEntity(Exam::class)->find($this->request->getFieldAsString('exam_id'));

@@ -80,7 +80,7 @@ class Response
             {
                 if (!isset($mandatory[$k])){
                     $k++;
-                    $mandatoryCount = count($mandatory);
+                    //$mandatoryCount = count($mandatory);
                     throw new ResponseException(sprintf('Missing mandatory "%s".',$k),$route);
                 }
                 $routeArray[$key] = $mandatory[$k];
