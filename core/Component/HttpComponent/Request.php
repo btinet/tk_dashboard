@@ -39,7 +39,7 @@ class Request
      */
     public function isGetRequest(): bool
     {
-        return ($_SERVER['REQUEST_METHOD'] == 'GET');
+        return (strtoupper($_SERVER['REQUEST_METHOD']) == 'GET');
     }
 
     /**

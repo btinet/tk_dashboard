@@ -8,7 +8,7 @@
 
 ?>
 
-    <div class="toast-container position-fixed d-flex justify-content-center align-items-center p-3" style="position: absolute; z-index: 10000">
+    <div class="toast-container position-fixed d-flex justify-content-center align-items-center p-3" style="position: absolute;left: 50%; transform: translate(-50%, 0px); z-index: 10000">
 
         <div id="liveToast" class="toast show text-<?=$type?>" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header text-bg-primary bg-gradient">
