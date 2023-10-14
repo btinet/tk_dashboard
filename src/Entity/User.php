@@ -256,7 +256,7 @@ final class User
                 ->setUserId($user->getId())
                 ->setUserRoleId($userRoleId)
                 ->setAttribs([])
-                ->setFromDate(date('now'))
+                ->setFromDate(date('Y-m-d'))
                 ->setToDate(NULL)
             ;
             try {
