@@ -64,7 +64,7 @@ class AuthenticationController extends AbstractController
                         $this->setFlash(200);
                     }
 
-                    $this->response->redirectToRoute(302, 'app_index');
+                    $this->response->redirectToRoute(302, 'exam_index');
                 }
             }
             $this->setFlash($tryLoginLastError,'danger');
