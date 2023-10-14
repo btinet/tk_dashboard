@@ -119,7 +119,7 @@ $this->layout('_layout.minimal.html',
             </div>
             <div class="col-12">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="group_key" name="group_key" value="<?=$userData?$userData['groupKey']:false?>" placeholder="<?=$trans->getConfig('group_key')?>" required>
+                    <input type="text" class="form-control" id="group_key" name="group_key" value="" placeholder="<?=$trans->getConfig('group_key')?>">
                     <label for="group_key"><?=$trans->getConfig('group_key')?></label>
                     <div class="invalid-feedback">
                         Bitte gib deinen Gruppenschlüssel an.
